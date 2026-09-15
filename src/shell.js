@@ -7,7 +7,7 @@ applyTheme();
 if (!document.querySelector("link[data-ai4s-css]")) {
   const link = document.createElement("link");
   link.rel = "stylesheet";
-  link.href = `${new URL("./styles.css", import.meta.url).href}?v=home3`;
+  link.href = `${new URL("./styles.css", import.meta.url).href}?v=home4`;
   link.dataset.ai4sCss = "1";
   document.head.appendChild(link);
 }

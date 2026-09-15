@@ -261,8 +261,13 @@ h3 { font-size: 1.05rem; margin: 0 0 0.4rem; }
 }
 .ui-icon circle { fill: var(--icon); stroke: none; }
 
-.preview-list {
+.preview-list,
+.preview-figure {
   padding: 0.7rem 0.8rem;
+  height: 100%;
+  box-sizing: border-box;
+}
+.preview-list {
   font-size: 0.62rem;
   color: var(--muted);
 }
@@ -282,7 +287,12 @@ h3 { font-size: 1.05rem; margin: 0 0 0.4rem; }
   font-weight: 600;
 }
 
-.preview-chart, .preview-map { width: 100%; height: 100%; display: block; }
+.preview-chart, .preview-map {
+  width: 100%;
+  height: 100%;
+  display: block;
+  background: var(--figure-bg);
+}
 .preview-paper { fill: var(--figure-bg); }
 .preview-axis { stroke: #c5d0da; }
 .preview-grid { stroke: #e4ebf1; }
