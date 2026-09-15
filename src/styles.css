@@ -462,7 +462,16 @@ tbody tr:hover { background: var(--row-hover); }
   min-height: 0 !important;
   overflow: hidden !important;
 }
-.figure-frame.compare { height: 78vh; min-height: 760px; }
+.figure-well.compare-well {
+  max-height: none !important;
+  overflow: visible !important;
+}
+.figure-frame.compare {
+  height: 980px !important;
+  min-height: 980px !important;
+  max-height: none !important;
+  overflow: visible;
+}
 
 .tabs { display: flex; gap: 0; flex-wrap: wrap; border-bottom: 1px solid var(--line); }
 .tab {

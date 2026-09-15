@@ -24,6 +24,39 @@ function srcFor(spec) {
   });
 }
 
+function fitCompareFrame() {
+  const COMPARE_H = 980;
+  const PLOT_H = 820;
+  frame.style.height = `${COMPARE_H}px`;
+  frame.style.minHeight = `${COMPARE_H}px`;
+  frame.style.maxHeight = "none";
+  const grow = () => {
+    try {
+      const doc = frame.contentDocument;
+      if (!doc) return;
+      let style = doc.getElementById("ai4s-compare-fit");
+      if (!style) {
+        style = doc.createElement("style");
+        style.id = "ai4s-compare-fit";
+        doc.head.appendChild(style);
+      }
+      style.textContent = `
+        html, body { overflow: visible !important; height: auto !important; max-height: none !important; }
+        .plot { height: ${PLOT_H}px !important; max-height: none !important; }
+      `;
+      const Plotly = frame.contentWindow?.Plotly;
+      if (Plotly?.Plots?.resize) {
+        doc.querySelectorAll(".js-plotly-plot").forEach((gd) => Plotly.Plots.resize(gd));
+      }
+    } catch {
+      /* same-origin figures only */
+    }
+  };
+  grow();
+  window.setTimeout(grow, 80);
+  window.setTimeout(grow, 400);
+}
+
 function showTab(key) {
   tabs.forEach((btn) => btn.classList.toggle("active", btn.dataset.tab === key));
   const spec = LIVE[key];
@@ -34,9 +67,11 @@ function showTab(key) {
     const api = frame.contentWindow?.AI4S_CH03;
     if (api) {
       api.setTab(spec.tab);
+      fitCompareFrame();
       return;
     }
     if (frame.getAttribute("src") !== srcFor(spec)) frame.src = srcFor(spec);
+    else fitCompareFrame();
     return;
   }
   live.hidden = true;
@@ -46,4 +81,5 @@ function showTab(key) {
 tabs.forEach((tab) => {
   tab.addEventListener("click", () => showTab(tab.dataset.tab));
 });
+frame.addEventListener("load", fitCompareFrame);
 showTab("a");
