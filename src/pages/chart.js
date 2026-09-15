@@ -47,6 +47,25 @@ function frameEl() {
   return slot.querySelector("iframe.figure-frame");
 }
 
+function fitChartFrame(iframe) {
+  const apply = () => {
+    try {
+      const doc = iframe.contentDocument;
+      if (!doc) return;
+      const plot = doc.querySelector(".js-plotly-plot, .plotly-graph-div");
+      const h = plot?.getBoundingClientRect().height || doc.body?.scrollHeight || 0;
+      if (h > 240) iframe.style.height = `${Math.round(h + 12)}px`;
+    } catch {
+      /* same-origin figures only */
+    }
+  };
+  iframe.addEventListener("load", () => {
+    apply();
+    window.setTimeout(apply, 200);
+    window.setTimeout(apply, 700);
+  });
+}
+
 function applyCh03View(view) {
   const api = frameEl()?.contentWindow?.AI4S_CH03;
   if (api) {
@@ -62,11 +81,13 @@ function render() {
   if (item.kind === "file") {
     const src = figureUrl(item.file[locale] || item.file.zh);
     slot.innerHTML = `<div class="figure-well"><iframe class="figure-frame chart" title="${t("chartTitle")}" src="${src}"></iframe></div>`;
+    fitChartFrame(frameEl());
     return;
   }
   const frame = frameEl();
   if (frame && applyCh03View(item.view)) return;
   slot.innerHTML = `<div class="figure-well"><iframe class="figure-frame chart" title="${t("chartTitle")}" src="${ch03Src(item.view)}"></iframe></div>`;
+  fitChartFrame(frameEl());
 }
 
 preset.addEventListener("change", render);

@@ -444,6 +444,7 @@ tbody tr:hover { background: var(--row-hover); }
   border: 1px solid var(--line);
   box-shadow: var(--shadow);
   padding: 0.35rem;
+  overflow: hidden;
 }
 .figure-frame {
   display: block;
@@ -451,7 +452,7 @@ tbody tr:hover { background: var(--row-hover); }
   border: 0;
   background: #fff;
 }
-.figure-frame.chart { height: 88vh; min-height: 980px; }
+.figure-frame.chart { height: 580px; min-height: 0; }
 .figure-frame.compare { height: 78vh; min-height: 760px; }
 
 .tabs { display: flex; gap: 0; flex-wrap: wrap; border-bottom: 1px solid var(--line); }
