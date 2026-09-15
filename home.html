@@ -35,21 +35,23 @@
         <a class="view-card" href="explore/chart.html">
           <div class="view-preview">
             <svg class="preview-chart" viewBox="0 0 260 140" aria-hidden="true">
-              <rect width="260" height="140" fill="#0a0a0a" />
-              <line x1="28" y1="118" x2="246" y2="118" stroke="#333" />
-              <line x1="28" y1="18" x2="28" y2="118" stroke="#333" />
-              <line x1="28" y1="108" x2="240" y2="42" stroke="#777" stroke-dasharray="3 3" opacity="0.7" />
-              <circle cx="52" cy="86" r="3.2" fill="#666" />
-              <circle cx="70" cy="74" r="3.2" fill="#666" />
-              <circle cx="88" cy="92" r="3.2" fill="#666" />
-              <circle cx="110" cy="68" r="3.4" fill="#fff" />
-              <circle cx="128" cy="80" r="3.2" fill="#666" />
-              <circle cx="148" cy="58" r="3.6" fill="#bbb" />
-              <circle cx="168" cy="70" r="3.2" fill="#fff" />
-              <circle cx="188" cy="50" r="3.4" fill="#fff" />
-              <circle cx="206" cy="62" r="3.2" fill="#666" />
-              <circle cx="222" cy="44" r="3.5" fill="#bbb" />
-              <text x="130" y="134" text-anchor="middle" font-size="8" fill="#777">n_ai4s</text>
+              <rect class="preview-bg" width="260" height="140" />
+              <line class="preview-grid" x1="28" y1="48" x2="246" y2="48" />
+              <line class="preview-grid" x1="28" y1="78" x2="246" y2="78" />
+              <line class="preview-axis" x1="28" y1="118" x2="246" y2="118" />
+              <line class="preview-axis" x1="28" y1="18" x2="28" y2="118" />
+              <line class="preview-trend" x1="28" y1="108" x2="240" y2="42" />
+              <circle class="preview-dot" cx="52" cy="86" r="3.2" />
+              <circle class="preview-dot" cx="70" cy="74" r="3.2" />
+              <circle class="preview-dot" cx="88" cy="92" r="3.2" />
+              <circle class="preview-dot-on" cx="110" cy="68" r="3.4" />
+              <circle class="preview-dot" cx="128" cy="80" r="3.2" />
+              <circle class="preview-dot-mid" cx="148" cy="58" r="3.6" />
+              <circle class="preview-dot-on" cx="168" cy="70" r="3.2" />
+              <circle class="preview-dot-on" cx="188" cy="50" r="3.4" />
+              <circle class="preview-dot" cx="206" cy="62" r="3.2" />
+              <circle class="preview-dot-mid" cx="222" cy="44" r="3.5" />
+              <text class="preview-label" x="130" y="134" text-anchor="middle">n_ai4s</text>
             </svg>
           </div>
           <div class="view-body">
@@ -62,14 +64,14 @@
         <a class="view-card" href="explore/map.html">
           <div class="view-preview">
             <svg class="preview-map" viewBox="0 0 260 140" aria-hidden="true">
-              <rect width="260" height="140" fill="#0a0a0a" />
-              <ellipse cx="70" cy="62" rx="28" ry="18" fill="#2a2a2a" />
-              <ellipse cx="128" cy="58" rx="42" ry="22" fill="#3a3a3a" />
-              <ellipse cx="188" cy="70" rx="36" ry="20" fill="#2e2e2e" />
-              <circle cx="96" cy="66" r="4" fill="#fff" />
-              <circle cx="142" cy="54" r="5" fill="#ddd" />
-              <circle cx="176" cy="72" r="4" fill="#fff" />
-              <circle cx="210" cy="80" r="3.5" fill="#bbb" />
+              <rect class="preview-bg" width="260" height="140" />
+              <ellipse class="preview-land" cx="70" cy="62" rx="28" ry="18" />
+              <ellipse class="preview-land-2" cx="128" cy="58" rx="42" ry="22" />
+              <ellipse class="preview-land" cx="188" cy="70" rx="36" ry="20" />
+              <circle class="preview-dot-on" cx="96" cy="66" r="4" />
+              <circle class="preview-dot-mid" cx="142" cy="54" r="5" />
+              <circle class="preview-dot-on" cx="176" cy="72" r="4" />
+              <circle class="preview-dot" cx="210" cy="80" r="3.5" />
             </svg>
           </div>
           <div class="view-body">
@@ -127,6 +129,6 @@
       </aside>
     </main>
     <div id="site-footer"></div>
-    <script type="module" src="src/pages/home.js"></script>
+    <script type="module" src="src/pages/home.js?v=home1"></script>
   </body>
 </html>
