@@ -439,16 +439,14 @@ tbody tr:hover { background: var(--row-hover); }
   color: var(--muted);
 }
 
-#chart-slot {
-  max-height: 548px;
-  overflow: hidden;
-}
 .figure-well {
   background: var(--figure-bg);
   border: 1px solid var(--line);
   box-shadow: var(--shadow);
   padding: 0.35rem;
   overflow: hidden;
+}
+.figure-well.tight {
   max-height: 548px;
 }
 .figure-frame {
@@ -457,7 +455,8 @@ tbody tr:hover { background: var(--row-hover); }
   border: 0;
   background: #fff;
 }
-.figure-frame.chart {
+.figure-frame.chart { height: 88vh; min-height: 980px; }
+.figure-frame.chart.tight {
   height: 540px !important;
   max-height: 540px !important;
   min-height: 0 !important;

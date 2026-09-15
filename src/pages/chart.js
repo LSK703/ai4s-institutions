@@ -48,6 +48,7 @@ function frameEl() {
 }
 
 function clipChartFrame(iframe) {
+  if (!iframe) return;
   const CLIP = 540;
   const PLOT = 520;
   iframe.style.height = `${CLIP}px`;
@@ -114,17 +115,19 @@ function applyCh03View(view) {
 
 function render() {
   const item = PRESETS[preset.value];
+  const tight = preset.value === "scale-quality";
   note.textContent = t(item.xyKey);
   if (item.kind === "file") {
     const src = figureUrl(item.file[locale] || item.file.zh);
-    slot.innerHTML = `<div class="figure-well"><iframe class="figure-frame chart" title="${t("chartTitle")}" src="${src}" style="height:540px;max-height:540px;min-height:0;overflow:hidden"></iframe></div>`;
-    clipChartFrame(frameEl());
+    slot.innerHTML = tight
+      ? `<div class="figure-well tight"><iframe class="figure-frame chart tight" title="${t("chartTitle")}" src="${src}"></iframe></div>`
+      : `<div class="figure-well"><iframe class="figure-frame chart" title="${t("chartTitle")}" src="${src}"></iframe></div>`;
+    if (tight) clipChartFrame(frameEl());
     return;
   }
   const frame = frameEl();
-  if (frame && applyCh03View(item.view)) return;
-  slot.innerHTML = `<div class="figure-well"><iframe class="figure-frame chart" title="${t("chartTitle")}" src="${ch03Src(item.view)}" style="height:540px;max-height:540px;min-height:0;overflow:hidden"></iframe></div>`;
-  clipChartFrame(frameEl());
+  if (frame && !frame.classList.contains("tight") && applyCh03View(item.view)) return;
+  slot.innerHTML = `<div class="figure-well"><iframe class="figure-frame chart" title="${t("chartTitle")}" src="${ch03Src(item.view)}"></iframe></div>`;
 }
 
 preset.addEventListener("change", render);
