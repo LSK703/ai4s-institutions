@@ -12,5 +12,6 @@ export function figureUrl(path, params = {}) {
   Object.entries(params).forEach(([key, value]) => {
     if (value != null && value !== "") url.searchParams.set(key, String(value));
   });
+  url.searchParams.set("v", "clip3");
   return url.href;
 }

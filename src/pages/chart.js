@@ -47,39 +47,59 @@ function frameEl() {
   return slot.querySelector("iframe.figure-frame");
 }
 
-function fitChartFrame(iframe) {
-  const apply = () => {
+function clipChartFrame(iframe) {
+  const CLIP = 540;
+  const PLOT = 520;
+  iframe.style.height = `${CLIP}px`;
+  iframe.style.maxHeight = `${CLIP}px`;
+  iframe.style.overflow = "hidden";
+
+  const clipDoc = () => {
     try {
       const doc = iframe.contentDocument;
       if (!doc) return;
-      doc.documentElement.style.overflow = "hidden";
-      doc.body.style.overflow = "hidden";
-      doc.body.style.height = "auto";
-      doc.body.style.minHeight = "0";
-      doc.querySelectorAll("div").forEach((el) => {
-        if (el.style.height === "100%") el.style.height = "auto";
-      });
-      const box =
-        doc.querySelector(".svg-container") ||
-        doc.querySelector(".plot.scatter") ||
-        doc.querySelector(".js-plotly-plot") ||
-        doc.querySelector(".plotly-graph-div");
-      const top = box?.getBoundingClientRect().top || 0;
-      const plotH =
-        Number(doc.querySelector(".main-svg")?.getAttribute("height")) ||
-        box?.getBoundingClientRect().height ||
-        0;
-      const h = Math.ceil(top + plotH + 8);
-      if (h > 240) iframe.style.height = `${Math.min(h, 720)}px`;
+      let style = doc.getElementById("ai4s-clip");
+      if (!style) {
+        style = doc.createElement("style");
+        style.id = "ai4s-clip";
+        doc.head.appendChild(style);
+      }
+      style.textContent = `
+        html, body {
+          height: auto !important;
+          max-height: ${CLIP}px !important;
+          overflow: hidden !important;
+          margin: 0 !important;
+          padding-bottom: 0 !important;
+        }
+        .chart-shell,
+        .plotly-graph-div,
+        .js-plotly-plot,
+        .svg-container,
+        .plot,
+        .plot.scatter {
+          height: ${PLOT}px !important;
+          max-height: ${PLOT}px !important;
+          min-height: 0 !important;
+          overflow: hidden !important;
+        }
+      `;
+      const Plotly = iframe.contentWindow?.Plotly;
+      if (Plotly?.relayout) {
+        doc.querySelectorAll(".js-plotly-plot").forEach((gd) => {
+          Plotly.relayout(gd, { height: PLOT, autosize: true });
+        });
+      }
     } catch {
       /* same-origin figures only */
     }
   };
+
   iframe.addEventListener("load", () => {
-    apply();
-    window.setTimeout(apply, 80);
-    window.setTimeout(apply, 300);
-    window.setTimeout(apply, 900);
+    clipDoc();
+    window.setTimeout(clipDoc, 50);
+    window.setTimeout(clipDoc, 250);
+    window.setTimeout(clipDoc, 800);
   });
 }
 
@@ -97,14 +117,14 @@ function render() {
   note.textContent = t(item.xyKey);
   if (item.kind === "file") {
     const src = figureUrl(item.file[locale] || item.file.zh);
-    slot.innerHTML = `<div class="figure-well"><iframe class="figure-frame chart" title="${t("chartTitle")}" src="${src}"></iframe></div>`;
-    fitChartFrame(frameEl());
+    slot.innerHTML = `<div class="figure-well"><iframe class="figure-frame chart" title="${t("chartTitle")}" src="${src}" style="height:540px;max-height:540px;min-height:0;overflow:hidden"></iframe></div>`;
+    clipChartFrame(frameEl());
     return;
   }
   const frame = frameEl();
   if (frame && applyCh03View(item.view)) return;
-  slot.innerHTML = `<div class="figure-well"><iframe class="figure-frame chart" title="${t("chartTitle")}" src="${ch03Src(item.view)}"></iframe></div>`;
-  fitChartFrame(frameEl());
+  slot.innerHTML = `<div class="figure-well"><iframe class="figure-frame chart" title="${t("chartTitle")}" src="${ch03Src(item.view)}" style="height:540px;max-height:540px;min-height:0;overflow:hidden"></iframe></div>`;
+  clipChartFrame(frameEl());
 }
 
 preset.addEventListener("change", render);

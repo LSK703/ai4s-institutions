@@ -8,6 +8,15 @@
     </script>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Chart · AI4S Institutions</title>
+    <style>
+      #chart-slot, .figure-well { max-height: 548px !important; overflow: hidden !important; }
+      .figure-frame.chart {
+        height: 540px !important;
+        max-height: 540px !important;
+        min-height: 0 !important;
+        overflow: hidden !important;
+      }
+    </style>
   </head>
   <body data-page="chart">
     <div id="site-header"></div>
@@ -31,6 +40,6 @@
       <div id="chart-slot"></div>
     </main>
     <div id="site-footer"></div>
-    <script type="module" src="../src/pages/chart.js"></script>
+    <script type="module" src="../src/pages/chart.js?v=clip3"></script>
   </body>
 </html>
