@@ -1,4 +1,4 @@
-import "../shell.js?v=home1";
+import "../shell.js?v=home2";
 import { fmtInt, fmtPct, loadInstitutions } from "../data.js";
 
 const payload = await loadInstitutions();
