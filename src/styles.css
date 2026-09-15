@@ -452,7 +452,11 @@ tbody tr:hover { background: var(--row-hover); }
   border: 0;
   background: #fff;
 }
-.figure-frame.chart { height: 580px; min-height: 0; }
+.figure-frame.chart {
+  height: 532px;
+  min-height: 0;
+  overflow: hidden;
+}
 .figure-frame.compare { height: 78vh; min-height: 760px; }
 
 .tabs { display: flex; gap: 0; flex-wrap: wrap; border-bottom: 1px solid var(--line); }

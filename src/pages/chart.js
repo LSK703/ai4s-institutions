@@ -52,17 +52,34 @@ function fitChartFrame(iframe) {
     try {
       const doc = iframe.contentDocument;
       if (!doc) return;
-      const plot = doc.querySelector(".js-plotly-plot, .plotly-graph-div");
-      const h = plot?.getBoundingClientRect().height || doc.body?.scrollHeight || 0;
-      if (h > 240) iframe.style.height = `${Math.round(h + 12)}px`;
+      doc.documentElement.style.overflow = "hidden";
+      doc.body.style.overflow = "hidden";
+      doc.body.style.height = "auto";
+      doc.body.style.minHeight = "0";
+      doc.querySelectorAll("div").forEach((el) => {
+        if (el.style.height === "100%") el.style.height = "auto";
+      });
+      const box =
+        doc.querySelector(".svg-container") ||
+        doc.querySelector(".plot.scatter") ||
+        doc.querySelector(".js-plotly-plot") ||
+        doc.querySelector(".plotly-graph-div");
+      const top = box?.getBoundingClientRect().top || 0;
+      const plotH =
+        Number(doc.querySelector(".main-svg")?.getAttribute("height")) ||
+        box?.getBoundingClientRect().height ||
+        0;
+      const h = Math.ceil(top + plotH + 8);
+      if (h > 240) iframe.style.height = `${Math.min(h, 720)}px`;
     } catch {
       /* same-origin figures only */
     }
   };
   iframe.addEventListener("load", () => {
     apply();
-    window.setTimeout(apply, 200);
-    window.setTimeout(apply, 700);
+    window.setTimeout(apply, 80);
+    window.setTimeout(apply, 300);
+    window.setTimeout(apply, 900);
   });
 }
 
