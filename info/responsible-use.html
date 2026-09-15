@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <script>
+      document.documentElement.dataset.theme =
+        localStorage.getItem("ai4s-theme") === "light" ? "light" : "dark";
+    </script>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Responsible use · AI4S Institutions</title>
+  </head>
+  <body data-page="use">
+    <div id="site-header"></div>
+    <main class="wrap">
+      <nav class="info-nav">
+        <a href="data.html" data-i18n="navData"></a>
+        <a href="indicators.html" data-i18n="navIndicators"></a>
+        <a href="institutions.html" data-i18n="navInstitutions"></a>
+        <a class="current" href="responsible-use.html" data-i18n="navUse"></a>
+      </nav>
+      <h1 data-i18n="infoUseTitle"></h1>
+      <p class="lede" data-i18n="useLede"></p>
+      <ul class="warn-list">
+        <li data-i18n="use1"></li>
+        <li data-i18n="use2"></li>
+        <li data-i18n="use3"></li>
+        <li data-i18n="use4"></li>
+        <li data-i18n="use5"></li>
+        <li data-i18n="use6"></li>
+      </ul>
+    </main>
+    <div id="site-footer"></div>
+    <script type="module" src="../src/shell.js"></script>
+  </body>
+</html>

@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <script>
+      document.documentElement.dataset.theme =
+        localStorage.getItem("ai4s-theme") === "light" ? "light" : "dark";
+    </script>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Compare · AI4S Institutions</title>
+  </head>
+  <body data-page="compare">
+    <div id="site-header"></div>
+    <main class="wrap">
+      <p class="kicker" data-i18n="kickerExplore"></p>
+      <h1 data-i18n="compareTitle"></h1>
+      <p class="lede" data-i18n="compareLede"></p>
+      <p class="note" data-i18n="compareNote"></p>
+      <div class="tabs" id="tabs">
+        <button class="tab active" type="button" data-tab="a" data-i18n="tabA"></button>
+        <button class="tab" type="button" data-tab="b" data-i18n="tabB"></button>
+        <button class="tab" type="button" data-tab="c" data-i18n="tabC"></button>
+        <button class="tab" type="button" data-tab="d" data-i18n="tabD"></button>
+      </div>
+      <div id="compare-live">
+        <p class="meta-line" id="compare-tab-note"></p>
+        <div class="figure-well">
+          <iframe class="figure-frame compare" id="compare-frame" data-i18n-title="compareTitle"></iframe>
+        </div>
+      </div>
+      <section id="compare-pending-d" hidden>
+        <div class="placeholder"><strong data-i18n="comparePendingDTitle"></strong><small data-i18n="comparePendingD"></small></div>
+      </section>
+    </main>
+    <div id="site-footer"></div>
+    <script type="module" src="../src/pages/compare.js"></script>
+  </body>
+</html>

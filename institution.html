@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <script>
+      document.documentElement.dataset.theme =
+        localStorage.getItem("ai4s-theme") === "light" ? "light" : "dark";
+    </script>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Institution · AI4S Institutions</title>
+  </head>
+  <body data-page="institution">
+    <div id="site-header"></div>
+    <main class="wrap">
+      <p class="kicker" data-i18n="profileKicker"></p>
+      <h1 id="org-name">—</h1>
+      <p class="meta-line" id="org-meta"></p>
+      <h2 data-i18n="kpiScale"></h2>
+      <div class="kpi-grid" id="kpi-scale"></div>
+      <h2 data-i18n="kpiCollab"></h2>
+      <p class="note" data-i18n="collabNote"></p>
+      <p><a href="explore/chart.html" data-i18n="collabChartLink"></a></p>
+      <h2 data-i18n="miniChart"></h2>
+      <div class="placeholder">
+        <strong data-i18n="miniChart"></strong>
+        <small data-i18n="miniChartS"></small>
+      </div>
+      <p><a href="explore/list.html" data-i18n="navList"></a></p>
+    </main>
+    <div id="site-footer"></div>
+    <script type="module" src="src/pages/institution.js"></script>
+  </body>
+</html>

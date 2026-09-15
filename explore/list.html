@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <script>
+      document.documentElement.dataset.theme =
+        localStorage.getItem("ai4s-theme") === "light" ? "light" : "dark";
+    </script>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>List · AI4S Institutions</title>
+  </head>
+  <body data-page="list">
+    <div id="site-header"></div>
+    <main class="wrap">
+      <p class="kicker" data-i18n="kickerExplore"></p>
+      <h1 data-i18n="listTitle"></h1>
+      <p class="lede" data-i18n="listLede"></p>
+      <form class="toolbar" id="filters">
+        <div class="field">
+          <label for="q" data-i18n="search"></label>
+          <input id="q" type="search" />
+        </div>
+        <div class="field">
+          <label for="sort" data-i18n="sortBy"></label>
+          <select id="sort">
+            <option value="n_ai4s" data-i18n="sortNai4s"></option>
+            <option value="discipline_adjusted_index" data-i18n="sortIndex"></option>
+            <option value="top_rate" data-i18n="sortTopRate"></option>
+            <option value="high_impact_representation" data-i18n="sortRepr"></option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="threshold" data-i18n="threshold"></label>
+          <select id="threshold">
+            <option value="200">≥ 200</option>
+            <option value="500" selected>≥ 500</option>
+            <option value="1000">≥ 1000</option>
+            <option value="2000">≥ 2000</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="country" data-i18n="country"></label>
+          <select id="country">
+            <option value="" data-i18n="allCountries"></option>
+          </select>
+        </div>
+      </form>
+      <p class="meta-line" id="count-line"></p>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th data-i18n="colInstitution"></th>
+              <th data-i18n="colCountry"></th>
+              <th class="num" data-i18n="colNai4s"></th>
+              <th class="num" data-i18n="colIndex"></th>
+              <th class="num" data-i18n="colTopRate"></th>
+              <th class="num" data-i18n="colRepr"></th>
+            </tr>
+          </thead>
+          <tbody id="table-body"></tbody>
+        </table>
+      </div>
+    </main>
+    <div id="site-footer"></div>
+    <script type="module" src="../src/pages/list.js"></script>
+  </body>
+</html>

@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <script>
+      document.documentElement.dataset.theme =
+        localStorage.getItem("ai4s-theme") === "light" ? "light" : "dark";
+    </script>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Data · AI4S Institutions</title>
+  </head>
+  <body data-page="data">
+    <div id="site-header"></div>
+    <main class="wrap">
+      <nav class="info-nav">
+        <a class="current" href="data.html" data-i18n="navData"></a>
+        <a href="indicators.html" data-i18n="navIndicators"></a>
+        <a href="institutions.html" data-i18n="navInstitutions"></a>
+        <a href="responsible-use.html" data-i18n="navUse"></a>
+      </nav>
+      <h1 data-i18n="infoDataTitle"></h1>
+      <p class="lede" data-i18n="dataLede"></p>
+      <div class="info-grid">
+        <article class="card">
+          <h3 data-i18n="dataSourceTitle"></h3>
+          <p data-i18n="dataSourceBody"></p>
+        </article>
+        <article class="card">
+          <h3 data-i18n="dataWindowTitle"></h3>
+          <p data-i18n-html="dataWindowBody"></p>
+        </article>
+        <article class="card">
+          <h3 data-i18n="dataSampleTitle"></h3>
+          <p data-i18n="dataSampleBody"></p>
+        </article>
+      </div>
+    </main>
+    <div id="site-footer"></div>
+    <script type="module" src="../src/shell.js"></script>
+  </body>
+</html>

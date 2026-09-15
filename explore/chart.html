@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <script>
+      document.documentElement.dataset.theme =
+        localStorage.getItem("ai4s-theme") === "light" ? "light" : "dark";
+    </script>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Chart · AI4S Institutions</title>
+  </head>
+  <body data-page="chart">
+    <div id="site-header"></div>
+    <main class="wrap">
+      <p class="kicker" data-i18n="kickerExplore"></p>
+      <h1 data-i18n="chartTitle"></h1>
+      <p class="lede" data-i18n="chartLede"></p>
+      <form class="toolbar">
+        <div class="field">
+          <label for="preset" data-i18n="preset"></label>
+          <select id="preset">
+            <option value="scale-quality" selected data-i18n="presetScaleQuality"></option>
+            <option value="scale-eff" data-i18n="presetScaleEff"></option>
+            <option value="expected-obs" data-i18n="presetExpectedObs"></option>
+            <option value="scale-collab" data-i18n="presetScaleCollab"></option>
+            <option value="disc-intl" data-i18n="presetDiscIntl"></option>
+          </select>
+        </div>
+      </form>
+      <p class="note" id="preset-note"></p>
+      <div id="chart-slot"></div>
+    </main>
+    <div id="site-footer"></div>
+    <script type="module" src="../src/pages/chart.js"></script>
+  </body>
+</html>
