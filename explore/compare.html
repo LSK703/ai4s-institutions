@@ -8,6 +8,22 @@
     </script>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Compare · AI4S Institutions</title>
+    <style>
+      #compare-live .figure-well {
+        max-height: none !important;
+        height: auto !important;
+        overflow: visible !important;
+      }
+      #compare-frame {
+        display: block;
+        width: 100%;
+        height: 1200px !important;
+        min-height: 1200px !important;
+        max-height: none !important;
+        border: 0;
+        background: #fff;
+      }
+    </style>
   </head>
   <body data-page="compare">
     <div id="site-header"></div>
@@ -24,8 +40,8 @@
       </div>
       <div id="compare-live">
         <p class="meta-line" id="compare-tab-note"></p>
-        <div class="figure-well compare-well">
-          <iframe class="figure-frame compare" id="compare-frame" data-i18n-title="compareTitle"></iframe>
+        <div class="figure-well compare-well" style="max-height:none;overflow:visible;height:auto">
+          <iframe class="figure-frame compare" id="compare-frame" data-i18n-title="compareTitle" style="height:1200px;min-height:1200px;max-height:none;overflow:visible"></iframe>
         </div>
       </div>
       <section id="compare-pending-d" hidden>
@@ -33,6 +49,6 @@
       </section>
     </main>
     <div id="site-footer"></div>
-    <script type="module" src="../src/pages/compare.js?v=clip5"></script>
+    <script type="module" src="../src/pages/compare.js?v=clip6"></script>
   </body>
 </html>

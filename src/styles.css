@@ -462,13 +462,15 @@ tbody tr:hover { background: var(--row-hover); }
   min-height: 0 !important;
   overflow: hidden !important;
 }
+#compare-live .figure-well,
 .figure-well.compare-well {
   max-height: none !important;
+  height: auto !important;
   overflow: visible !important;
 }
 .figure-frame.compare {
-  height: 980px !important;
-  min-height: 980px !important;
+  height: 1200px !important;
+  min-height: 1200px !important;
   max-height: none !important;
   overflow: visible;
 }

@@ -21,17 +21,17 @@ function srcFor(spec) {
     lang: locale,
     view: spec.view,
     tab: spec.tab,
+    v: "clip6",
   });
 }
 
 function fitCompareFrame() {
-  const COMPARE_H = 980;
-  const PLOT_H = 820;
-  frame.style.height = `${COMPARE_H}px`;
-  frame.style.minHeight = `${COMPARE_H}px`;
-  frame.style.maxHeight = "none";
+  const PLOT_H = 900;
   const grow = () => {
     try {
+      frame.style.height = "1200px";
+      frame.style.minHeight = "1200px";
+      frame.style.maxHeight = "none";
       const doc = frame.contentDocument;
       if (!doc) return;
       let style = doc.getElementById("ai4s-compare-fit");
@@ -42,19 +42,30 @@ function fitCompareFrame() {
       }
       style.textContent = `
         html, body { overflow: visible !important; height: auto !important; max-height: none !important; }
-        .plot { height: ${PLOT_H}px !important; max-height: none !important; }
+        #plot-cn, #plot-gb, .plot { height: ${PLOT_H}px !important; max-height: none !important; }
       `;
       const Plotly = frame.contentWindow?.Plotly;
-      if (Plotly?.Plots?.resize) {
-        doc.querySelectorAll(".js-plotly-plot").forEach((gd) => Plotly.Plots.resize(gd));
-      }
+      ["plot-cn", "plot-gb"].forEach((id) => {
+        const gd = doc.getElementById(id);
+        if (!gd) return;
+        gd.style.height = `${PLOT_H}px`;
+        if (Plotly?.relayout) Plotly.relayout(gd, { height: PLOT_H, autosize: true });
+        else if (Plotly?.Plots?.resize) Plotly.Plots.resize(gd);
+      });
+      const measured = Math.max(
+        doc.documentElement?.scrollHeight || 0,
+        doc.body?.scrollHeight || 0,
+        PLOT_H + 160
+      );
+      frame.style.height = `${Math.max(1200, Math.ceil(measured + 24))}px`;
     } catch {
       /* same-origin figures only */
     }
   };
   grow();
   window.setTimeout(grow, 80);
-  window.setTimeout(grow, 400);
+  window.setTimeout(grow, 300);
+  window.setTimeout(grow, 900);
 }
 
 function showTab(key) {
