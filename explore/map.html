@@ -8,19 +8,59 @@
     </script>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Map · AI4S Institutions</title>
+    <link rel="stylesheet" href="../src/styles.css?v=map2" />
+    <script src="../public/figures/plotly.min.js"></script>
   </head>
   <body data-page="map">
     <div id="site-header"></div>
-    <main class="wrap">
+    <main class="wrap map-page">
       <p class="kicker" data-i18n="kickerExplore"></p>
-      <h1 data-i18n="mapTitle"></h1>
-      <p class="lede" data-i18n="mapLede"></p>
-      <div class="placeholder">
-        <strong data-i18n="mapSlot"></strong>
-        <small data-i18n="mapSlotS"></small>
+      <div class="map-heading">
+        <div>
+          <h1 id="map-heading-title" data-i18n="mapTitle"></h1>
+          <p class="lede" id="map-heading-lede" data-i18n="mapLede"></p>
+        </div>
+        <button type="button" class="map-back" id="map-back" hidden data-i18n="mapBack"></button>
+      </div>
+      <form class="toolbar" id="filters">
+        <div class="field" id="field-q" hidden>
+          <label for="q" data-i18n="search"></label>
+          <input id="q" type="search" />
+        </div>
+        <div class="field">
+          <label for="threshold" data-i18n="threshold"></label>
+          <select id="threshold">
+            <option value="200">≥ 200</option>
+            <option value="500" selected>≥ 500</option>
+            <option value="1000">≥ 1000</option>
+            <option value="2000">≥ 2000</option>
+          </select>
+        </div>
+        <div class="field" id="field-color">
+          <label for="color" data-i18n="mapColor"></label>
+          <select id="color">
+            <option value="n_ai4s" selected data-i18n="mapColorN"></option>
+            <option value="n_orgs" data-i18n="mapColorOrgs"></option>
+            <option value="top_rate" data-i18n="mapColorTop"></option>
+          </select>
+        </div>
+      </form>
+      <p class="meta-line" id="count-line"></p>
+      <p class="note" id="map-note" data-i18n="mapNoteWorld"></p>
+      <div class="map-frame" id="map-frame">
+        <div id="map-plot"></div>
+        <aside class="map-card" id="map-card" hidden>
+          <p class="map-card-kicker" data-i18n="mapCardKicker"></p>
+          <h2 id="card-title"></h2>
+          <div class="map-card-kpis" id="card-kpis"></div>
+          <p class="map-card-sub" data-i18n="mapCardTop"></p>
+          <ul class="map-card-list" id="card-list"></ul>
+          <button type="button" class="map-card-cta" id="card-cta" data-i18n="mapDetail"></button>
+        </aside>
       </div>
     </main>
     <div id="site-footer"></div>
     <script type="module" src="../src/shell.js"></script>
+    <script type="module" src="../src/pages/map.js"></script>
   </body>
 </html>

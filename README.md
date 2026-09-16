@@ -32,7 +32,7 @@ python serve.py
 | `/home.html` | 概览：定位、入口卡片、机构数（n_ai4s ≥ 500） |
 | `/explore/list.html` | 机构列表（Education，可搜、排序、门槛 200/500/1000/2000） |
 | `/explore/chart.html` | 图表：默认 Ch05 规模—质量；另有 Ch03 高校图 + Ch04 图 6-1/6-4 |
-| `/explore/map.html` | 地图占位 |
+| `/explore/map.html` | 地图：国家热力 + 国际合作连线；进入国家后为城市热力与高校散点 |
 | `/explore/compare.html` | 中英对比 Tab A/B/C 已接入；D 占位 |
 | `/institution.html?id=` | 机构详情 KPI（来自 master 表） |
 | `/info/*` | 数据、指标、机构定义、负责任使用 |
