@@ -1,5 +1,5 @@
 import { applyTheme, bindThemeToggle } from "./theme.js";
-import { applyI18n, getLocale, setLocale, t } from "./i18n.js";
+import { applyI18n, getLocale, setLocale, t } from "./i18n.js?v=ed1";
 import { pageUrl } from "./paths.js";
 
 applyTheme();
