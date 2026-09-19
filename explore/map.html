@@ -5,10 +5,34 @@
     <script>
       document.documentElement.dataset.theme =
         localStorage.getItem("ai4s-theme") === "light" ? "light" : "dark";
+      if (new URLSearchParams(location.search).get("embed") === "1") {
+        document.documentElement.dataset.embed = "1";
+      }
     </script>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Map · AI4S Institutions</title>
     <link rel="stylesheet" href="../src/styles.css?v=map2" />
+    <style>
+      html[data-embed="1"] .site-header,
+      html[data-embed="1"] .site-footer,
+      html[data-embed="1"] .kicker,
+      html[data-embed="1"] .map-heading,
+      html[data-embed="1"] .toolbar,
+      html[data-embed="1"] .meta-line,
+      html[data-embed="1"] .note {
+        display: none !important;
+      }
+      html[data-embed="1"] .wrap {
+        max-width: none;
+        padding: 0;
+      }
+      html[data-embed="1"] .map-frame {
+        height: 100vh;
+        min-height: 0;
+        border: 0;
+        box-shadow: none;
+      }
+    </style>
     <script src="../public/figures/plotly.min.js"></script>
   </head>
   <body data-page="map">
