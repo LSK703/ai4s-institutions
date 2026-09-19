@@ -130,10 +130,11 @@ const CITY_ZH = {
   Zigong: "自贡",
   Zunyi: "遵义",
   Ürümqi: "乌鲁木齐",
-  Hong: "香港",
-  "Hong Kong": "香港",
-  Macau: "澳门",
-  Macao: "澳门",
+  Hong: "中国香港",
+  "Hong Kong": "中国香港",
+  Macau: "中国澳门",
+  Macao: "中国澳门",
+  Taiwan: "中国台湾",
   Taipei: "台北",
   Taichung: "台中",
   Tainan: "台南",
@@ -165,10 +166,17 @@ const UNI_ZH = {
   "grid.459818.9": "北华航天工业学院",
 };
 
+const CITY_EN = {
+  Hong: "Hong Kong, China",
+  "Hong Kong": "Hong Kong, China",
+  Macau: "Macao, China",
+  Macao: "Macao, China",
+};
+
 export function cityName(city, locale) {
   if (!city) return "";
   if (locale === "zh") return CITY_ZH[city] || "";
-  return city;
+  return CITY_EN[city] || city;
 }
 
 export function uniName(row, geo, locale) {

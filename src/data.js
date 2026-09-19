@@ -1,8 +1,30 @@
+const REGION_LABEL = {
+  zh: {
+    HK: "中国香港",
+    HKG: "中国香港",
+    MO: "中国澳门",
+    MAC: "中国澳门",
+    TW: "中国台湾",
+    TWN: "中国台湾",
+  },
+  en: {
+    HK: "Hong Kong, China",
+    HKG: "Hong Kong, China",
+    MO: "Macao, China",
+    MAC: "Macao, China",
+    TW: "Taiwan, China",
+    TWN: "Taiwan, China",
+  },
+};
+
 export function countryName(code, locale) {
   if (!code) return "—";
+  const key = String(code).toUpperCase();
+  const pack = locale === "zh" ? REGION_LABEL.zh : REGION_LABEL.en;
+  if (pack[key]) return pack[key];
   try {
     const dn = new Intl.DisplayNames([locale === "zh" ? "zh-CN" : "en"], { type: "region" });
-    return dn.of(String(code).toUpperCase()) || code;
+    return dn.of(key) || code;
   } catch {
     return code;
   }
