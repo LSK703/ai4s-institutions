@@ -75,9 +75,10 @@
           overflow: hidden;
         }
         #home-chart-live {
+          container-type: inline-size;
           max-width: none;
           width: 100%;
-          height: 34rem;
+          height: calc(min(52rem, 82cqi) * 520 / 1000);
           aspect-ratio: auto;
           margin-top: 1.15rem;
           overflow: visible;
@@ -91,8 +92,8 @@
           align-items: stretch;
         }
         #home-chart-live .swiper-slide {
-          width: auto;
-          height: 34rem;
+          width: min(52rem, 82%);
+          height: 100%;
           background: #fff;
         }
         #home-chart-live .swiper-button-prev,
@@ -227,6 +228,6 @@
     </main>
     <div id="site-footer"></div>
     <script src="vendor/swiper/swiper-bundle.min.js"></script>
-    <script type="module" src="src/pages/home.js?v=ed13"></script>
+    <script type="module" src="src/pages/home.js?v=ed14"></script>
   </body>
 </html>
