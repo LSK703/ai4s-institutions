@@ -20,26 +20,48 @@
           position: relative;
           padding: 2.6rem 0 0;
         }
-        .ed-stage::before {
+        .ed-stage::before,
+        .ed-stage::after {
           content: "";
           position: absolute;
-          top: 0;
-          bottom: 0;
+          top: -22%;
+          bottom: -28%;
           left: calc(50% - 50vw);
           width: 100vw;
           z-index: 0;
           pointer-events: none;
-          background:
-            repeating-radial-gradient(
-              circle at 68% 42%,
-              transparent 0 1.12rem,
-              color-mix(in srgb, var(--accent) 13%, transparent) 1.16rem 1.28rem
-            ),
-            radial-gradient(
-              circle at 70% 44%,
-              color-mix(in srgb, var(--accent-strong) 22%, transparent),
-              transparent 58%
-            );
+        }
+        .ed-stage::before {
+          background: repeating-radial-gradient(
+            circle at 64% 42%,
+            color-mix(in srgb, #cfe6f2 8%, transparent) 0,
+            color-mix(in srgb, #8ec4de 36%, transparent) 1.35%,
+            color-mix(in srgb, #e7f3f8 4%, transparent) 2.7%,
+            color-mix(in srgb, #7eb6d4 22%, transparent) 4.05%
+          );
+          filter: blur(28px) saturate(1.08);
+          opacity: 0.88;
+          -webkit-mask-image: radial-gradient(
+            ellipse 92% 78% at 64% 42%,
+            #000 18%,
+            #000 48%,
+            transparent 76%
+          );
+          mask-image: radial-gradient(
+            ellipse 92% 78% at 64% 42%,
+            #000 18%,
+            #000 48%,
+            transparent 76%
+          );
+        }
+        .ed-stage::after {
+          background: radial-gradient(
+            circle at 64% 42%,
+            color-mix(in srgb, #b7d8ea 42%, transparent),
+            color-mix(in srgb, #9cc9e0 12%, transparent) 38%,
+            transparent 68%
+          );
+          filter: blur(56px);
         }
         .ed-stage > * { position: relative; z-index: 1; }
         .ed-hero { padding: 0 0 0.6rem; }
