@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <script>
+      document.documentElement.dataset.theme =
+        localStorage.getItem("ai4s-theme") === "light" ? "light" : "dark";
+    </script>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>说明 · AI4S Institutions</title>
+  </head>
+  <body data-page="info">
+    <div id="site-header"></div>
+    <main class="wrap">
+      <p class="lede signpost-lede" data-i18n="infoHubLede"></p>
+      <div class="signpost" aria-label="information signpost">
+        <div class="signpost-stage">
+          <div class="signpost-pole" aria-hidden="true"></div>
+          <div class="signpost-base" aria-hidden="true"></div>
+
+          <button class="road-sign is-right shade-1" type="button" data-sign="data" aria-pressed="false" style="top: 6%">
+            <span class="road-sign-3d">
+              <span class="road-sign-depth"></span>
+              <span class="road-sign-face"><span data-i18n="navData"></span></span>
+            </span>
+          </button>
+          <button class="road-sign is-left shade-2" type="button" data-sign="indicators" aria-pressed="false" style="top: 27%">
+            <span class="road-sign-3d">
+              <span class="road-sign-depth"></span>
+              <span class="road-sign-face"><span data-i18n="navIndicators"></span></span>
+            </span>
+          </button>
+          <button class="road-sign is-right shade-3" type="button" data-sign="institutions" aria-pressed="false" style="top: 48%">
+            <span class="road-sign-3d">
+              <span class="road-sign-depth"></span>
+              <span class="road-sign-face"><span data-i18n="navInstitutions"></span></span>
+            </span>
+          </button>
+          <button class="road-sign is-left shade-4" type="button" data-sign="use" aria-pressed="false" style="top: 69%">
+            <span class="road-sign-3d">
+              <span class="road-sign-depth"></span>
+              <span class="road-sign-face"><span data-i18n="navUse"></span></span>
+            </span>
+          </button>
+
+          <button class="sign-peek" id="sign-peek" type="button" hidden data-i18n="signView"></button>
+        </div>
+      </div>
+
+      <div class="info-panels" id="info-panels">
+        <section class="info-panel" id="panel-data" hidden>
+          <h1 data-i18n="infoDataTitle"></h1>
+          <p class="lede" data-i18n="dataLede"></p>
+          <div class="info-grid">
+            <article class="card">
+              <h3 data-i18n="dataSourceTitle"></h3>
+              <p data-i18n="dataSourceBody"></p>
+            </article>
+            <article class="card">
+              <h3 data-i18n="dataWindowTitle"></h3>
+              <p data-i18n-html="dataWindowBody"></p>
+            </article>
+            <article class="card">
+              <h3 data-i18n="dataSampleTitle"></h3>
+              <p data-i18n="dataSampleBody"></p>
+            </article>
+          </div>
+        </section>
+
+        <section class="info-panel" id="panel-indicators" hidden>
+          <h1 data-i18n="infoIndTitle"></h1>
+          <p class="lede" data-i18n="indLede"></p>
+          <article class="card indicator">
+            <h3><code>n_ai4s</code> · <span data-i18n="indNai4sName"></span></h3>
+            <p data-i18n="indNai4sBody"></p>
+          </article>
+          <article class="card indicator">
+            <h3><code>global_share_ai4s</code> · <span data-i18n="indShareName"></span></h3>
+            <p data-i18n="indShareBody"></p>
+          </article>
+          <article class="card indicator">
+            <h3><code>discipline_adjusted_index</code> · <span data-i18n="indIndexName"></span></h3>
+            <p data-i18n="indIndexBody"></p>
+          </article>
+          <article class="card indicator">
+            <h3><code>multi_org_rate</code> · <span data-i18n="indMultiName"></span></h3>
+            <p data-i18n="indMultiBody"></p>
+          </article>
+          <article class="card indicator">
+            <h3><code>international_rate</code> · <span data-i18n="indIntlName"></span></h3>
+            <p data-i18n="indIntlBody"></p>
+          </article>
+          <article class="card indicator">
+            <h3><code>top_rate</code> · <span data-i18n="indTopName"></span></h3>
+            <p data-i18n="indTopBody"></p>
+          </article>
+          <article class="card indicator">
+            <h3><code>top_rate_all</code> · <span data-i18n="indTopAllName"></span></h3>
+            <p data-i18n="indTopAllBody"></p>
+          </article>
+          <article class="card indicator">
+            <h3><code>high_impact_representation</code> · <span data-i18n="indReprName"></span></h3>
+            <p data-i18n="indReprBody"></p>
+          </article>
+          <h2 data-i18n="indPenTitle"></h2>
+          <p data-i18n-html="indPenBody"></p>
+        </section>
+
+        <section class="info-panel" id="panel-institutions" hidden>
+          <h1 data-i18n="infoInstTitle"></h1>
+          <article class="card">
+            <h3 data-i18n="instWhatTitle"></h3>
+            <p data-i18n="instWhatBody"></p>
+          </article>
+          <article class="card">
+            <h3 data-i18n="instBoundTitle"></h3>
+            <p data-i18n="instBoundBody"></p>
+          </article>
+          <article class="card">
+            <h3 data-i18n="instThreshTitle"></h3>
+            <p data-i18n="instThreshBody"></p>
+          </article>
+        </section>
+
+        <section class="info-panel" id="panel-use" hidden>
+          <h1 data-i18n="infoUseTitle"></h1>
+          <p class="lede" data-i18n="useLede"></p>
+          <ul class="warn-list">
+            <li data-i18n="use1"></li>
+            <li data-i18n="use2"></li>
+            <li data-i18n="use3"></li>
+            <li data-i18n="use4"></li>
+            <li data-i18n="use5"></li>
+            <li data-i18n="use6"></li>
+          </ul>
+        </section>
+      </div>
+    </main>
+    <div id="site-footer"></div>
+    <script type="module" src="../src/pages/info.js?v=sign1"></script>
+  </body>
+</html>

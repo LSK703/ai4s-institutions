@@ -1,4 +1,4 @@
-import "../shell.js?v=ed1";
+import "../shell.js?v=sign1";
 import { fmtInt, loadInstitutions } from "../data.js";
 import { getLocale, t } from "../i18n.js?v=ed3";
 import { figureUrl, pageUrl } from "../paths.js";

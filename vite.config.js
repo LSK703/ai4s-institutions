@@ -17,6 +17,7 @@ export default defineConfig({
         map: resolve(__dirname, "explore/map.html"),
         compare: resolve(__dirname, "explore/compare.html"),
         institution: resolve(__dirname, "institution.html"),
+        infoHub: resolve(__dirname, "info/index.html"),
         infoData: resolve(__dirname, "info/data.html"),
         infoIndicators: resolve(__dirname, "info/indicators.html"),
         infoInstitutions: resolve(__dirname, "info/institutions.html"),

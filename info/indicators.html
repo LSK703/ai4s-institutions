@@ -2,60 +2,9 @@
 <html lang="zh-CN">
   <head>
     <meta charset="UTF-8" />
-    <script>
-      document.documentElement.dataset.theme =
-        localStorage.getItem("ai4s-theme") === "light" ? "light" : "dark";
-    </script>
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta http-equiv="refresh" content="0;url=index.html#indicators" />
+    <script>location.replace("index.html#indicators");</script>
     <title>Indicators · AI4S Institutions</title>
   </head>
-  <body data-page="indicators">
-    <div id="site-header"></div>
-    <main class="wrap">
-      <nav class="info-nav">
-        <a href="data.html" data-i18n="navData"></a>
-        <a class="current" href="indicators.html" data-i18n="navIndicators"></a>
-        <a href="institutions.html" data-i18n="navInstitutions"></a>
-        <a href="responsible-use.html" data-i18n="navUse"></a>
-      </nav>
-      <h1 data-i18n="infoIndTitle"></h1>
-      <p class="lede" data-i18n="indLede"></p>
-      <article class="card indicator">
-        <h3><code>n_ai4s</code> · <span data-i18n="indNai4sName"></span></h3>
-        <p data-i18n="indNai4sBody"></p>
-      </article>
-      <article class="card indicator">
-        <h3><code>global_share_ai4s</code> · <span data-i18n="indShareName"></span></h3>
-        <p data-i18n="indShareBody"></p>
-      </article>
-      <article class="card indicator">
-        <h3><code>discipline_adjusted_index</code> · <span data-i18n="indIndexName"></span></h3>
-        <p data-i18n="indIndexBody"></p>
-      </article>
-      <article class="card indicator">
-        <h3><code>multi_org_rate</code> · <span data-i18n="indMultiName"></span></h3>
-        <p data-i18n="indMultiBody"></p>
-      </article>
-      <article class="card indicator">
-        <h3><code>international_rate</code> · <span data-i18n="indIntlName"></span></h3>
-        <p data-i18n="indIntlBody"></p>
-      </article>
-      <article class="card indicator">
-        <h3><code>top_rate</code> · <span data-i18n="indTopName"></span></h3>
-        <p data-i18n="indTopBody"></p>
-      </article>
-      <article class="card indicator">
-        <h3><code>top_rate_all</code> · <span data-i18n="indTopAllName"></span></h3>
-        <p data-i18n="indTopAllBody"></p>
-      </article>
-      <article class="card indicator">
-        <h3><code>high_impact_representation</code> · <span data-i18n="indReprName"></span></h3>
-        <p data-i18n="indReprBody"></p>
-      </article>
-      <h2 data-i18n="indPenTitle"></h2>
-      <p data-i18n-html="indPenBody"></p>
-    </main>
-    <div id="site-footer"></div>
-    <script type="module" src="../src/shell.js"></script>
-  </body>
+  <body></body>
 </html>

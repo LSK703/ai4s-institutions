@@ -1,5 +1,5 @@
 import { applyTheme, bindThemeToggle } from "./theme.js";
-import { applyI18n, getLocale, setLocale, t } from "./i18n.js?v=ed3";
+import { applyI18n, getLocale, setLocale, t } from "./i18n.js?v=ed4";
 import { pageUrl } from "./paths.js";
 
 applyTheme();
@@ -7,14 +7,14 @@ applyTheme();
 if (!document.querySelector("link[data-ai4s-css]")) {
   const link = document.createElement("link");
   link.rel = "stylesheet";
-  link.href = `${new URL("./styles.css", import.meta.url).href}?v=map2`;
+  link.href = `${new URL("./styles.css", import.meta.url).href}?v=sign1`;
   link.dataset.ai4sCss = "1";
   document.head.appendChild(link);
 }
 
 const PAGE = document.body.dataset.page || "home";
 const EXPLORE = new Set(["list", "chart", "map", "compare"]);
-const INFO = new Set(["data", "indicators", "institutions", "use"]);
+const INFO = new Set(["info", "data", "indicators", "institutions", "use"]);
 
 const THEME_ICON = `
   <svg class="icon-sun" viewBox="0 0 24 24" aria-hidden="true">
@@ -47,12 +47,12 @@ function headerHtml() {
           </div>
         </div>
         <div class="nav-drop ${INFO.has(PAGE) ? "current" : ""}">
-          <span data-i18n="navInfo"></span>
+          <a href="${pageUrl("info/index.html")}" data-page="info" data-i18n="navInfo"></a>
           <div class="menu">
-            <a href="${pageUrl("info/data.html")}" data-page="data" data-i18n="navData"></a>
-            <a href="${pageUrl("info/indicators.html")}" data-page="indicators" data-i18n="navIndicators"></a>
-            <a href="${pageUrl("info/institutions.html")}" data-page="institutions" data-i18n="navInstitutions"></a>
-            <a href="${pageUrl("info/responsible-use.html")}" data-page="use" data-i18n="navUse"></a>
+            <a href="${pageUrl("info/index.html")}#data" data-i18n="navData"></a>
+            <a href="${pageUrl("info/index.html")}#indicators" data-i18n="navIndicators"></a>
+            <a href="${pageUrl("info/index.html")}#institutions" data-i18n="navInstitutions"></a>
+            <a href="${pageUrl("info/index.html")}#use" data-i18n="navUse"></a>
           </div>
         </div>
       </nav>
@@ -77,7 +77,7 @@ function mount() {
     footer.innerHTML = `
       <div class="footer-inner">
         <span data-i18n="footer"></span>
-        <a href="${pageUrl("info/responsible-use.html")}" data-i18n="navUse"></a>
+        <a href="${pageUrl("info/index.html")}#use" data-i18n="navUse"></a>
       </div>`;
   }
 

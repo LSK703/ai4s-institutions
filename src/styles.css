@@ -124,7 +124,7 @@ button, select, input { font-family: inherit; color: inherit; }
   gap: 0.1rem;
   flex: 1;
 }
-.nav > a, .nav-drop > span {
+.nav > a, .nav-drop > span, .nav-drop > a {
   display: flex;
   align-items: center;
   padding: 0.7rem 0.85rem;
@@ -132,12 +132,14 @@ button, select, input { font-family: inherit; color: inherit; }
   font-size: 0.95rem;
   font-weight: 600;
 }
-.nav > a.current, .nav-drop.current > span {
+.nav > a.current, .nav-drop.current > span, .nav-drop.current > a {
   color: var(--ink);
   box-shadow: inset 0 -2px 0 var(--accent);
 }
 .nav-drop { position: relative; }
 .nav-drop > span { cursor: default; }
+.nav-drop > a { text-decoration: none; }
+.nav-drop > a:hover { text-decoration: none; color: var(--ink); }
 .nav-drop:hover .menu,
 .nav-drop:focus-within .menu { display: block; }
 .menu {
@@ -634,6 +636,198 @@ tbody tr:hover { background: var(--row-hover); }
   color: var(--ink);
   box-shadow: inset 0 -2px 0 var(--accent);
   text-decoration: none;
+}
+
+.signpost-lede {
+  max-width: 36rem;
+  margin: 0 auto 0.4rem;
+  text-align: center;
+}
+.signpost-stage {
+  position: relative;
+  width: min(42rem, 100%);
+  height: 28.5rem;
+  margin: 0.4rem auto 1.8rem;
+  perspective: 920px;
+}
+.signpost-pole {
+  position: absolute;
+  left: 50%;
+  top: 0.4rem;
+  bottom: 2.4rem;
+  width: 0.72rem;
+  transform: translateX(-50%) rotateX(6deg);
+  transform-origin: bottom center;
+  background: linear-gradient(90deg, #4e5b66 0%, #d7e0e8 38%, #8d9aa6 52%, #3e4a54 100%);
+  border-radius: 4px 4px 2px 2px;
+  box-shadow: 10px 16px 28px rgba(8, 16, 28, 0.32);
+}
+.signpost-pole::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: -0.42rem;
+  width: 1.15rem;
+  height: 0.7rem;
+  transform: translateX(-50%);
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, #eef4f8, #6d7c88);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.25);
+}
+.signpost-base {
+  position: absolute;
+  left: 50%;
+  bottom: 0.35rem;
+  width: 7.2rem;
+  height: 1.35rem;
+  transform: translateX(-50%) rotateX(62deg);
+  border-radius: 50%;
+  background: radial-gradient(ellipse at 40% 40%, rgba(180, 210, 228, 0.45), rgba(40, 55, 70, 0.18));
+  box-shadow: 0 10px 18px rgba(10, 20, 32, 0.22);
+}
+.road-sign {
+  position: absolute;
+  left: 50%;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+  z-index: 2;
+  transform-style: preserve-3d;
+}
+.road-sign.is-right { transform: translateX(0.36rem); }
+.road-sign.is-left { transform: translateX(calc(-100% - 0.36rem)); }
+.road-sign.is-right::before,
+.road-sign.is-left::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  width: 0.7rem;
+  height: 0.34rem;
+  background: linear-gradient(#c5d0d8, #6e7c88);
+  transform: translateY(-50%);
+  box-shadow: 2px 3px 6px rgba(0, 0, 0, 0.2);
+}
+.road-sign.is-right::before { left: -0.7rem; }
+.road-sign.is-left::before { right: -0.7rem; }
+.road-sign-3d {
+  position: relative;
+  display: block;
+  transform-style: preserve-3d;
+  transition: transform 0.35s ease, filter 0.35s ease;
+}
+.road-sign.is-right .road-sign-3d { transform: rotateY(-24deg) rotateX(7deg); }
+.road-sign.is-left .road-sign-3d { transform: rotateY(24deg) rotateX(7deg); }
+.road-sign:hover .road-sign-3d,
+.road-sign.is-on .road-sign-3d {
+  filter:
+    drop-shadow(0 0 4px #f3fbff)
+    drop-shadow(0 0 10px rgba(180, 230, 255, 0.95))
+    drop-shadow(0 0 22px rgba(126, 182, 212, 0.75));
+}
+.road-sign.is-right:hover .road-sign-3d,
+.road-sign.is-right.is-on .road-sign-3d {
+  transform: rotateY(-12deg) rotateX(4deg) translateZ(14px);
+}
+.road-sign.is-left:hover .road-sign-3d,
+.road-sign.is-left.is-on .road-sign-3d {
+  transform: rotateY(12deg) rotateX(4deg) translateZ(14px);
+}
+.road-sign-face,
+.road-sign-depth {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 12.2rem;
+  height: 2.85rem;
+  font-size: 0.92rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  color: #102433;
+}
+.road-sign.is-right .road-sign-face,
+.road-sign.is-right .road-sign-depth {
+  padding: 0 1.55rem 0 1.05rem;
+  clip-path: polygon(0 0, calc(100% - 1.2rem) 0, 100% 50%, calc(100% - 1.2rem) 100%, 0 100%);
+}
+.road-sign.is-left .road-sign-face,
+.road-sign.is-left .road-sign-depth {
+  padding: 0 1.05rem 0 1.55rem;
+  clip-path: polygon(1.2rem 0, 100% 0, 100% 100%, 1.2rem 100%, 0 50%);
+}
+.road-sign-depth {
+  position: absolute;
+  inset: 0;
+  transform: translate3d(7px, 8px, -8px);
+  filter: brightness(0.62);
+}
+.road-sign-face {
+  position: relative;
+  z-index: 1;
+  border: 0;
+}
+.road-sign.shade-1 .road-sign-face {
+  background: linear-gradient(180deg, #e7f6fc 0%, #c5e7f4 48%, #9fd0e6 100%);
+}
+.road-sign.shade-2 .road-sign-face {
+  background: linear-gradient(180deg, #cfe8f4 0%, #a8d4ea 48%, #7eb6d4 100%);
+}
+.road-sign.shade-3 .road-sign-face {
+  background: linear-gradient(180deg, #a8d0e4 0%, #7eb6d4 50%, #5a9cbc 100%);
+}
+.road-sign.shade-4 .road-sign-face {
+  background: linear-gradient(180deg, #7eacc8 0%, #5a8fb0 52%, #3d6f90 100%);
+  color: #f4fbff;
+}
+.road-sign.shade-1 .road-sign-depth { background: #6a92a8; }
+.road-sign.shade-2 .road-sign-depth { background: #4f7c96; }
+.road-sign.shade-3 .road-sign-depth { background: #3c657c; }
+.road-sign.shade-4 .road-sign-depth { background: #2a4d62; }
+.sign-peek {
+  position: absolute;
+  z-index: 4;
+  padding: 0.28rem 0.78rem;
+  border: 1px solid rgba(180, 230, 255, 0.65);
+  border-radius: 999px;
+  background: color-mix(in srgb, #d9f1fb 72%, transparent);
+  color: #16344a;
+  font-size: 0.74rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  cursor: pointer;
+  box-shadow: 0 0 14px rgba(126, 182, 212, 0.45);
+  animation: sign-peek 1.8s ease-in-out infinite;
+}
+.sign-peek:hover {
+  background: #eef8fd;
+  box-shadow: 0 0 18px rgba(160, 220, 245, 0.7);
+}
+@keyframes sign-peek {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-3px); }
+}
+.info-panels {
+  max-width: 52rem;
+  margin: 0 auto;
+  min-height: 0;
+}
+.info-panel {
+  padding-top: 0.6rem;
+  scroll-margin-top: 5rem;
+}
+.info-panel[hidden] { display: none !important; }
+@media (max-width: 700px) {
+  .signpost-stage { height: 26rem; }
+  .road-sign-face,
+  .road-sign-depth {
+    min-width: 9.6rem;
+    height: 2.55rem;
+    font-size: 0.8rem;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .sign-peek { animation: none; }
+  .road-sign-3d { transition: none; }
 }
 
 .indicator { margin-bottom: 0.8rem; }
