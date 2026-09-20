@@ -104,7 +104,7 @@ function fitChart(iframe, fit) {
   `;
   const Plotly = win.Plotly;
   if (!Plotly?.relayout) return;
-  const scale = 0.36;
+  const scale = 0.62;
   const shrink = (v, min) => (typeof v === "number" ? Math.max(min, v * scale) : v);
   const copySize = (s) => {
     if (Array.isArray(s)) return s.slice();
@@ -112,7 +112,7 @@ function fitChart(iframe, fit) {
     return 6;
   };
   const scaleSize = (s) => {
-    const one = (n) => Math.max(2.2, Number(n) * scale);
+    const one = (n) => Math.max(3.2, Number(n) * scale);
     return Array.isArray(s) ? s.map(one) : one(s);
   };
   const margin = fit === "axes" ? { l: 42, r: 8, t: 8, b: 36 } : { l: 34, r: 8, t: 6, b: 28 };
@@ -145,14 +145,14 @@ function fitChart(iframe, fit) {
       height: h,
       margin,
       showlegend: false,
-      "font.size": shrink(orig.font || 11, 7),
-      "xaxis.tickfont.size": shrink(orig.tick || 10, 7),
-      "yaxis.tickfont.size": shrink(orig.tick || 10, 7),
-      "xaxis.title.font.size": shrink(orig.title || 11, 8),
-      "yaxis.title.font.size": shrink(orig.title || 11, 8),
+      "font.size": shrink(orig.font || 11, 8),
+      "xaxis.tickfont.size": shrink(orig.tick || 10, 8),
+      "yaxis.tickfont.size": shrink(orig.tick || 10, 8),
+      "xaxis.title.font.size": shrink(orig.title || 11, 9),
+      "yaxis.title.font.size": shrink(orig.title || 11, 9),
     };
     orig.anns.forEach((sz, i) => {
-      patch[`annotations[${i}].font.size`] = shrink(sz || 10, 7);
+      patch[`annotations[${i}].font.size`] = shrink(sz || 10, 8);
     });
     const sizes = orig.sizes.map(scaleSize);
     Plotly.relayout(gd, patch)
