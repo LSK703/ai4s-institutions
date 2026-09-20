@@ -268,12 +268,16 @@ document.querySelectorAll(".stats-orbs .stat").forEach((el) => {
     const r = el.getBoundingClientRect();
     const x = (ev.clientX - r.left) / r.width - 0.5;
     const y = (ev.clientY - r.top) / r.height - 0.5;
-    el.style.setProperty("--tilt-x", `${(-y * 16).toFixed(2)}deg`);
-    el.style.setProperty("--tilt-y", `${(x * 16).toFixed(2)}deg`);
+    el.style.setProperty("--tilt-x", `${(-y * 26).toFixed(2)}deg`);
+    el.style.setProperty("--tilt-y", `${(x * 30).toFixed(2)}deg`);
+    el.style.setProperty("--lx", `${(30 + x * 34).toFixed(1)}%`);
+    el.style.setProperty("--ly", `${(22 + y * 26).toFixed(1)}%`);
   });
   el.addEventListener("mouseleave", () => {
     el.style.setProperty("--tilt-x", "0deg");
     el.style.setProperty("--tilt-y", "0deg");
+    el.style.setProperty("--lx", "30%");
+    el.style.setProperty("--ly", "22%");
   });
 });
 
