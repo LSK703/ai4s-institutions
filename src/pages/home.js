@@ -104,19 +104,25 @@ function fitChart(iframe, fit) {
   `;
   const Plotly = win.Plotly;
   if (!Plotly?.relayout) return;
-  const scale = Math.max(0.38, Math.min(0.5, h / 520));
+  const scale = 0.22;
   const shrink = (v, min) => (typeof v === "number" ? Math.max(min, v * scale) : v);
+  const copySize = (s) => {
+    if (Array.isArray(s)) return s.slice();
+    if (typeof s === "number") return s;
+    return 6;
+  };
+  const scaleSize = (s) => {
+    const one = (n) => Math.max(1.5, Number(n) * scale);
+    return Array.isArray(s) ? s.map(one) : one(s);
+  };
   const margin = fit === "axes" ? { l: 42, r: 8, t: 8, b: 36 } : { l: 34, r: 8, t: 6, b: 28 };
   doc.querySelectorAll(".js-plotly-plot").forEach((gd) => {
     const traces = gd.data || [];
-    if (!gd._homeOrig || !gd._homeOrig.sizes.length) {
-      if (!traces.length) return;
+    if (!traces.length) return;
+    if (!gd._homeOrig) {
       gd._homeOrig = {
-        sizes: traces.map((tr) => {
-          const s = tr.marker?.size;
-          return Array.isArray(s) ? s.slice() : s;
-        }),
-        lineW: traces.map((tr) => tr.marker?.line?.width),
+        sizes: traces.map((tr, i) => copySize(tr.marker?.size ?? gd._fullData?.[i]?.marker?.size)),
+        lineW: traces.map((tr, i) => tr.marker?.line?.width ?? gd._fullData?.[i]?.marker?.line?.width),
         font: gd.layout?.font?.size,
         tick: gd.layout?.xaxis?.tickfont?.size || gd.layout?.font?.size,
         title: gd.layout?.xaxis?.title?.font?.size,
@@ -124,30 +130,45 @@ function fitChart(iframe, fit) {
       };
     }
     const orig = gd._homeOrig;
+    traces.forEach((tr, i) => {
+      if (!tr.marker) tr.marker = {};
+      tr.marker.size = scaleSize(orig.sizes[i]);
+      if (typeof orig.lineW[i] === "number") {
+        tr.marker.line = Object.assign({}, tr.marker.line, {
+          width: Math.max(0.12, orig.lineW[i] * scale),
+        });
+      }
+    });
     const patch = {
       autosize: false,
       width: w,
       height: h,
       margin,
       showlegend: false,
-      "font.size": shrink(orig.font || 11, 7),
-      "xaxis.tickfont.size": shrink(orig.tick || 10, 7),
-      "yaxis.tickfont.size": shrink(orig.tick || 10, 7),
-      "xaxis.title.font.size": shrink(orig.title || 11, 8),
-      "yaxis.title.font.size": shrink(orig.title || 11, 8),
+      "font.size": shrink(orig.font || 11, 6),
+      "xaxis.tickfont.size": shrink(orig.tick || 10, 6),
+      "yaxis.tickfont.size": shrink(orig.tick || 10, 6),
+      "xaxis.title.font.size": shrink(orig.title || 11, 7),
+      "yaxis.title.font.size": shrink(orig.title || 11, 7),
     };
     orig.anns.forEach((sz, i) => {
-      patch[`annotations[${i}].font.size`] = shrink(sz || 10, 6);
+      patch[`annotations[${i}].font.size`] = shrink(sz || 10, 5);
     });
-    Plotly.relayout(gd, patch).catch(() => {});
-    Plotly.restyle(gd, {
-      "marker.size": orig.sizes.map((s) =>
-        Array.isArray(s) ? s.map((n) => shrink(Number(n) || 6, 2.2)) : shrink(s, 2.2)
-      ),
-      "marker.line.width": orig.lineW.map((n) =>
-        typeof n === "number" ? Math.max(0.2, n * scale) : n
-      ),
-    }).catch(() => {});
+    const sizes = orig.sizes.map(scaleSize);
+    Plotly.relayout(gd, patch)
+      .then(() => {
+        traces.forEach((tr, i) => {
+          if (!tr.marker) tr.marker = {};
+          tr.marker.size = sizes[i];
+          if (typeof orig.lineW[i] === "number") {
+            tr.marker.line = Object.assign({}, tr.marker.line, {
+              width: Math.max(0.12, orig.lineW[i] * scale),
+            });
+          }
+        });
+        return Plotly.restyle(gd, { "marker.size": sizes });
+      })
+      .catch(() => {});
   });
 }
 
