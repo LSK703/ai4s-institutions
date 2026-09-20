@@ -418,92 +418,6 @@
             animation: none;
           }
         }
-        .principles.principles-slicer {
-          display: block;
-          margin: 0.5rem 0 2.2rem;
-        }
-        .prin-slicer {
-          --n: 8;
-          position: relative;
-          height: min(18rem, 56vw);
-          perspective: 1400px;
-          overflow: visible;
-        }
-        .prin-slice {
-          position: absolute;
-          top: 0;
-          bottom: 0;
-          left: calc(var(--i) * 100% / var(--n));
-          width: calc(100% / var(--n));
-          overflow: hidden;
-          transform-style: preserve-3d;
-        }
-        .prin-slice .swiper {
-          width: calc(var(--n) * 100%);
-          height: 100%;
-          margin-left: calc(var(--i) * -100%);
-          overflow: visible;
-        }
-        .prin-slice .swiper-slide {
-          height: 100%;
-          background: transparent;
-        }
-        .prin-card {
-          height: 100%;
-          display: flex;
-          flex-direction: column;
-          justify-content: center;
-          box-sizing: border-box;
-          padding: 1.35rem 7%;
-          background: var(--surface);
-          border: 1px solid var(--line);
-          color: var(--ink);
-        }
-        .prin-card .principle-n {
-          margin-bottom: 0.55rem;
-        }
-        .prin-card h3 {
-          margin: 0 0 0.45rem;
-          font-size: clamp(1.05rem, 2.1vw, 1.35rem);
-          line-height: 1.25;
-        }
-        .prin-card p {
-          margin: 0;
-          max-width: 36rem;
-          color: var(--muted);
-          font-size: 0.95rem;
-          line-height: 1.5;
-        }
-        .prin-slicer-ctrl {
-          position: absolute;
-          inset: 0;
-          z-index: 5;
-          opacity: 0;
-          cursor: grab;
-        }
-        .prin-slicer-ctrl:active { cursor: grabbing; }
-        #prin-slicer-dots {
-          position: static;
-          margin-top: 0.9rem;
-          display: flex;
-          justify-content: center;
-          gap: 0.45rem;
-        }
-        #prin-slicer-dots .swiper-pagination-bullet {
-          width: 0.45rem;
-          height: 0.45rem;
-          margin: 0 !important;
-          background: var(--muted);
-          opacity: 0.4;
-        }
-        #prin-slicer-dots .swiper-pagination-bullet-active {
-          background: var(--ink);
-          opacity: 1;
-        }
-        @media (max-width: 980px) {
-          .principles.principles-slicer { display: block; }
-          .prin-slicer { height: 16.5rem; }
-        }
       </style>
 
       <div class="ed-home">
@@ -557,17 +471,22 @@
         </section>
       </div>
 
-      <div class="principles principles-slicer" id="home-prin-slicer">
-        <div class="prin-slicer" id="prin-slicer">
-          <div class="swiper prin-slicer-ctrl" id="prin-slicer-ctrl">
-            <div class="swiper-wrapper">
-              <div class="swiper-slide"></div>
-              <div class="swiper-slide"></div>
-              <div class="swiper-slide"></div>
-            </div>
-          </div>
-        </div>
-        <div class="swiper-pagination" id="prin-slicer-dots"></div>
+      <div class="principles">
+        <section class="principle">
+          <span class="principle-n">01</span>
+          <h3 data-i18n="prin1Title"></h3>
+          <p data-i18n="prin1Body"></p>
+        </section>
+        <section class="principle">
+          <span class="principle-n">02</span>
+          <h3 data-i18n="prin2Title"></h3>
+          <p data-i18n="prin2Body"></p>
+        </section>
+        <section class="principle">
+          <span class="principle-n">03</span>
+          <h3 data-i18n="prin3Title"></h3>
+          <p data-i18n="prin3Body"></p>
+        </section>
       </div>
 
       <aside class="news-box">
@@ -582,6 +501,6 @@
     </main>
     <div id="site-footer"></div>
     <script src="vendor/swiper/swiper-bundle.min.js"></script>
-    <script type="module" src="src/pages/home.js?v=ed20"></script>
+    <script type="module" src="src/pages/home.js?v=ed21"></script>
   </body>
 </html>
