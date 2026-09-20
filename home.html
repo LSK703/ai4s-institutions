@@ -64,7 +64,14 @@
           filter: blur(56px);
         }
         .ed-stage > * { position: relative; z-index: 1; }
-        .ed-hero { padding: 0 0 0.6rem; }
+        .ed-top {
+          display: grid;
+          grid-template-columns: minmax(16rem, 1fr) minmax(20rem, 28rem);
+          align-items: center;
+          gap: 1.4rem 2.4rem;
+          padding: 0.4rem 0 0.2rem;
+        }
+        .ed-hero { padding: 0.4rem 0 0.6rem; }
         .ed-mark,
         .ed-num {
           margin: 0 0 1.15rem;
@@ -469,13 +476,15 @@
         }
         .principles.principles-cube {
           display: block;
-          margin: 0.8rem auto 0.4rem;
-          padding: 0.4rem 0 1.2rem;
-          max-width: 22.5rem;
+          margin: 0;
+          padding: 0.2rem 0 0.8rem;
+          width: 100%;
+          max-width: none;
+          justify-self: stretch;
         }
         #prin-cube {
           width: 100%;
-          height: 11.25rem;
+          height: 13.2rem;
           overflow: visible;
         }
         #prin-cube .swiper-slide {
@@ -558,14 +567,22 @@
           color: #0d141c;
           border-color: #7eb6d4;
         }
-        @media (max-width: 700px) {
-          .principles.principles-cube { max-width: 18.5rem; }
+        @media (max-width: 860px) {
+          .ed-top {
+            grid-template-columns: 1fr;
+            gap: 1.2rem;
+          }
+          .principles.principles-cube {
+            max-width: 22.5rem;
+            margin: 0 auto;
+          }
           #prin-cube { height: 12rem; }
         }
       </style>
 
       <div class="ed-home">
         <div class="ed-stage">
+        <div class="ed-top">
         <header class="ed-hero">
           <p class="ed-mark" data-i18n="edMark"></p>
           <h1 data-i18n-html="edHeroTitle"></h1>
@@ -599,6 +616,7 @@
             </div>
           </div>
           <div class="prin-3d-pag" id="prin-3d-pag"></div>
+        </div>
         </div>
 
         <div class="stats stats-orbs">
