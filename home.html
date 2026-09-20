@@ -8,6 +8,7 @@
     </script>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>AI4S Institutions Open Edition</title>
+    <link rel="stylesheet" href="vendor/swiper/swiper-bundle.min.css" />
   </head>
   <body data-page="home">
     <div id="site-header"></div>
@@ -78,6 +79,14 @@
           aspect-ratio: 1000 / 520;
           margin-top: 1.15rem;
         }
+        #home-chart-live.swiper {
+          margin-left: 0;
+          margin-right: 0;
+        }
+        #home-chart-live .swiper-wrapper,
+        #home-chart-live .swiper-slide {
+          height: 100%;
+        }
         .ed-live iframe {
           display: block;
           width: 100%;
@@ -88,21 +97,27 @@
           transition: opacity 0.4s ease;
         }
         .ed-live iframe.is-wait { opacity: 0; }
-        .ed-dots {
+        #home-chart-dots {
+          position: static;
+          bottom: auto;
+          left: auto;
+          width: auto;
+          transform: none;
           display: flex;
           gap: 0.4rem;
           margin: 0 0 0.35rem;
         }
-        .ed-dots button {
+        #home-chart-dots .swiper-pagination-bullet {
           width: 1.55rem;
           height: 2px;
-          padding: 0;
-          border: 0;
+          margin: 0 !important;
           border-radius: 0;
           background: var(--line);
-          cursor: pointer;
+          opacity: 1;
         }
-        .ed-dots button.on { background: var(--ink); }
+        #home-chart-dots .swiper-pagination-bullet-active {
+          background: var(--ink);
+        }
       </style>
 
       <div class="ed-home">
@@ -122,10 +137,10 @@
         <section class="ed-sec">
           <p class="ed-num" data-i18n="ed02Num"></p>
           <h2 data-i18n="ed02Title"></h2>
-          <div class="ed-live" id="home-chart-live">
-            <iframe id="home-chart-frame" title="AI4S chart" loading="lazy"></iframe>
+          <div class="ed-live swiper" id="home-chart-live">
+            <div class="swiper-wrapper" id="home-chart-slides"></div>
           </div>
-          <div class="ed-dots" id="home-chart-dots"></div>
+          <div class="swiper-pagination" id="home-chart-dots"></div>
           <p class="ed-caption" data-i18n="ed02Caption"></p>
           <p data-i18n="ed02Body"></p>
           <a class="ed-link" href="explore/chart.html" data-i18n="ed02Link"></a>
@@ -183,6 +198,7 @@
       </aside>
     </main>
     <div id="site-footer"></div>
-    <script type="module" src="src/pages/home.js?v=ed7"></script>
+    <script src="vendor/swiper/swiper-bundle.min.js"></script>
+    <script type="module" src="src/pages/home.js?v=ed8"></script>
   </body>
 </html>

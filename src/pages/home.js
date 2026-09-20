@@ -12,9 +12,8 @@ if (nEl) nEl.textContent = fmtInt(meta.n_ge_500);
 if (cEl) cEl.textContent = fmtInt(meta.n_countries);
 
 const locale = getLocale();
-const chartFrame = document.getElementById("home-chart-frame");
-const chartDots = document.getElementById("home-chart-dots");
 const chartLive = document.getElementById("home-chart-live");
+const chartSlides = document.getElementById("home-chart-slides");
 const chartCaption = document.querySelector("[data-i18n='ed02Caption']");
 const mapFrame = document.getElementById("home-map-frame");
 
@@ -46,22 +45,13 @@ const slides = [
   },
 ];
 
-let index = 0;
-let timer = 0;
-
-function paintDots() {
-  if (!chartDots) return;
-  chartDots.innerHTML = slides
-    .map((_, i) => `<button type="button" data-i="${i}"${i === index ? ' class="on"' : ""}></button>`)
-    .join("");
-}
-
 function fitChart(iframe, fit) {
   const doc = iframe.contentDocument;
   const win = iframe.contentWindow;
   if (!doc?.documentElement || !win) return;
-  const w = Math.max(160, Math.round(iframe.clientWidth));
-  const h = Math.max(110, Math.round(iframe.clientHeight));
+  const box = chartLive || iframe;
+  const w = Math.max(160, Math.round(box.clientWidth || iframe.clientWidth));
+  const h = Math.max(110, Math.round(box.clientHeight || iframe.clientHeight));
   let style = doc.getElementById("home-fit");
   if (!style) {
     style = doc.createElement("style");
@@ -172,48 +162,77 @@ function fitChart(iframe, fit) {
   });
 }
 
-function showSlide(next) {
-  if (!chartFrame || !slides.length) return;
-  index = (next + slides.length) % slides.length;
-  const slide = slides[index];
-  if (chartCaption) chartCaption.textContent = t(slide.titleKey);
-  paintDots();
-  chartFrame.classList.add("is-wait");
-  chartFrame.dataset.fit = slide.fit;
-  chartFrame.src = slide.src;
-}
-
-function play() {
-  stop();
-  timer = window.setInterval(() => showSlide(index + 1), 8000);
-}
-
-function stop() {
-  window.clearInterval(timer);
-}
-
-if (chartFrame) {
-  const afterLoad = () => {
-    const fit = chartFrame.dataset.fit || "plot";
-    fitChart(chartFrame, fit);
-    window.setTimeout(() => fitChart(chartFrame, fit), 80);
-    window.setTimeout(() => {
-      fitChart(chartFrame, fit);
-      chartFrame.classList.remove("is-wait");
-    }, 280);
-    window.setTimeout(() => fitChart(chartFrame, fit), 900);
+function watchIframe(iframe) {
+  const run = () => {
+    fitChart(iframe, iframe.dataset.fit || "plot");
   };
-  chartFrame.addEventListener("load", afterLoad);
-  chartDots?.addEventListener("click", (ev) => {
-    const btn = ev.target.closest("button[data-i]");
-    if (!btn) return;
-    showSlide(Number(btn.dataset.i));
-    play();
+  iframe.addEventListener("load", () => {
+    run();
+    window.setTimeout(run, 80);
+    window.setTimeout(() => {
+      run();
+      iframe.classList.remove("is-wait");
+    }, 280);
+    window.setTimeout(run, 900);
   });
-  chartLive?.addEventListener("mouseenter", stop);
-  chartLive?.addEventListener("mouseleave", play);
-  showSlide(0);
-  play();
+}
+
+function loadSlide(i) {
+  const slide = slides[i];
+  const iframe = chartSlides?.querySelector(`iframe[data-i="${i}"]`);
+  if (!slide || !iframe || iframe.dataset.ready === "1") return;
+  iframe.dataset.ready = "1";
+  iframe.src = slide.src;
+}
+
+function setCaption(i) {
+  if (chartCaption && slides[i]) chartCaption.textContent = t(slides[i].titleKey);
+}
+
+function fitActive(i) {
+  const iframe = chartSlides?.querySelector(`iframe[data-i="${i}"]`);
+  if (!iframe) return;
+  fitChart(iframe, iframe.dataset.fit || "plot");
+}
+
+if (chartLive && chartSlides && window.Swiper) {
+  chartSlides.innerHTML = slides
+    .map(
+      (slide, i) =>
+        `<div class="swiper-slide"><iframe data-i="${i}" data-fit="${slide.fit}" class="is-wait" title="AI4S chart"></iframe></div>`
+    )
+    .join("");
+  chartSlides.querySelectorAll("iframe").forEach(watchIframe);
+  loadSlide(0);
+  loadSlide(1);
+  setCaption(0);
+
+  const swiper = new window.Swiper(chartLive, {
+    speed: 520,
+    rewind: true,
+    autoplay: {
+      delay: 8000,
+      disableOnInteraction: false,
+      pauseOnMouseEnter: true,
+    },
+    pagination: {
+      el: "#home-chart-dots",
+      clickable: true,
+    },
+    on: {
+      slideChange() {
+        const i = this.realIndex;
+        setCaption(i);
+        loadSlide(i);
+        loadSlide((i + 1) % slides.length);
+      },
+      slideChangeTransitionEnd() {
+        fitActive(this.realIndex);
+      },
+    },
+  });
+  chartLive.addEventListener("mouseenter", () => swiper.autoplay?.stop());
+  chartLive.addEventListener("mouseleave", () => swiper.autoplay?.start());
 }
 
 if (mapFrame) {
