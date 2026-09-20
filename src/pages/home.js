@@ -215,11 +215,11 @@ if (chartLive && chartSlides && window.Swiper) {
     speed: 700,
     rewind: true,
     coverflowEffect: {
-      rotate: 12,
+      rotate: 22,
       stretch: 0,
-      depth: 80,
-      modifier: 1,
-      slideShadows: false,
+      depth: 180,
+      modifier: 1.15,
+      slideShadows: true,
     },
     autoplay: {
       delay: 8000,

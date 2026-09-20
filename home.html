@@ -81,8 +81,9 @@
           height: calc(min(52rem, 82cqi) * 520 / 1000);
           aspect-ratio: auto;
           margin-top: 1.15rem;
+          padding-bottom: 1.35rem;
           overflow: visible;
-          perspective: 1100px;
+          perspective: 900px;
         }
         #home-chart-live.swiper {
           margin-left: 0;
@@ -90,11 +91,37 @@
         }
         #home-chart-live .swiper-wrapper {
           align-items: stretch;
+          transform-style: preserve-3d;
         }
         #home-chart-live .swiper-slide {
           width: min(52rem, 82%);
           height: 100%;
           background: #fff;
+          box-shadow:
+            0 22px 48px rgba(0, 0, 0, 0.32),
+            0 6px 16px rgba(0, 0, 0, 0.18);
+        }
+        #home-chart-live .swiper-slide-active {
+          box-shadow:
+            0 28px 64px rgba(0, 0, 0, 0.4),
+            0 10px 22px rgba(0, 0, 0, 0.22);
+        }
+        #home-chart-live .swiper-slide-shadow-left,
+        #home-chart-live .swiper-slide-shadow-right {
+          background-image: linear-gradient(
+            to left,
+            rgba(0, 0, 0, 0.42),
+            rgba(0, 0, 0, 0.08),
+            transparent
+          );
+        }
+        #home-chart-live .swiper-slide-shadow-right {
+          background-image: linear-gradient(
+            to right,
+            rgba(0, 0, 0, 0.42),
+            rgba(0, 0, 0, 0.08),
+            transparent
+          );
         }
         #home-chart-live .swiper-button-prev,
         #home-chart-live .swiper-button-next {
@@ -228,6 +255,6 @@
     </main>
     <div id="site-footer"></div>
     <script src="vendor/swiper/swiper-bundle.min.js"></script>
-    <script type="module" src="src/pages/home.js?v=ed14"></script>
+    <script type="module" src="src/pages/home.js?v=ed15"></script>
   </body>
 </html>
