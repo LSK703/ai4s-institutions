@@ -418,6 +418,77 @@
             animation: none;
           }
         }
+        .principles.principles-cube {
+          display: block;
+          margin: 0.5rem auto 2.4rem;
+          max-width: 38rem;
+        }
+        #prin-cube {
+          width: 100%;
+          height: 15.5rem;
+          overflow: visible;
+        }
+        #prin-cube .swiper-slide {
+          background: var(--surface);
+          border: 1px solid var(--line);
+        }
+        #prin-cube .principle {
+          height: 100%;
+          box-sizing: border-box;
+          border: 0;
+          background: transparent;
+          padding: 1.35rem 1.4rem;
+        }
+        .prin-3d-pag {
+          display: flex;
+          justify-content: center;
+          gap: 0.9rem;
+          margin-top: 1.85rem;
+          perspective: 520px;
+        }
+        .prin-3d-pag button {
+          width: 2.55rem;
+          height: 2.55rem;
+          padding: 0;
+          border: 0;
+          background: transparent;
+          cursor: pointer;
+        }
+        .prin-3d-box {
+          display: block;
+          width: 100%;
+          height: 100%;
+          position: relative;
+          transform-style: preserve-3d;
+          transition: transform 0.55s ease;
+        }
+        .prin-3d-pag button.is-on .prin-3d-box {
+          transform: rotateX(-90deg);
+        }
+        .prin-3d-face {
+          position: absolute;
+          inset: 0;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          background: var(--surface);
+          border: 1px solid var(--line);
+          color: var(--muted);
+          font-size: 0.72rem;
+          font-weight: 700;
+          letter-spacing: 0.08em;
+          backface-visibility: hidden;
+        }
+        .prin-3d-face.front { transform: translateZ(1.28rem); }
+        .prin-3d-face.bottom {
+          transform: rotateX(90deg) translateZ(1.28rem);
+          background: var(--accent);
+          color: var(--on-accent);
+          border-color: var(--accent);
+        }
+        @media (max-width: 700px) {
+          #prin-cube { height: 16.5rem; }
+        }
       </style>
 
       <div class="ed-home">
@@ -471,22 +542,33 @@
         </section>
       </div>
 
-      <div class="principles">
-        <section class="principle">
-          <span class="principle-n">01</span>
-          <h3 data-i18n="prin1Title"></h3>
-          <p data-i18n="prin1Body"></p>
-        </section>
-        <section class="principle">
-          <span class="principle-n">02</span>
-          <h3 data-i18n="prin2Title"></h3>
-          <p data-i18n="prin2Body"></p>
-        </section>
-        <section class="principle">
-          <span class="principle-n">03</span>
-          <h3 data-i18n="prin3Title"></h3>
-          <p data-i18n="prin3Body"></p>
-        </section>
+      <div class="principles principles-cube">
+        <div class="swiper" id="prin-cube">
+          <div class="swiper-wrapper">
+            <div class="swiper-slide">
+              <section class="principle">
+                <span class="principle-n">01</span>
+                <h3 data-i18n="prin1Title"></h3>
+                <p data-i18n="prin1Body"></p>
+              </section>
+            </div>
+            <div class="swiper-slide">
+              <section class="principle">
+                <span class="principle-n">02</span>
+                <h3 data-i18n="prin2Title"></h3>
+                <p data-i18n="prin2Body"></p>
+              </section>
+            </div>
+            <div class="swiper-slide">
+              <section class="principle">
+                <span class="principle-n">03</span>
+                <h3 data-i18n="prin3Title"></h3>
+                <p data-i18n="prin3Body"></p>
+              </section>
+            </div>
+          </div>
+        </div>
+        <div class="prin-3d-pag" id="prin-3d-pag"></div>
       </div>
 
       <aside class="news-box">
@@ -501,6 +583,6 @@
     </main>
     <div id="site-footer"></div>
     <script src="vendor/swiper/swiper-bundle.min.js"></script>
-    <script type="module" src="src/pages/home.js?v=ed21"></script>
+    <script type="module" src="src/pages/home.js?v=ed22"></script>
   </body>
 </html>

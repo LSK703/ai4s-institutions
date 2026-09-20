@@ -275,4 +275,46 @@ document.querySelectorAll(".stats-orbs .stat").forEach((el) => {
   });
 });
 
+const prinCube = document.getElementById("prin-cube");
+const prinPag = document.getElementById("prin-3d-pag");
+if (prinCube && prinPag && window.Swiper) {
+  const count = prinCube.querySelectorAll(".swiper-slide").length;
+  const buttons = [];
+  for (let i = 0; i < count; i += 1) {
+    const label = String(i + 1).padStart(2, "0");
+    const btn = document.createElement("button");
+    btn.type = "button";
+    btn.setAttribute("aria-label", label);
+    if (i === 0) btn.classList.add("is-on");
+    btn.innerHTML = `<span class="prin-3d-box"><span class="prin-3d-face front">${label}</span><span class="prin-3d-face bottom">${label}</span></span>`;
+    prinPag.appendChild(btn);
+    buttons.push(btn);
+  }
+  const sw = new window.Swiper(prinCube, {
+    effect: "cube",
+    grabCursor: true,
+    rewind: true,
+    speed: 800,
+    cubeEffect: {
+      shadow: true,
+      slideShadows: true,
+      shadowOffset: 16,
+      shadowScale: 0.92,
+    },
+    autoplay: { delay: 4800, disableOnInteraction: false },
+    on: {
+      slideChange() {
+        buttons.forEach((btn, i) => {
+          btn.classList.toggle("is-on", i === this.activeIndex);
+        });
+      },
+    },
+  });
+  buttons.forEach((btn, i) => {
+    btn.addEventListener("click", () => sw.slideTo(i));
+  });
+  prinCube.addEventListener("mouseenter", () => sw.autoplay?.stop());
+  prinCube.addEventListener("mouseleave", () => sw.autoplay?.start());
+}
+
 
