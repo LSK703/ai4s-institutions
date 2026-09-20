@@ -21,22 +21,27 @@ const mapFrame = document.getElementById("home-map-frame");
 const slides = [
   {
     titleKey: "presetScaleQuality",
+    fit: "axes",
     src: figureUrl(locale === "zh" ? "ch05_fig2_x2000_zh.html" : "ch05_fig2_x2000_en.html"),
   },
   {
     titleKey: "presetScaleEff",
+    fit: "plot",
     src: figureUrl("ch03_institutions.html", { embed: "1", lang: locale, view: "size" }),
   },
   {
     titleKey: "presetExpectedObs",
+    fit: "plot",
     src: figureUrl("ch03_institutions.html", { embed: "1", lang: locale, view: "obs" }),
   },
   {
     titleKey: "presetScaleCollab",
+    fit: "plot",
     src: figureUrl(locale === "zh" ? "ch04_fig6_1_zh.html" : "ch04_fig6_1_en.html"),
   },
   {
     titleKey: "presetDiscIntl",
+    fit: "plot",
     src: figureUrl(locale === "zh" ? "ch04_fig6_4_zh.html" : "ch04_fig6_4_en.html"),
   },
 ];
@@ -51,6 +56,66 @@ function paintDots() {
     .join("");
 }
 
+function fitChart(iframe, fit) {
+  const doc = iframe.contentDocument;
+  const win = iframe.contentWindow;
+  if (!doc?.documentElement || !win) return;
+  const w = Math.max(160, Math.round(iframe.clientWidth));
+  const h = Math.max(110, Math.round(iframe.clientHeight));
+  let style = doc.getElementById("home-fit");
+  if (!style) {
+    style = doc.createElement("style");
+    style.id = "home-fit";
+    doc.head.appendChild(style);
+  }
+  style.textContent = `
+    html, body {
+      margin: 0 !important;
+      padding: 0 !important;
+      overflow: hidden !important;
+      width: ${w}px !important;
+      height: ${h}px !important;
+      background: #fff !important;
+    }
+    header, nav, .lang, .sub, .hint, .toolbar, table, .pager, .tabs,
+    .notes, #view-notes, #view-compare, #boot-error {
+      display: none !important;
+    }
+    main {
+      margin: 0 !important;
+      padding: 0 !important;
+      max-width: none !important;
+    }
+    .chart-shell,
+    .plotly-graph-div,
+    .js-plotly-plot,
+    .svg-container,
+    .plot,
+    .plot.scatter,
+    body > div {
+      width: ${w}px !important;
+      height: ${h}px !important;
+      min-width: 0 !important;
+      min-height: 0 !important;
+      max-height: none !important;
+      margin: 0 !important;
+    }
+    .modebar, .modebar-container { display: none !important; }
+  `;
+  const Plotly = win.Plotly;
+  if (!Plotly?.relayout) return;
+  const margin = fit === "axes" ? { l: 42, r: 8, t: 8, b: 36 } : { l: 34, r: 8, t: 6, b: 28 };
+  doc.querySelectorAll(".js-plotly-plot").forEach((gd) => {
+    Plotly.relayout(gd, {
+      autosize: false,
+      width: w,
+      height: h,
+      margin,
+      showlegend: false,
+    }).catch(() => {});
+  });
+}
+
 function showSlide(next) {
   if (!chartFrame || !slides.length) return;
   index = (next + slides.length) % slides.length;
@@ -58,6 +123,7 @@ function showSlide(next) {
   if (chartCaption) chartCaption.textContent = t(slide.titleKey);
   paintDots();
   chartFrame.classList.add("is-wait");
+  chartFrame.dataset.fit = slide.fit;
   chartFrame.src = slide.src;
 }
 
@@ -71,7 +137,17 @@ function stop() {
 }
 
 if (chartFrame) {
-  chartFrame.addEventListener("load", () => chartFrame.classList.remove("is-wait"));
+  const afterLoad = () => {
+    const fit = chartFrame.dataset.fit || "plot";
+    fitChart(chartFrame, fit);
+    window.setTimeout(() => fitChart(chartFrame, fit), 80);
+    window.setTimeout(() => {
+      fitChart(chartFrame, fit);
+      chartFrame.classList.remove("is-wait");
+    }, 280);
+    window.setTimeout(() => fitChart(chartFrame, fit), 900);
+  };
+  chartFrame.addEventListener("load", afterLoad);
   chartDots?.addEventListener("click", (ev) => {
     const btn = ev.target.closest("button[data-i]");
     if (!btn) return;
