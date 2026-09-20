@@ -196,9 +196,9 @@
           --tilt-y: 0deg;
           --rest-x: 14deg;
           --rest-y: -8deg;
-          --blob-from: var(--accent-strong);
-          --blob-mid: var(--accent);
-          --blob-to: var(--accent-strong);
+          --blob-from: #d9f1fb;
+          --blob-mid: #a8d4ea;
+          --blob-to: #7eb6d4;
           position: relative;
           flex: 0 0 auto;
           aspect-ratio: 1;
@@ -223,9 +223,9 @@
           animation-duration: 6.2s;
           --rest-x: 18deg;
           --rest-y: 8deg;
-          --blob-from: var(--accent-strong);
-          --blob-mid: var(--accent);
-          --blob-to: var(--accent);
+          --blob-from: #dff4fb;
+          --blob-mid: #9cc9e0;
+          --blob-to: #74b0d0;
         }
         .stats.stats-orbs .stat:nth-child(3) {
           width: min(13.6rem, 44vw);
@@ -234,9 +234,9 @@
           animation-duration: 5.8s;
           --rest-x: 11deg;
           --rest-y: -4deg;
-          --blob-from: var(--accent-strong);
-          --blob-mid: var(--accent);
-          --blob-to: var(--accent);
+          --blob-from: #e7f6fc;
+          --blob-mid: #b5dceb;
+          --blob-to: #7eb6d4;
         }
         .stats.stats-orbs .stat:nth-child(4) {
           width: min(10.4rem, 36vw);
@@ -245,9 +245,9 @@
           animation-duration: 4.7s;
           --rest-x: 16deg;
           --rest-y: 10deg;
-          --blob-from: var(--accent);
-          --blob-mid: var(--accent-strong);
-          --blob-to: var(--accent);
+          --blob-from: #d2ebf6;
+          --blob-mid: #8ec4de;
+          --blob-to: #6aa5c6;
         }
         .stats.stats-orbs .stat-core {
           position: relative;
@@ -263,18 +263,10 @@
           inset: 0;
           z-index: 1;
           border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
-          background: linear-gradient(
-            150deg,
-            color-mix(in srgb, var(--blob-from) 40%, transparent),
-            color-mix(in srgb, var(--blob-mid) 28%, transparent) 52%,
-            color-mix(in srgb, var(--blob-to) 36%, transparent)
-          );
+          background: linear-gradient(145deg, var(--blob-from), var(--blob-mid) 48%, var(--blob-to));
           box-shadow:
-            inset 0 0 0 1px color-mix(in srgb, var(--accent-strong) 35%, transparent),
-            0 14px 26px rgba(8, 16, 28, 0.12),
-            0 0 28px color-mix(in srgb, var(--accent) 18%, transparent);
-          backdrop-filter: blur(10px) saturate(1.08);
-          -webkit-backdrop-filter: blur(10px) saturate(1.08);
+            0 16px 28px rgba(20, 48, 72, 0.16),
+            0 0 32px rgba(126, 182, 212, 0.28);
           transform: translateZ(0);
           animation: blob-morph 8s ease-in-out infinite;
         }
@@ -362,9 +354,13 @@
         .stats.stats-orbs .stat:hover .stat-blob,
         .stats.stats-orbs .stat:focus-within .stat-blob {
           box-shadow:
-            inset 0 0 0 1px color-mix(in srgb, var(--accent-strong) 45%, transparent),
-            0 16px 28px rgba(8, 16, 28, 0.14),
-            0 0 30px color-mix(in srgb, var(--accent) 22%, transparent);
+            0 18px 30px rgba(20, 48, 72, 0.18),
+            0 0 36px rgba(126, 182, 212, 0.34);
+        }
+        [data-theme="light"] .stats.stats-orbs .stat {
+          --blob-from: #c5e6f5;
+          --blob-mid: #8ec4de;
+          --blob-to: #5b9ec4;
         }
         [data-theme="light"] .stats.stats-orbs .stat::before {
           background: radial-gradient(ellipse, rgba(31, 90, 134, 0.16), transparent 72%);
