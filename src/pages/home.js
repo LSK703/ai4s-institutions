@@ -1,6 +1,6 @@
 import "../shell.js?v=ed1";
 import { fmtInt, loadInstitutions } from "../data.js";
-import { getLocale, t } from "../i18n.js?v=ed2";
+import { getLocale, t, applyI18n } from "../i18n.js?v=ed2";
 import { figureUrl, pageUrl } from "../paths.js";
 
 const payload = await loadInstitutions();
@@ -274,5 +274,64 @@ document.querySelectorAll(".stats-orbs .stat").forEach((el) => {
     el.style.setProperty("--tilt-y", "0deg");
   });
 });
+
+const prinHost = document.getElementById("prin-slicer");
+const prinCtrlEl = document.getElementById("prin-slicer-ctrl");
+if (prinHost && prinCtrlEl && window.Swiper) {
+  const sliceN = 8;
+  prinHost.style.setProperty("--n", String(sliceN));
+  const items = [
+    { n: "01", title: "prin1Title", body: "prin1Body" },
+    { n: "02", title: "prin2Title", body: "prin2Body" },
+    { n: "03", title: "prin3Title", body: "prin3Body" },
+  ];
+  const slidesHtml = items
+    .map(
+      (it) =>
+        `<div class="swiper-slide"><article class="prin-card"><span class="principle-n">${it.n}</span><h3 data-i18n="${it.title}"></h3><p data-i18n="${it.body}"></p></article></div>`
+    )
+    .join("");
+
+  const visuals = [];
+  for (let i = 0; i < sliceN; i += 1) {
+    const slice = document.createElement("div");
+    slice.className = "prin-slice";
+    slice.style.setProperty("--i", String(i));
+    slice.innerHTML = `<div class="swiper prin-slice-sw"><div class="swiper-wrapper">${slidesHtml}</div></div>`;
+    prinHost.insertBefore(slice, prinCtrlEl);
+    visuals.push(
+      new window.Swiper(slice.querySelector(".swiper"), {
+        effect: "cube",
+        cubeEffect: { shadow: false, slideShadows: false },
+        speed: 1100,
+        rewind: true,
+        allowTouchMove: false,
+        resistanceRatio: 0.7,
+      })
+    );
+  }
+  applyI18n(prinHost);
+
+  const ctrl = new window.Swiper(prinCtrlEl, {
+    speed: 1100,
+    rewind: true,
+    grabCursor: true,
+    resistanceRatio: 0.7,
+    pagination: { el: "#prin-slicer-dots", clickable: true },
+    autoplay: { delay: 5200, disableOnInteraction: false },
+  });
+  const sync = (translate, duration) => {
+    visuals.forEach((sw, i) => {
+      if (duration != null) sw.setTransition(duration);
+      sw.setTranslate(translate * (1 + i * 0.22));
+    });
+  };
+  ctrl.on("setTranslate", (sw, translate) => sync(translate));
+  ctrl.on("setTransition", (sw, duration) => {
+    visuals.forEach((v) => v.setTransition(duration));
+  });
+  prinHost.addEventListener("mouseenter", () => ctrl.autoplay?.stop());
+  prinHost.addEventListener("mouseleave", () => ctrl.autoplay?.start());
+}
 
 
