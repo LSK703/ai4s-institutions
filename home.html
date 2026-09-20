@@ -254,20 +254,38 @@
           z-index: 1;
           width: 100%;
           height: 100%;
-          border-radius: 50%;
           transform-style: preserve-3d;
           transform: rotateX(calc(var(--rest-x) + var(--tilt-x))) rotateY(calc(var(--rest-y) + var(--tilt-y)));
           transition: transform 0.28s ease;
+        }
+        .stats.stats-orbs .stat-blob {
+          position: absolute;
+          inset: 0;
+          transform-style: preserve-3d;
+          border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+          animation: blob-morph 8s ease-in-out infinite;
+        }
+        .stats.stats-orbs .stat:nth-child(2) .stat-blob {
+          animation-duration: 9.4s;
+          animation-delay: -2.1s;
+        }
+        .stats.stats-orbs .stat:nth-child(3) .stat-blob {
+          animation-duration: 7.6s;
+          animation-delay: -4.4s;
+        }
+        .stats.stats-orbs .stat:nth-child(4) .stat-blob {
+          animation-duration: 10.2s;
+          animation-delay: -1.3s;
         }
         .stats.stats-orbs .stat-back,
         .stats.stats-orbs .stat-equator,
         .stats.stats-orbs .stat-glass {
           position: absolute;
+          border-radius: inherit;
           pointer-events: none;
         }
         .stats.stats-orbs .stat-back {
           inset: 0;
-          border-radius: 50%;
           transform: translateZ(-42px) scale(0.92);
           background:
             radial-gradient(circle at 48% 58%, rgba(var(--orb), 0.16), transparent 46%),
@@ -279,9 +297,8 @@
         }
         .stats.stats-orbs .stat-equator {
           inset: 9%;
-          border-radius: 50%;
           border: 1px solid rgba(255, 255, 255, 0.22);
-          transform: rotateX(78deg) translateZ(-2px);
+          transform: translateZ(-2px);
           box-shadow:
             0 0 10px rgba(255, 255, 255, 0.08),
             inset 0 0 8px rgba(var(--orb), 0.12);
@@ -303,7 +320,6 @@
         .stats.stats-orbs .stat-glass {
           inset: 0;
           z-index: 3;
-          border-radius: 50%;
           transform: translateZ(38px);
           background:
             radial-gradient(circle at var(--lx) var(--ly), rgba(255, 255, 255, 0.34) 0 7%, transparent 20%),
@@ -356,16 +372,25 @@
           content: "";
           position: absolute;
           inset: -18%;
-          border-radius: 50%;
+          border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
           background: radial-gradient(circle, rgba(var(--orb), 0.24), transparent 66%);
           filter: blur(12px);
           z-index: 0;
-          animation: orb-glow 3.8s ease-in-out infinite;
+          animation: orb-glow 3.8s ease-in-out infinite, blob-morph 8s ease-in-out infinite;
           pointer-events: none;
         }
-        .stats.stats-orbs .stat:nth-child(2)::after { animation-delay: 0.6s; }
-        .stats.stats-orbs .stat:nth-child(3)::after { animation-delay: 1.2s; }
-        .stats.stats-orbs .stat:nth-child(4)::after { animation-delay: 1.9s; }
+        .stats.stats-orbs .stat:nth-child(2)::after {
+          animation-duration: 3.8s, 9.4s;
+          animation-delay: 0.6s, -2.1s;
+        }
+        .stats.stats-orbs .stat:nth-child(3)::after {
+          animation-duration: 3.8s, 7.6s;
+          animation-delay: 1.2s, -4.4s;
+        }
+        .stats.stats-orbs .stat:nth-child(4)::after {
+          animation-duration: 3.8s, 10.2s;
+          animation-delay: 1.9s, -1.3s;
+        }
         .stats.stats-orbs .stat-inner b {
           font-size: clamp(1.05rem, 2.2vw, 1.5rem);
           color: var(--stat);
@@ -428,6 +453,28 @@
           0%, 100% { opacity: 0.32; transform: scale(0.92); }
           50% { opacity: 0.62; transform: scale(1.06); }
         }
+        @keyframes blob-morph {
+          0% {
+            border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+            rotate: 0deg;
+          }
+          25% {
+            border-radius: 30% 60% 70% 40% / 50% 60% 30% 70%;
+            rotate: 8deg;
+          }
+          50% {
+            border-radius: 50% 60% 30% 70% / 30% 40% 70% 60%;
+            rotate: -6deg;
+          }
+          75% {
+            border-radius: 40% 70% 60% 30% / 70% 30% 50% 60%;
+            rotate: 5deg;
+          }
+          100% {
+            border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+            rotate: 0deg;
+          }
+        }
         @media (max-width: 980px) {
           .stats.stats-orbs {
             gap: 1.2rem 1.6rem;
@@ -438,7 +485,8 @@
         }
         @media (prefers-reduced-motion: reduce) {
           .stats.stats-orbs .stat,
-          .stats.stats-orbs .stat::after {
+          .stats.stats-orbs .stat::after,
+          .stats.stats-orbs .stat-blob {
             animation: none;
           }
         }
@@ -489,10 +537,10 @@
       </div>
 
       <div class="stats stats-orbs">
-        <div class="stat"><div class="stat-core"><span class="stat-back" aria-hidden="true"></span><span class="stat-equator" aria-hidden="true"></span><div class="stat-inner"><b id="stat-n">—</b><span data-i18n="statN"></span></div><span class="stat-glass" aria-hidden="true"></span></div></div>
-        <div class="stat"><div class="stat-core"><span class="stat-back" aria-hidden="true"></span><span class="stat-equator" aria-hidden="true"></span><div class="stat-inner"><b id="stat-c">—</b><span data-i18n="statC"></span></div><span class="stat-glass" aria-hidden="true"></span></div></div>
-        <div class="stat"><div class="stat-core"><span class="stat-back" aria-hidden="true"></span><span class="stat-equator" aria-hidden="true"></span><div class="stat-inner"><b>2024</b><span data-i18n="statY"></span></div><span class="stat-glass" aria-hidden="true"></span></div></div>
-        <div class="stat"><div class="stat-core"><span class="stat-back" aria-hidden="true"></span><span class="stat-equator" aria-hidden="true"></span><div class="stat-inner"><b data-i18n="statSValue">Education</b><span data-i18n="statS"></span></div><span class="stat-glass" aria-hidden="true"></span></div></div>
+        <div class="stat"><div class="stat-core"><div class="stat-blob"><span class="stat-back" aria-hidden="true"></span><span class="stat-equator" aria-hidden="true"></span><span class="stat-glass" aria-hidden="true"></span></div><div class="stat-inner"><b id="stat-n">—</b><span data-i18n="statN"></span></div></div></div>
+        <div class="stat"><div class="stat-core"><div class="stat-blob"><span class="stat-back" aria-hidden="true"></span><span class="stat-equator" aria-hidden="true"></span><span class="stat-glass" aria-hidden="true"></span></div><div class="stat-inner"><b id="stat-c">—</b><span data-i18n="statC"></span></div></div></div>
+        <div class="stat"><div class="stat-core"><div class="stat-blob"><span class="stat-back" aria-hidden="true"></span><span class="stat-equator" aria-hidden="true"></span><span class="stat-glass" aria-hidden="true"></span></div><div class="stat-inner"><b>2024</b><span data-i18n="statY"></span></div></div></div>
+        <div class="stat"><div class="stat-core"><div class="stat-blob"><span class="stat-back" aria-hidden="true"></span><span class="stat-equator" aria-hidden="true"></span><span class="stat-glass" aria-hidden="true"></span></div><div class="stat-inner"><b data-i18n="statSValue">Education</b><span data-i18n="statS"></span></div></div></div>
       </div>
 
       <div class="principles">
