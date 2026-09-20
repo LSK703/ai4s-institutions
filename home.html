@@ -192,63 +192,93 @@
           overflow: visible;
         }
         .stats.stats-orbs .stat {
-          --blob-a: 126, 212, 186;
-          --blob-b: 90, 168, 204;
-          --blob-c: 122, 140, 224;
+          --tilt-x: 0deg;
+          --tilt-y: 0deg;
+          --rest-x: 14deg;
+          --rest-y: -8deg;
+          --blob-from: var(--accent-strong);
+          --blob-mid: var(--accent);
+          --blob-to: var(--surface-2);
           position: relative;
           flex: 0 0 auto;
           aspect-ratio: 1;
           padding: 0;
           border: 0;
           background: transparent;
+          perspective: 520px;
+          perspective-origin: 50% 40%;
           animation: orb-float 5.4s ease-in-out infinite;
         }
         .stats.stats-orbs .stat:nth-child(1) {
           width: min(12.8rem, 42vw);
           margin-bottom: 2.1rem;
           animation-duration: 5.1s;
+          --rest-x: 12deg;
+          --rest-y: -10deg;
         }
         .stats.stats-orbs .stat:nth-child(2) {
           width: min(9.6rem, 34vw);
           margin-bottom: 0.15rem;
           animation-delay: 0.85s;
           animation-duration: 6.2s;
-          --blob-a: 104, 204, 196;
-          --blob-b: 72, 164, 188;
-          --blob-c: 96, 148, 216;
+          --rest-x: 18deg;
+          --rest-y: 8deg;
+          --blob-from: var(--accent);
+          --blob-mid: var(--accent-strong);
+          --blob-to: var(--surface);
         }
         .stats.stats-orbs .stat:nth-child(3) {
           width: min(13.6rem, 44vw);
           margin-bottom: 2.8rem;
           animation-delay: 0.35s;
           animation-duration: 5.8s;
-          --blob-a: 148, 216, 198;
-          --blob-b: 110, 168, 214;
-          --blob-c: 132, 148, 232;
+          --rest-x: 11deg;
+          --rest-y: -4deg;
+          --blob-from: var(--ink);
+          --blob-mid: var(--accent);
+          --blob-to: var(--surface-2);
         }
         .stats.stats-orbs .stat:nth-child(4) {
           width: min(10.4rem, 36vw);
           margin-bottom: 0.85rem;
           animation-delay: 1.4s;
           animation-duration: 4.7s;
-          --blob-a: 112, 196, 210;
-          --blob-b: 88, 152, 208;
-          --blob-c: 118, 132, 220;
+          --rest-x: 16deg;
+          --rest-y: 10deg;
+          --blob-from: var(--accent-strong);
+          --blob-mid: var(--surface-2);
+          --blob-to: var(--accent);
+        }
+        .stats.stats-orbs .stat-core {
+          position: relative;
+          z-index: 1;
+          width: 100%;
+          height: 100%;
+          transform-style: preserve-3d;
+          transform: rotateX(calc(var(--rest-x) + var(--tilt-x))) rotateY(calc(var(--rest-y) + var(--tilt-y)));
+          transition: transform 0.28s ease;
         }
         .stats.stats-orbs .stat-blob {
           position: absolute;
           inset: 0;
           z-index: 1;
           border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
-          background: linear-gradient(
-            145deg,
-            rgba(var(--blob-a), 0.42),
-            rgba(var(--blob-b), 0.38) 48%,
-            rgba(var(--blob-c), 0.44)
-          );
-          box-shadow: 0 0 42px rgba(var(--blob-c), 0.22);
-          backdrop-filter: blur(14px) saturate(1.15);
-          -webkit-backdrop-filter: blur(14px) saturate(1.15);
+          background:
+            radial-gradient(circle at 30% 26%, color-mix(in srgb, var(--ink) 20%, transparent), transparent 36%),
+            linear-gradient(
+              150deg,
+              color-mix(in srgb, var(--blob-from) 58%, transparent),
+              color-mix(in srgb, var(--blob-mid) 48%, transparent) 48%,
+              color-mix(in srgb, var(--blob-to) 52%, transparent)
+            );
+          box-shadow:
+            inset 12px 16px 20px color-mix(in srgb, var(--ink) 16%, transparent),
+            inset -14px -18px 26px color-mix(in srgb, var(--surface) 55%, transparent),
+            0 18px 28px rgba(8, 16, 28, 0.28),
+            0 0 28px color-mix(in srgb, var(--accent) 22%, transparent);
+          backdrop-filter: blur(12px) saturate(1.12);
+          -webkit-backdrop-filter: blur(12px) saturate(1.12);
+          transform: translateZ(18px);
           animation: blob-morph 8s ease-in-out infinite;
         }
         .stats.stats-orbs .stat:nth-child(2) .stat-blob {
@@ -275,15 +305,29 @@
           text-align: center;
           padding: 1.2rem 0.9rem;
           pointer-events: none;
+          transform: translateZ(6px);
+        }
+        .stats.stats-orbs .stat::before {
+          content: "";
+          position: absolute;
+          left: 18%;
+          right: 18%;
+          bottom: -16%;
+          height: 20%;
+          border-radius: 50%;
+          background: radial-gradient(ellipse, rgba(8, 16, 28, 0.38), transparent 72%);
+          filter: blur(8px);
+          z-index: 0;
+          pointer-events: none;
         }
         .stats.stats-orbs .stat::after {
           content: "";
           position: absolute;
-          inset: -28%;
+          inset: -24%;
           z-index: 0;
           border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
-          background: radial-gradient(circle, rgba(var(--blob-b), 0.28), transparent 68%);
-          filter: blur(28px);
+          background: radial-gradient(circle, color-mix(in srgb, var(--accent) 26%, transparent), transparent 68%);
+          filter: blur(26px);
           animation: blob-morph 8s ease-in-out infinite;
           pointer-events: none;
         }
@@ -301,9 +345,9 @@
         }
         .stats.stats-orbs .stat-inner b {
           font-size: clamp(1.05rem, 2.2vw, 1.5rem);
-          color: #fff;
-          letter-spacing: 0.04em;
-          text-shadow: 0 1px 8px rgba(20, 36, 72, 0.22);
+          color: var(--stat);
+          letter-spacing: 0.02em;
+          text-shadow: 0 1px 10px rgba(8, 16, 28, 0.28);
           line-height: 1.12;
         }
         .stats.stats-orbs .stat-inner span {
@@ -311,7 +355,8 @@
           max-width: 8.6rem;
           font-size: 0.7rem;
           line-height: 1.3;
-          color: rgba(255, 255, 255, 0.82);
+          color: var(--ink);
+          opacity: 0.82;
         }
         .stats.stats-orbs .stat:nth-child(2) .stat-inner b,
         .stats.stats-orbs .stat:nth-child(4) .stat-inner b {
@@ -319,18 +364,17 @@
         }
         .stats.stats-orbs .stat:hover .stat-blob,
         .stats.stats-orbs .stat:focus-within .stat-blob {
-          box-shadow: 0 0 48px rgba(var(--blob-c), 0.28);
+          box-shadow:
+            inset 12px 16px 20px color-mix(in srgb, var(--ink) 18%, transparent),
+            inset -14px -18px 26px color-mix(in srgb, var(--surface) 50%, transparent),
+            0 20px 32px rgba(8, 16, 28, 0.3),
+            0 0 26px color-mix(in srgb, var(--accent) 26%, transparent);
         }
-        [data-theme="light"] .stats.stats-orbs .stat-blob {
-          background: linear-gradient(
-            145deg,
-            rgba(var(--blob-a), 0.5),
-            rgba(var(--blob-b), 0.46) 48%,
-            rgba(var(--blob-c), 0.52)
-          );
+        [data-theme="light"] .stats.stats-orbs .stat::before {
+          background: radial-gradient(ellipse, rgba(31, 90, 134, 0.16), transparent 72%);
         }
         [data-theme="light"] .stats.stats-orbs .stat::after {
-          background: radial-gradient(circle, rgba(var(--blob-b), 0.2), transparent 68%);
+          background: radial-gradient(circle, color-mix(in srgb, var(--accent) 16%, transparent), transparent 68%);
         }
         @keyframes orb-float {
           0%, 100% { transform: translateY(0); }
@@ -420,10 +464,10 @@
       </div>
 
       <div class="stats stats-orbs">
-        <div class="stat"><div class="stat-blob" aria-hidden="true"></div><div class="stat-inner"><b id="stat-n">—</b><span data-i18n="statN"></span></div></div>
-        <div class="stat"><div class="stat-blob" aria-hidden="true"></div><div class="stat-inner"><b id="stat-c">—</b><span data-i18n="statC"></span></div></div>
-        <div class="stat"><div class="stat-blob" aria-hidden="true"></div><div class="stat-inner"><b>2024</b><span data-i18n="statY"></span></div></div>
-        <div class="stat"><div class="stat-blob" aria-hidden="true"></div><div class="stat-inner"><b data-i18n="statSValue">Education</b><span data-i18n="statS"></span></div></div>
+        <div class="stat"><div class="stat-core"><div class="stat-blob" aria-hidden="true"></div><div class="stat-inner"><b id="stat-n">—</b><span data-i18n="statN"></span></div></div></div>
+        <div class="stat"><div class="stat-core"><div class="stat-blob" aria-hidden="true"></div><div class="stat-inner"><b id="stat-c">—</b><span data-i18n="statC"></span></div></div></div>
+        <div class="stat"><div class="stat-core"><div class="stat-blob" aria-hidden="true"></div><div class="stat-inner"><b>2024</b><span data-i18n="statY"></span></div></div></div>
+        <div class="stat"><div class="stat-core"><div class="stat-blob" aria-hidden="true"></div><div class="stat-inner"><b data-i18n="statSValue">Education</b><span data-i18n="statS"></span></div></div></div>
       </div>
 
       <div class="principles">
@@ -456,6 +500,6 @@
     </main>
     <div id="site-footer"></div>
     <script src="vendor/swiper/swiper-bundle.min.js"></script>
-    <script type="module" src="src/pages/home.js?v=ed18"></script>
+    <script type="module" src="src/pages/home.js?v=ed19"></script>
   </body>
 </html>

@@ -261,4 +261,18 @@ if (mapFrame) {
   mapFrame.src = url.href;
 }
 
+document.querySelectorAll(".stats-orbs .stat").forEach((el) => {
+  el.addEventListener("mousemove", (ev) => {
+    const r = el.getBoundingClientRect();
+    const x = (ev.clientX - r.left) / r.width - 0.5;
+    const y = (ev.clientY - r.top) / r.height - 0.5;
+    el.style.setProperty("--tilt-x", `${(-y * 18).toFixed(2)}deg`);
+    el.style.setProperty("--tilt-y", `${(x * 20).toFixed(2)}deg`);
+  });
+  el.addEventListener("mouseleave", () => {
+    el.style.setProperty("--tilt-x", "0deg");
+    el.style.setProperty("--tilt-y", "0deg");
+  });
+});
+
 
