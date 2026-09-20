@@ -209,7 +209,7 @@ if (chartLive && chartSlides && window.Swiper) {
     effect: "coverflow",
     grabCursor: true,
     centeredSlides: true,
-    slidesPerView: 4.15,
+    slidesPerView: 3.2,
     initialSlide: 2,
     spaceBetween: 12,
     speed: 700,
@@ -235,9 +235,9 @@ if (chartLive && chartSlides && window.Swiper) {
       prevEl: "#home-chart-live .swiper-button-prev",
     },
     breakpoints: {
-      0: { slidesPerView: 1.45 },
-      700: { slidesPerView: 2.6 },
-      980: { slidesPerView: 4.15 },
+      0: { slidesPerView: 1.28 },
+      700: { slidesPerView: 2.15 },
+      980: { slidesPerView: 3.2 },
     },
     on: {
       slideChange() {
