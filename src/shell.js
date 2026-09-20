@@ -61,7 +61,6 @@ function headerHtml() {
         <button class="lang-toggle" type="button" id="lang-toggle" data-i18n="langBtn"></button>
       </div>
     </div>
-    <div class="banner" data-i18n="banner"></div>
   `;
 }
 
