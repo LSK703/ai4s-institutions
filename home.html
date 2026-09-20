@@ -180,6 +180,132 @@
           background: var(--ink);
           opacity: 1;
         }
+        .stats.stats-orbs {
+          display: grid;
+          grid-template-columns: repeat(4, minmax(0, 1fr));
+          gap: 1.2rem 1rem;
+          margin: 0.4rem 0 2.2rem;
+          padding: 1.4rem 0 1.8rem;
+          justify-items: center;
+          overflow: visible;
+        }
+        .stats.stats-orbs .stat {
+          --tilt-x: 0deg;
+          --tilt-y: 0deg;
+          position: relative;
+          width: min(11.6rem, 100%);
+          aspect-ratio: 1;
+          padding: 0;
+          border: 0;
+          background: transparent;
+          perspective: 700px;
+          animation: orb-float 4.8s ease-in-out infinite;
+        }
+        .stats.stats-orbs .stat:nth-child(1) { animation-delay: 0s; }
+        .stats.stats-orbs .stat:nth-child(2) { animation-delay: 0.7s; }
+        .stats.stats-orbs .stat:nth-child(3) { animation-delay: 1.3s; }
+        .stats.stats-orbs .stat:nth-child(4) { animation-delay: 2s; }
+        .stats.stats-orbs .stat-core {
+          position: relative;
+          z-index: 1;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          width: 100%;
+          height: 100%;
+          border-radius: 50%;
+          text-align: center;
+          padding: 1.15rem 0.85rem;
+          color: var(--ink);
+          background:
+            radial-gradient(circle at 30% 24%, rgba(255, 255, 255, 0.42), transparent 32%),
+            radial-gradient(circle at 50% 100%, rgba(80, 160, 210, 0.18), transparent 55%),
+            linear-gradient(160deg, rgba(180, 220, 245, 0.16), rgba(20, 40, 60, 0.12) 58%, rgba(126, 182, 212, 0.1));
+          border: 1px solid rgba(255, 255, 255, 0.28);
+          box-shadow:
+            inset 8px 10px 18px rgba(255, 255, 255, 0.18),
+            inset -10px -14px 22px rgba(10, 30, 50, 0.28),
+            0 14px 28px rgba(0, 0, 0, 0.22);
+          backdrop-filter: blur(14px);
+          -webkit-backdrop-filter: blur(14px);
+          transform: rotateX(var(--tilt-x)) rotateY(var(--tilt-y));
+          transform-style: preserve-3d;
+          transition: transform 0.2s ease, box-shadow 0.35s ease, filter 0.35s ease;
+        }
+        .stats.stats-orbs .stat::after {
+          content: "";
+          position: absolute;
+          inset: -12%;
+          border-radius: 50%;
+          background: radial-gradient(circle, rgba(126, 182, 212, 0.42), transparent 68%);
+          filter: blur(10px);
+          z-index: 0;
+          animation: orb-glow 3.6s ease-in-out infinite;
+          pointer-events: none;
+        }
+        .stats.stats-orbs .stat:nth-child(2)::after { animation-delay: 0.5s; }
+        .stats.stats-orbs .stat:nth-child(3)::after { animation-delay: 1.1s; }
+        .stats.stats-orbs .stat:nth-child(4)::after { animation-delay: 1.8s; }
+        .stats.stats-orbs .stat b {
+          font-size: clamp(1.15rem, 2.4vw, 1.55rem);
+          color: var(--stat);
+          text-shadow: 0 0 12px rgba(126, 182, 212, 0.55);
+          line-height: 1.15;
+        }
+        .stats.stats-orbs .stat span {
+          margin-top: 0.35rem;
+          max-width: 9rem;
+          font-size: 0.72rem;
+          line-height: 1.3;
+          color: var(--muted);
+        }
+        .stats.stats-orbs .stat:hover .stat-core,
+        .stats.stats-orbs .stat:focus-within .stat-core {
+          filter: brightness(1.16);
+          box-shadow:
+            inset 8px 10px 18px rgba(255, 255, 255, 0.28),
+            inset -10px -14px 22px rgba(10, 30, 50, 0.22),
+            0 18px 36px rgba(0, 0, 0, 0.28),
+            0 0 28px rgba(126, 182, 212, 0.7),
+            0 0 54px rgba(126, 182, 212, 0.35);
+        }
+        .stats.stats-orbs .stat:hover::after,
+        .stats.stats-orbs .stat:focus-within::after {
+          opacity: 1;
+          filter: blur(8px) brightness(1.35);
+        }
+        [data-theme="light"] .stats.stats-orbs .stat-core {
+          background:
+            radial-gradient(circle at 30% 24%, rgba(255, 255, 255, 0.92), transparent 34%),
+            radial-gradient(circle at 50% 100%, rgba(90, 170, 220, 0.16), transparent 58%),
+            linear-gradient(160deg, rgba(255, 255, 255, 0.42), rgba(170, 210, 235, 0.22));
+          border-color: rgba(255, 255, 255, 0.85);
+          box-shadow:
+            inset 8px 10px 16px rgba(255, 255, 255, 0.7),
+            inset -8px -12px 18px rgba(80, 130, 170, 0.16),
+            0 12px 26px rgba(40, 80, 120, 0.14);
+        }
+        [data-theme="light"] .stats.stats-orbs .stat::after {
+          background: radial-gradient(circle, rgba(90, 170, 220, 0.38), transparent 68%);
+        }
+        @keyframes orb-float {
+          0%, 100% { transform: translateY(0); }
+          50% { transform: translateY(-0.7rem); }
+        }
+        @keyframes orb-glow {
+          0%, 100% { opacity: 0.55; transform: scale(0.92); }
+          50% { opacity: 1; transform: scale(1.08); }
+        }
+        @media (max-width: 980px) {
+          .stats.stats-orbs { grid-template-columns: 1fr 1fr; }
+        }
+        @media (prefers-reduced-motion: reduce) {
+          .stats.stats-orbs .stat,
+          .stats.stats-orbs .stat::after {
+            animation: none;
+          }
+        }
       </style>
 
       <div class="ed-home">
@@ -226,11 +352,11 @@
         </section>
       </div>
 
-      <div class="stats">
-        <div class="stat"><b id="stat-n">—</b><span data-i18n="statN"></span></div>
-        <div class="stat"><b id="stat-c">—</b><span data-i18n="statC"></span></div>
-        <div class="stat"><b>2024</b><span data-i18n="statY"></span></div>
-        <div class="stat"><b data-i18n="statSValue">Education</b><span data-i18n="statS"></span></div>
+      <div class="stats stats-orbs">
+        <div class="stat"><div class="stat-core"><b id="stat-n">—</b><span data-i18n="statN"></span></div></div>
+        <div class="stat"><div class="stat-core"><b id="stat-c">—</b><span data-i18n="statC"></span></div></div>
+        <div class="stat"><div class="stat-core"><b>2024</b><span data-i18n="statY"></span></div></div>
+        <div class="stat"><div class="stat-core"><b data-i18n="statSValue">Education</b><span data-i18n="statS"></span></div></div>
       </div>
 
       <div class="principles">
@@ -263,6 +389,6 @@
     </main>
     <div id="site-footer"></div>
     <script src="vendor/swiper/swiper-bundle.min.js"></script>
-    <script type="module" src="src/pages/home.js?v=ed15"></script>
+    <script type="module" src="src/pages/home.js?v=ed16"></script>
   </body>
 </html>
