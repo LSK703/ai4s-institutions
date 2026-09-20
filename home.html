@@ -15,8 +15,7 @@
     <main class="wrap">
       <style>
         .ed-home { padding: 2.6rem 0 0; }
-        .ed-home + .stats { margin-top: 2.4rem; }
-        .ed-hero { padding: 0 0 3.1rem; border-bottom: 1px solid var(--line); }
+        .ed-hero { padding: 0 0 0.6rem; }
         .ed-mark,
         .ed-num {
           margin: 0 0 1.15rem;
@@ -187,9 +186,10 @@
           justify-content: center;
           gap: 0.4rem 2.4rem;
           min-height: 17.5rem;
-          margin: 0.2rem 0 2.4rem;
-          padding: 1.1rem 0 2.2rem;
+          margin: 0.8rem 0 0;
+          padding: 1.4rem 0 2.6rem;
           overflow: visible;
+          border-bottom: 1px solid var(--line);
         }
         .stats.stats-orbs .stat {
           --tilt-x: 0deg;
@@ -427,6 +427,13 @@
           <p class="ed-meta" data-i18n-html="edHeroMeta"></p>
         </header>
 
+        <div class="stats stats-orbs">
+          <div class="stat"><div class="stat-core"><div class="stat-blob" aria-hidden="true"></div><div class="stat-inner"><b id="stat-n">—</b><span data-i18n="statN"></span></div></div></div>
+          <div class="stat"><div class="stat-core"><div class="stat-blob" aria-hidden="true"></div><div class="stat-inner"><b id="stat-c">—</b><span data-i18n="statC"></span></div></div></div>
+          <div class="stat"><div class="stat-core"><div class="stat-blob" aria-hidden="true"></div><div class="stat-inner"><b>2024</b><span data-i18n="statY"></span></div></div></div>
+          <div class="stat"><div class="stat-core"><div class="stat-blob" aria-hidden="true"></div><div class="stat-inner"><b data-i18n="statSValue">Education</b><span data-i18n="statS"></span></div></div></div>
+        </div>
+
         <section class="ed-sec">
           <p class="ed-num" data-i18n="ed01Num"></p>
           <h2 data-i18n="ed01Title"></h2>
@@ -462,13 +469,6 @@
           <h2 data-i18n-html="ed04Title"></h2>
           <a class="ed-link" href="explore/compare.html" data-i18n="ed04Link"></a>
         </section>
-      </div>
-
-      <div class="stats stats-orbs">
-        <div class="stat"><div class="stat-core"><div class="stat-blob" aria-hidden="true"></div><div class="stat-inner"><b id="stat-n">—</b><span data-i18n="statN"></span></div></div></div>
-        <div class="stat"><div class="stat-core"><div class="stat-blob" aria-hidden="true"></div><div class="stat-inner"><b id="stat-c">—</b><span data-i18n="statC"></span></div></div></div>
-        <div class="stat"><div class="stat-core"><div class="stat-blob" aria-hidden="true"></div><div class="stat-inner"><b>2024</b><span data-i18n="statY"></span></div></div></div>
-        <div class="stat"><div class="stat-core"><div class="stat-blob" aria-hidden="true"></div><div class="stat-inner"><b data-i18n="statSValue">Education</b><span data-i18n="statS"></span></div></div></div>
       </div>
 
       <div class="principles">
