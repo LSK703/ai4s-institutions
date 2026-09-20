@@ -317,4 +317,32 @@ if (prinCube && prinPag && window.Swiper) {
   prinCube.addEventListener("mouseleave", () => sw.autoplay?.start());
 }
 
+function revealOnScroll() {
+  const nodes = [
+    ...document.querySelectorAll(".ed-reveal"),
+    document.querySelector(".site-footer"),
+  ].filter(Boolean);
+  nodes.forEach((el) => {
+    if (!el.classList.contains("ed-reveal")) {
+      el.classList.add("ed-reveal", "ed-reveal-fade");
+    }
+  });
+  if (!document.documentElement.classList.contains("ed-motion")) {
+    nodes.forEach((el) => el.classList.add("is-in"));
+    return;
+  }
+  const io = new IntersectionObserver(
+    (entries) => {
+      for (const entry of entries) {
+        if (!entry.isIntersecting) continue;
+        entry.target.classList.add("is-in");
+        io.unobserve(entry.target);
+      }
+    },
+    { threshold: 0.14, rootMargin: "0px 0px -10% 0px" }
+  );
+  nodes.forEach((el) => io.observe(el));
+}
+revealOnScroll();
+
 

@@ -5,6 +5,9 @@
     <script>
       document.documentElement.dataset.theme =
         localStorage.getItem("ai4s-theme") === "light" ? "light" : "dark";
+      if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+        document.documentElement.classList.add("ed-motion");
+      }
     </script>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>AI4S Institutions Open Edition</title>
@@ -96,6 +99,29 @@
         }
         .ed-sec { padding: 3rem 0; border-bottom: 1px solid var(--line); }
         .ed-sec:last-child { border-bottom: 0; }
+        html.ed-motion .ed-reveal {
+          opacity: 0;
+          transform: translate3d(0, 1.6rem, 0);
+          transition:
+            opacity 0.95s cubic-bezier(0.22, 1, 0.36, 1),
+            transform 0.95s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+        html.ed-motion .ed-reveal-fade { transform: none; }
+        html.ed-motion .ed-reveal.is-in {
+          opacity: 1;
+          transform: none;
+        }
+        html.ed-motion .ed-hero.ed-reveal { transition-delay: 0.04s; }
+        html.ed-motion .principles-cube.ed-reveal { transition-delay: 0.18s; }
+        html.ed-motion .stats-orbs.ed-reveal .stat {
+          opacity: 0;
+          transition: opacity 0.85s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+        html.ed-motion .stats-orbs.ed-reveal.is-in .stat { opacity: 1; }
+        html.ed-motion .stats-orbs.ed-reveal.is-in .stat:nth-child(1) { transition-delay: 0.06s; }
+        html.ed-motion .stats-orbs.ed-reveal.is-in .stat:nth-child(2) { transition-delay: 0.16s; }
+        html.ed-motion .stats-orbs.ed-reveal.is-in .stat:nth-child(3) { transition-delay: 0.26s; }
+        html.ed-motion .stats-orbs.ed-reveal.is-in .stat:nth-child(4) { transition-delay: 0.36s; }
         .ed-sec h2 {
           margin: 0 0 0.85rem;
           max-width: 24rem;
@@ -584,13 +610,13 @@
       <div class="ed-home">
         <div class="ed-stage">
         <div class="ed-top">
-        <header class="ed-hero">
+        <header class="ed-hero ed-reveal">
           <p class="ed-mark" data-i18n="edMark"></p>
           <h1 data-i18n-html="edHeroTitle"></h1>
           <p class="ed-meta" data-i18n-html="edHeroMeta"></p>
         </header>
 
-        <div class="principles principles-cube">
+        <div class="principles principles-cube ed-reveal ed-reveal-fade">
           <div class="swiper" id="prin-cube">
             <div class="swiper-wrapper">
               <div class="swiper-slide">
@@ -620,7 +646,7 @@
         </div>
         </div>
 
-        <div class="stats stats-orbs">
+        <div class="stats stats-orbs ed-reveal ed-reveal-fade">
           <div class="stat"><div class="stat-core"><div class="stat-blob" aria-hidden="true"></div><div class="stat-inner"><b id="stat-n">—</b><span data-i18n="statN"></span></div></div></div>
           <div class="stat"><div class="stat-core"><div class="stat-blob" aria-hidden="true"></div><div class="stat-inner"><b id="stat-c">—</b><span data-i18n="statC"></span></div></div></div>
           <div class="stat"><div class="stat-core"><div class="stat-blob" aria-hidden="true"></div><div class="stat-inner"><b>2024</b><span data-i18n="statY"></span></div></div></div>
@@ -628,14 +654,14 @@
         </div>
         </div>
 
-        <section class="ed-sec">
+        <section class="ed-sec ed-reveal">
           <p class="ed-num" data-i18n="ed01Num"></p>
           <h2 data-i18n="ed01Title"></h2>
           <p data-i18n="ed01Body"></p>
           <a class="ed-link" href="explore/list.html" data-i18n="ed01Link"></a>
         </section>
 
-        <section class="ed-sec">
+        <section class="ed-sec ed-reveal">
           <p class="ed-num" data-i18n="ed02Num"></p>
           <h2 data-i18n="ed02Title"></h2>
           <div class="ed-live swiper" id="home-chart-live">
@@ -649,7 +675,7 @@
           <a class="ed-link" href="explore/chart.html" data-i18n="ed02Link"></a>
         </section>
 
-        <section class="ed-sec">
+        <section class="ed-sec ed-reveal">
           <p class="ed-num" data-i18n="ed03Num"></p>
           <h2 data-i18n="ed03Title"></h2>
           <div class="ed-live" id="home-map-live">
@@ -658,7 +684,7 @@
           <a class="ed-link" href="explore/map.html" data-i18n="ed03Link"></a>
         </section>
 
-        <section class="ed-sec">
+        <section class="ed-sec ed-reveal">
           <p class="ed-num" data-i18n="ed04Num"></p>
           <h2 data-i18n-html="ed04Title"></h2>
           <a class="ed-link" href="explore/compare.html" data-i18n="ed04Link"></a>
@@ -667,6 +693,6 @@
     </main>
     <div id="site-footer"></div>
     <script src="vendor/swiper/swiper-bundle.min.js"></script>
-    <script type="module" src="src/pages/home.js?v=ed23"></script>
+    <script type="module" src="src/pages/home.js?v=ed24"></script>
   </body>
 </html>
