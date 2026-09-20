@@ -1,4 +1,4 @@
-import "../shell.js?v=sign1";
+import "../shell.js?v=sign2";
 
 const SIGNS = ["data", "indicators", "institutions", "use"];
 
@@ -32,6 +32,32 @@ function selectSign(id) {
   placePeek(id);
 }
 
+const stacks = new Map();
+
+function initStacks(panelEl) {
+  if (!panelEl || !window.Swiper) return;
+  panelEl.querySelectorAll(".info-stack").forEach((el) => {
+    const existing = stacks.get(el);
+    if (existing) {
+      existing.update();
+      return;
+    }
+    const sw = new window.Swiper(el, {
+      effect: "cards",
+      grabCursor: true,
+      rewind: true,
+      speed: 650,
+      cardsEffect: {
+        perSlideOffset: 10,
+        perSlideRotate: 1.6,
+        rotate: true,
+        slideShadows: true,
+      },
+    });
+    stacks.set(el, sw);
+  });
+}
+
 function showPanel(id) {
   SIGNS.forEach((key) => {
     const el = panel(key);
@@ -42,6 +68,7 @@ function showPanel(id) {
     history.replaceState(null, "", `#${id}`);
   }
   requestAnimationFrame(() => {
+    initStacks(panel(id));
     panel(id)?.scrollIntoView({ behavior: "smooth", block: "start" });
   });
 }
