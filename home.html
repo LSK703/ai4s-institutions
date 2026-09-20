@@ -198,7 +198,7 @@
           --rest-y: -8deg;
           --blob-from: var(--accent-strong);
           --blob-mid: var(--accent);
-          --blob-to: var(--surface-2);
+          --blob-to: var(--accent-strong);
           position: relative;
           flex: 0 0 auto;
           aspect-ratio: 1;
@@ -223,9 +223,9 @@
           animation-duration: 6.2s;
           --rest-x: 18deg;
           --rest-y: 8deg;
-          --blob-from: var(--accent);
-          --blob-mid: var(--accent-strong);
-          --blob-to: var(--surface);
+          --blob-from: var(--accent-strong);
+          --blob-mid: var(--accent);
+          --blob-to: var(--accent);
         }
         .stats.stats-orbs .stat:nth-child(3) {
           width: min(13.6rem, 44vw);
@@ -234,9 +234,9 @@
           animation-duration: 5.8s;
           --rest-x: 11deg;
           --rest-y: -4deg;
-          --blob-from: var(--ink);
+          --blob-from: var(--accent-strong);
           --blob-mid: var(--accent);
-          --blob-to: var(--surface-2);
+          --blob-to: var(--accent);
         }
         .stats.stats-orbs .stat:nth-child(4) {
           width: min(10.4rem, 36vw);
@@ -245,8 +245,8 @@
           animation-duration: 4.7s;
           --rest-x: 16deg;
           --rest-y: 10deg;
-          --blob-from: var(--accent-strong);
-          --blob-mid: var(--surface-2);
+          --blob-from: var(--accent);
+          --blob-mid: var(--accent-strong);
           --blob-to: var(--accent);
         }
         .stats.stats-orbs .stat-core {
@@ -264,21 +264,20 @@
           z-index: 1;
           border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
           background:
-            radial-gradient(circle at 30% 26%, color-mix(in srgb, var(--ink) 20%, transparent), transparent 36%),
+            radial-gradient(circle at 30% 24%, rgba(255, 255, 255, 0.38), transparent 38%),
             linear-gradient(
               150deg,
-              color-mix(in srgb, var(--blob-from) 58%, transparent),
-              color-mix(in srgb, var(--blob-mid) 48%, transparent) 48%,
-              color-mix(in srgb, var(--blob-to) 52%, transparent)
+              color-mix(in srgb, var(--blob-from) 82%, white),
+              color-mix(in srgb, var(--blob-mid) 70%, white) 48%,
+              color-mix(in srgb, var(--blob-to) 78%, white)
             );
           box-shadow:
-            inset 12px 16px 20px color-mix(in srgb, var(--ink) 16%, transparent),
-            inset -14px -18px 26px color-mix(in srgb, var(--surface) 55%, transparent),
-            0 18px 28px rgba(8, 16, 28, 0.28),
-            0 0 28px color-mix(in srgb, var(--accent) 22%, transparent);
-          backdrop-filter: blur(12px) saturate(1.12);
-          -webkit-backdrop-filter: blur(12px) saturate(1.12);
-          transform: translateZ(18px);
+            inset 12px 16px 20px rgba(255, 255, 255, 0.28),
+            inset -12px -16px 22px color-mix(in srgb, var(--accent) 22%, transparent),
+            0 16px 28px rgba(8, 16, 28, 0.18),
+            0 0 26px color-mix(in srgb, var(--accent) 28%, transparent);
+          opacity: 0.88;
+          transform: translateZ(0);
           animation: blob-morph 8s ease-in-out infinite;
         }
         .stats.stats-orbs .stat:nth-child(2) .stat-blob {
@@ -294,8 +293,9 @@
           animation-delay: -1.3s;
         }
         .stats.stats-orbs .stat-inner {
-          position: relative;
-          z-index: 2;
+          position: absolute;
+          inset: 0;
+          z-index: 3;
           display: flex;
           flex-direction: column;
           align-items: center;
@@ -305,7 +305,7 @@
           text-align: center;
           padding: 1.2rem 0.9rem;
           pointer-events: none;
-          transform: translateZ(6px);
+          transform: translateZ(28px);
         }
         .stats.stats-orbs .stat::before {
           content: "";
@@ -347,7 +347,7 @@
           font-size: clamp(1.05rem, 2.2vw, 1.5rem);
           color: var(--stat);
           letter-spacing: 0.02em;
-          text-shadow: 0 1px 10px rgba(8, 16, 28, 0.28);
+          text-shadow: 0 1px 8px rgba(8, 16, 28, 0.35);
           line-height: 1.12;
         }
         .stats.stats-orbs .stat-inner span {
@@ -356,7 +356,6 @@
           font-size: 0.7rem;
           line-height: 1.3;
           color: var(--ink);
-          opacity: 0.82;
         }
         .stats.stats-orbs .stat:nth-child(2) .stat-inner b,
         .stats.stats-orbs .stat:nth-child(4) .stat-inner b {
@@ -365,10 +364,10 @@
         .stats.stats-orbs .stat:hover .stat-blob,
         .stats.stats-orbs .stat:focus-within .stat-blob {
           box-shadow:
-            inset 12px 16px 20px color-mix(in srgb, var(--ink) 18%, transparent),
-            inset -14px -18px 26px color-mix(in srgb, var(--surface) 50%, transparent),
-            0 20px 32px rgba(8, 16, 28, 0.3),
-            0 0 26px color-mix(in srgb, var(--accent) 26%, transparent);
+            inset 12px 16px 20px rgba(255, 255, 255, 0.32),
+            inset -12px -16px 22px color-mix(in srgb, var(--accent) 18%, transparent),
+            0 18px 30px rgba(8, 16, 28, 0.2),
+            0 0 24px color-mix(in srgb, var(--accent) 32%, transparent);
         }
         [data-theme="light"] .stats.stats-orbs .stat::before {
           background: radial-gradient(ellipse, rgba(31, 90, 134, 0.16), transparent 72%);
