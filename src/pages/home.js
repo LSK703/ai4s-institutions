@@ -209,15 +209,15 @@ if (chartLive && chartSlides && window.Swiper) {
     effect: "coverflow",
     grabCursor: true,
     centeredSlides: true,
-    slidesPerView: 5,
+    slidesPerView: 4.15,
     initialSlide: 2,
-    spaceBetween: 10,
+    spaceBetween: 12,
     speed: 700,
     rewind: true,
     coverflowEffect: {
-      rotate: 18,
+      rotate: 16,
       stretch: 0,
-      depth: 140,
+      depth: 150,
       modifier: 1,
       slideShadows: false,
     },
@@ -235,9 +235,9 @@ if (chartLive && chartSlides && window.Swiper) {
       prevEl: "#home-chart-live .swiper-button-prev",
     },
     breakpoints: {
-      0: { slidesPerView: 1.35 },
-      700: { slidesPerView: 3 },
-      980: { slidesPerView: 5 },
+      0: { slidesPerView: 1.45 },
+      700: { slidesPerView: 2.6 },
+      980: { slidesPerView: 4.15 },
     },
     on: {
       slideChange() {
