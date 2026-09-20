@@ -75,17 +75,38 @@
           overflow: hidden;
         }
         #home-chart-live {
-          max-width: 26rem;
-          aspect-ratio: 1000 / 520;
+          --slide-w: min(22rem, 78vw);
+          --slide-h: calc(var(--slide-w) * 520 / 1000);
+          max-width: none;
+          width: 100%;
+          height: var(--slide-h);
+          aspect-ratio: auto;
           margin-top: 1.15rem;
+          overflow: hidden;
+          -webkit-mask-image: linear-gradient(to right, #000 0%, #000 82%, transparent 100%);
+          mask-image: linear-gradient(to right, #000 0%, #000 82%, transparent 100%);
         }
         #home-chart-live.swiper {
           margin-left: 0;
           margin-right: 0;
         }
-        #home-chart-live .swiper-wrapper,
+        #home-chart-live .swiper-wrapper {
+          align-items: center;
+        }
         #home-chart-live .swiper-slide {
-          height: 100%;
+          width: var(--slide-w);
+          height: var(--slide-h);
+          opacity: 0.42;
+          filter: saturate(0.7);
+          transform: scale(0.92);
+          transform-origin: center center;
+          transition: opacity 0.45s ease, transform 0.45s ease, filter 0.45s ease;
+        }
+        #home-chart-live .swiper-slide-active {
+          opacity: 1;
+          filter: none;
+          transform: scale(1);
+          z-index: 2;
         }
         .ed-live iframe {
           display: block;
@@ -199,6 +220,6 @@
     </main>
     <div id="site-footer"></div>
     <script src="vendor/swiper/swiper-bundle.min.js"></script>
-    <script type="module" src="src/pages/home.js?v=ed8"></script>
+    <script type="module" src="src/pages/home.js?v=ed9"></script>
   </body>
 </html>

@@ -49,9 +49,9 @@ function fitChart(iframe, fit) {
   const doc = iframe.contentDocument;
   const win = iframe.contentWindow;
   if (!doc?.documentElement || !win) return;
-  const box = chartLive || iframe;
-  const w = Math.max(160, Math.round(box.clientWidth || iframe.clientWidth));
-  const h = Math.max(110, Math.round(box.clientHeight || iframe.clientHeight));
+  const box = iframe.parentElement || iframe;
+  const w = Math.max(160, Math.round(iframe.clientWidth || box.clientWidth));
+  const h = Math.max(110, Math.round(iframe.clientHeight || box.clientHeight));
   let style = doc.getElementById("home-fit");
   if (!style) {
     style = doc.createElement("style");
@@ -208,8 +208,12 @@ if (chartLive && chartSlides && window.Swiper) {
   setCaption(0);
 
   const swiper = new window.Swiper(chartLive, {
-    speed: 520,
+    speed: 620,
     rewind: true,
+    slidesPerView: "auto",
+    spaceBetween: 18,
+    grabCursor: true,
+    watchSlidesProgress: true,
     autoplay: {
       delay: 8000,
       disableOnInteraction: false,
@@ -225,12 +229,17 @@ if (chartLive && chartSlides && window.Swiper) {
         setCaption(i);
         loadSlide(i);
         loadSlide((i + 1) % slides.length);
+        loadSlide((i + slides.length - 1) % slides.length);
       },
       slideChangeTransitionEnd() {
         fitActive(this.realIndex);
       },
+      resize() {
+        slides.forEach((_, i) => fitActive(i));
+      },
     },
   });
+  slides.forEach((_, i) => loadSlide(i));
   chartLive.addEventListener("mouseenter", () => swiper.autoplay?.stop());
   chartLive.addEventListener("mouseleave", () => swiper.autoplay?.start());
 }
