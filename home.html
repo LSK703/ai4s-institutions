@@ -75,39 +75,42 @@
           overflow: hidden;
         }
         #home-chart-live {
-          --slide-w: min(22rem, 78vw);
-          --slide-h: calc(var(--slide-w) * 520 / 1000);
           max-width: none;
           width: 100%;
-          height: var(--slide-h);
+          height: 13.5rem;
           aspect-ratio: auto;
           margin-top: 1.15rem;
-          overflow: hidden;
-          -webkit-mask-image: linear-gradient(to right, #000 0%, #000 82%, transparent 100%);
-          mask-image: linear-gradient(to right, #000 0%, #000 82%, transparent 100%);
+          overflow: visible;
+          perspective: 1100px;
         }
         #home-chart-live.swiper {
           margin-left: 0;
           margin-right: 0;
         }
         #home-chart-live .swiper-wrapper {
-          align-items: center;
+          align-items: stretch;
         }
         #home-chart-live .swiper-slide {
-          width: var(--slide-w);
-          height: var(--slide-h);
-          opacity: 0.42;
-          filter: saturate(0.7);
-          transform: scale(0.92);
-          transform-origin: center center;
-          transition: opacity 0.45s ease, transform 0.45s ease, filter 0.45s ease;
+          width: auto;
+          height: 13.5rem;
+          background: #fff;
         }
-        #home-chart-live .swiper-slide-active {
-          opacity: 1;
-          filter: none;
-          transform: scale(1);
-          z-index: 2;
+        #home-chart-live .swiper-button-prev,
+        #home-chart-live .swiper-button-next {
+          color: var(--ink);
+          width: 2rem;
+          height: 2rem;
+          margin-top: 0;
+          top: 50%;
+          transform: translateY(-50%);
         }
+        #home-chart-live .swiper-button-prev::after,
+        #home-chart-live .swiper-button-next::after {
+          font-size: 1.15rem;
+          font-weight: 700;
+        }
+        #home-chart-live .swiper-button-prev { left: -0.2rem; }
+        #home-chart-live .swiper-button-next { right: -0.2rem; }
         .ed-live iframe {
           display: block;
           width: 100%;
@@ -125,19 +128,21 @@
           width: auto;
           transform: none;
           display: flex;
-          gap: 0.4rem;
-          margin: 0 0 0.35rem;
+          justify-content: center;
+          gap: 0.45rem;
+          margin: 0.85rem 0 0.35rem;
         }
         #home-chart-dots .swiper-pagination-bullet {
-          width: 1.55rem;
-          height: 2px;
+          width: 0.45rem;
+          height: 0.45rem;
           margin: 0 !important;
-          border-radius: 0;
-          background: var(--line);
-          opacity: 1;
+          border-radius: 50%;
+          background: var(--muted);
+          opacity: 0.4;
         }
         #home-chart-dots .swiper-pagination-bullet-active {
           background: var(--ink);
+          opacity: 1;
         }
       </style>
 
@@ -160,6 +165,8 @@
           <h2 data-i18n="ed02Title"></h2>
           <div class="ed-live swiper" id="home-chart-live">
             <div class="swiper-wrapper" id="home-chart-slides"></div>
+            <div class="swiper-button-prev"></div>
+            <div class="swiper-button-next"></div>
           </div>
           <div class="swiper-pagination" id="home-chart-dots"></div>
           <p class="ed-caption" data-i18n="ed02Caption"></p>
@@ -220,6 +227,6 @@
     </main>
     <div id="site-footer"></div>
     <script src="vendor/swiper/swiper-bundle.min.js"></script>
-    <script type="module" src="src/pages/home.js?v=ed9"></script>
+    <script type="module" src="src/pages/home.js?v=ed10"></script>
   </body>
 </html>

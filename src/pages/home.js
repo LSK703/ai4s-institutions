@@ -203,17 +203,24 @@ if (chartLive && chartSlides && window.Swiper) {
     )
     .join("");
   chartSlides.querySelectorAll("iframe").forEach(watchIframe);
-  loadSlide(0);
-  loadSlide(1);
-  setCaption(0);
+  setCaption(2);
 
   const swiper = new window.Swiper(chartLive, {
-    speed: 620,
-    rewind: true,
-    slidesPerView: "auto",
-    spaceBetween: 18,
+    effect: "coverflow",
     grabCursor: true,
-    watchSlidesProgress: true,
+    centeredSlides: true,
+    slidesPerView: 5,
+    initialSlide: 2,
+    spaceBetween: 10,
+    speed: 700,
+    rewind: true,
+    coverflowEffect: {
+      rotate: 18,
+      stretch: 0,
+      depth: 140,
+      modifier: 1,
+      slideShadows: false,
+    },
     autoplay: {
       delay: 8000,
       disableOnInteraction: false,
@@ -222,6 +229,15 @@ if (chartLive && chartSlides && window.Swiper) {
     pagination: {
       el: "#home-chart-dots",
       clickable: true,
+    },
+    navigation: {
+      nextEl: "#home-chart-live .swiper-button-next",
+      prevEl: "#home-chart-live .swiper-button-prev",
+    },
+    breakpoints: {
+      0: { slidesPerView: 1.35 },
+      700: { slidesPerView: 3 },
+      980: { slidesPerView: 5 },
     },
     on: {
       slideChange() {
