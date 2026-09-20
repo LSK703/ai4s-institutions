@@ -104,14 +104,49 @@ function fitChart(iframe, fit) {
   `;
   const Plotly = win.Plotly;
   if (!Plotly?.relayout) return;
+  const scale = Math.max(0.38, Math.min(0.5, h / 520));
+  const shrink = (v, min) => (typeof v === "number" ? Math.max(min, v * scale) : v);
   const margin = fit === "axes" ? { l: 42, r: 8, t: 8, b: 36 } : { l: 34, r: 8, t: 6, b: 28 };
   doc.querySelectorAll(".js-plotly-plot").forEach((gd) => {
-    Plotly.relayout(gd, {
+    const traces = gd.data || [];
+    if (!gd._homeOrig || !gd._homeOrig.sizes.length) {
+      if (!traces.length) return;
+      gd._homeOrig = {
+        sizes: traces.map((tr) => {
+          const s = tr.marker?.size;
+          return Array.isArray(s) ? s.slice() : s;
+        }),
+        lineW: traces.map((tr) => tr.marker?.line?.width),
+        font: gd.layout?.font?.size,
+        tick: gd.layout?.xaxis?.tickfont?.size || gd.layout?.font?.size,
+        title: gd.layout?.xaxis?.title?.font?.size,
+        anns: (gd.layout?.annotations || []).map((a) => a.font?.size),
+      };
+    }
+    const orig = gd._homeOrig;
+    const patch = {
       autosize: false,
       width: w,
       height: h,
       margin,
       showlegend: false,
+      "font.size": shrink(orig.font || 11, 7),
+      "xaxis.tickfont.size": shrink(orig.tick || 10, 7),
+      "yaxis.tickfont.size": shrink(orig.tick || 10, 7),
+      "xaxis.title.font.size": shrink(orig.title || 11, 8),
+      "yaxis.title.font.size": shrink(orig.title || 11, 8),
+    };
+    orig.anns.forEach((sz, i) => {
+      patch[`annotations[${i}].font.size`] = shrink(sz || 10, 6);
+    });
+    Plotly.relayout(gd, patch).catch(() => {});
+    Plotly.restyle(gd, {
+      "marker.size": orig.sizes.map((s) =>
+        Array.isArray(s) ? s.map((n) => shrink(Number(n) || 6, 2.2)) : shrink(s, 2.2)
+      ),
+      "marker.line.width": orig.lineW.map((n) =>
+        typeof n === "number" ? Math.max(0.2, n * scale) : n
+      ),
     }).catch(() => {});
   });
 }
