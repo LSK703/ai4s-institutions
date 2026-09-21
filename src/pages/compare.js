@@ -1,5 +1,5 @@
 import "../shell.js?v=sign3";
-import { getLocale, t } from "../i18n.js?v=ed5";
+import { getLocale, t } from "../i18n.js?v=ed6";
 import { figureUrl } from "../paths.js";
 
 const LIVE = {
@@ -17,7 +17,7 @@ const tabNote = document.getElementById("compare-tab-note");
 
 function srcFor(spec) {
   if (spec.figure) {
-    return figureUrl(spec.figure, { embed: "1", lang: locale, v: "d1" });
+    return figureUrl(spec.figure, { embed: "1", lang: locale, v: "d2" });
   }
   return figureUrl("ch03_institutions.html", {
     embed: "1",
@@ -35,10 +35,12 @@ function isMixFrame() {
 function fitCompareFrame() {
   const mix = isMixFrame();
   const PLOT_H = 900;
+  const SYS_H = 280;
+  const UNI_H = 520;
   const grow = () => {
     try {
-      frame.style.height = "1200px";
-      frame.style.minHeight = "1200px";
+      frame.style.height = mix ? "1480px" : "1200px";
+      frame.style.minHeight = mix ? "1480px" : "1200px";
       frame.style.maxHeight = "none";
       const doc = frame.contentDocument;
       if (!doc) return;
@@ -51,27 +53,30 @@ function fitCompareFrame() {
       style.textContent = mix
         ? `
         html, body { overflow: visible !important; height: auto !important; max-height: none !important; }
-        #plot { height: ${PLOT_H}px !important; max-height: none !important; }
+        #plot-sys { height: ${SYS_H}px !important; max-height: none !important; }
+        #plot-cn, #plot-gb { height: ${UNI_H}px !important; max-height: none !important; }
       `
         : `
         html, body { overflow: visible !important; height: auto !important; max-height: none !important; }
         #plot-cn, #plot-gb, .plot { height: ${PLOT_H}px !important; max-height: none !important; }
       `;
       const Plotly = frame.contentWindow?.Plotly;
-      const ids = mix ? ["plot"] : ["plot-cn", "plot-gb"];
-      ids.forEach((id) => {
+      const ids = mix
+        ? [["plot-sys", SYS_H], ["plot-cn", UNI_H], ["plot-gb", UNI_H]]
+        : [["plot-cn", PLOT_H], ["plot-gb", PLOT_H]];
+      ids.forEach(([id, h]) => {
         const gd = doc.getElementById(id);
         if (!gd) return;
-        gd.style.height = `${PLOT_H}px`;
-        if (Plotly?.relayout) Plotly.relayout(gd, { height: PLOT_H, autosize: true });
+        gd.style.height = `${h}px`;
+        if (Plotly?.relayout) Plotly.relayout(gd, { height: h, autosize: true });
         else if (Plotly?.Plots?.resize) Plotly.Plots.resize(gd);
       });
       const measured = Math.max(
         doc.documentElement?.scrollHeight || 0,
         doc.body?.scrollHeight || 0,
-        PLOT_H + 160
+        mix ? SYS_H + UNI_H * 2 + 220 : PLOT_H + 160
       );
-      frame.style.height = `${Math.max(1200, Math.ceil(measured + 24))}px`;
+      frame.style.height = `${Math.max(mix ? 1480 : 1200, Math.ceil(measured + 24))}px`;
     } catch {
       /* same-origin figures only */
     }
