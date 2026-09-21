@@ -1,11 +1,12 @@
 import "../shell.js?v=sign3";
-import { getLocale, t } from "../i18n.js";
+import { getLocale, t } from "../i18n.js?v=ed5";
 import { figureUrl } from "../paths.js";
 
 const LIVE = {
   a: { view: "compare", tab: "volume", noteKey: "compareTabANote" },
   b: { view: "compare", tab: "index", noteKey: "compareTabBNote" },
   c: { view: "compare", tab: "oe", noteKey: "compareTabCNote" },
+  d: { figure: "ch03_cn_uk_discipline.html", noteKey: "compareTabDNote" },
 };
 
 const locale = getLocale();
@@ -13,9 +14,11 @@ const tabs = document.querySelectorAll(".tab");
 const live = document.getElementById("compare-live");
 const frame = document.getElementById("compare-frame");
 const tabNote = document.getElementById("compare-tab-note");
-const pendingD = document.getElementById("compare-pending-d");
 
 function srcFor(spec) {
+  if (spec.figure) {
+    return figureUrl(spec.figure, { embed: "1", lang: locale, v: "d1" });
+  }
   return figureUrl("ch03_institutions.html", {
     embed: "1",
     lang: locale,
@@ -25,7 +28,12 @@ function srcFor(spec) {
   });
 }
 
+function isMixFrame() {
+  return /ch03_cn_uk_discipline/.test(frame.getAttribute("src") || "");
+}
+
 function fitCompareFrame() {
+  const mix = isMixFrame();
   const PLOT_H = 900;
   const grow = () => {
     try {
@@ -40,12 +48,18 @@ function fitCompareFrame() {
         style.id = "ai4s-compare-fit";
         doc.head.appendChild(style);
       }
-      style.textContent = `
+      style.textContent = mix
+        ? `
+        html, body { overflow: visible !important; height: auto !important; max-height: none !important; }
+        #plot { height: ${PLOT_H}px !important; max-height: none !important; }
+      `
+        : `
         html, body { overflow: visible !important; height: auto !important; max-height: none !important; }
         #plot-cn, #plot-gb, .plot { height: ${PLOT_H}px !important; max-height: none !important; }
       `;
       const Plotly = frame.contentWindow?.Plotly;
-      ["plot-cn", "plot-gb"].forEach((id) => {
+      const ids = mix ? ["plot"] : ["plot-cn", "plot-gb"];
+      ids.forEach((id) => {
         const gd = doc.getElementById(id);
         if (!gd) return;
         gd.style.height = `${PLOT_H}px`;
@@ -71,22 +85,18 @@ function fitCompareFrame() {
 function showTab(key) {
   tabs.forEach((btn) => btn.classList.toggle("active", btn.dataset.tab === key));
   const spec = LIVE[key];
-  if (spec) {
-    live.hidden = false;
-    pendingD.hidden = true;
-    tabNote.textContent = t(spec.noteKey);
-    const api = frame.contentWindow?.AI4S_CH03;
-    if (api) {
-      api.setTab(spec.tab);
-      fitCompareFrame();
-      return;
-    }
-    if (frame.getAttribute("src") !== srcFor(spec)) frame.src = srcFor(spec);
-    else fitCompareFrame();
+  if (!spec) return;
+  live.hidden = false;
+  tabNote.textContent = t(spec.noteKey);
+  const next = srcFor(spec);
+  const api = frame.contentWindow?.AI4S_CH03;
+  if (!spec.figure && api && frame.getAttribute("src") && !isMixFrame()) {
+    api.setTab(spec.tab);
+    fitCompareFrame();
     return;
   }
-  live.hidden = true;
-  pendingD.hidden = key !== "d";
+  if (frame.getAttribute("src") !== next) frame.src = next;
+  else fitCompareFrame();
 }
 
 tabs.forEach((tab) => {

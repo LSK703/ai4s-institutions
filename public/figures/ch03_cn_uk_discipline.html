@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>China–UK discipline mix</title>
+    <script src="plotly.min.js"></script>
+    <style>
+      :root { --ink:#1a2330; --muted:#5c6b7a; --bg:#fff; --line:#d4dde6; }
+      html, body { margin:0; background:var(--bg); color:var(--ink); font-family:"Source Sans 3","Noto Sans SC","Segoe UI",sans-serif; }
+      header { padding:12px 16px 4px; }
+      h1 { margin:0 0 6px; font-size:1.15rem; }
+      .meta { margin:0; color:var(--muted); font-size:0.86rem; line-height:1.45; }
+      #plot { width:100%; height:920px; }
+      html.embed header { display:none; }
+      html.embed, html.embed body { background:transparent; }
+      html.embed #plot { height:900px; }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1 id="title"></h1>
+      <p class="meta" id="meta"></p>
+    </header>
+    <div id="plot"></div>
+    <script>
+      const DATA = {"window":"recent_10y","period":"2015-2024","min_n_ai4s":200,"n_cn":399,"n_gb":76,"cn_papers":562509.2,"gb_papers":90237.9,"fields":[{"code":"40","en":"Engineering","zh":"工程学","cn":0.42892,"gb":0.215994,"world":0.29099,"n_cn":241271.3,"n_gb":19490.8},{"code":"46","en":"Information & computing","zh":"信息与计算","cn":0.131612,"gb":0.093757,"world":0.143242,"n_cn":74033.0,"n_gb":8460.4},{"code":"32","en":"Biomedical & clinical","zh":"生物医学与临床医学","cn":0.079324,"gb":0.195758,"world":0.126707,"n_cn":44620.3,"n_gb":17664.8},{"code":"37","en":"Earth sciences","zh":"地球科学","cn":0.071459,"gb":0.039378,"world":0.051142,"n_cn":40196.4,"n_gb":3553.4},{"code":"51","en":"Physical sciences","zh":"物理科学","cn":0.054319,"gb":0.081419,"world":0.054855,"n_cn":30554.8,"n_gb":7347.1},{"code":"31","en":"Biological","zh":"生物科学","cn":0.049628,"gb":0.068693,"world":0.052679,"n_cn":27916.3,"n_gb":6198.8},{"code":"49","en":"Mathematical","zh":"数学科学","cn":0.042384,"gb":0.052135,"world":0.058698,"n_cn":23841.3,"n_gb":4704.6},{"code":"34","en":"Chemical","zh":"化学科学","cn":0.029529,"gb":0.024222,"world":0.025682,"n_cn":16610.4,"n_gb":2185.7},{"code":"35","en":"Commerce & management","zh":"商业、管理、旅游与服务","cn":0.023348,"gb":0.026097,"world":0.033346,"n_cn":13133.2,"n_gb":2354.9},{"code":"30","en":"Agriculture & food","zh":"农业与食品科学","cn":0.02176,"gb":0.009682,"world":0.023731,"n_cn":12240.0,"n_gb":873.7},{"code":"41","en":"Environmental","zh":"环境科学","cn":0.019446,"gb":0.014353,"world":0.016609,"n_cn":10938.3,"n_gb":1295.2},{"code":"42","en":"Health sciences","zh":"健康科学","cn":0.013353,"gb":0.067123,"world":0.028332,"n_cn":7510.9,"n_gb":6057.1},{"code":"33","en":"Built environment","zh":"建成环境","cn":0.011761,"gb":0.010783,"world":0.012585,"n_cn":6615.8,"n_gb":973.0},{"code":"52","en":"Psychology","zh":"心理学","cn":0.008468,"gb":0.049528,"world":0.018136,"n_cn":4763.2,"n_gb":4469.3},{"code":"38","en":"Economics","zh":"经济学","cn":0.005562,"gb":0.015872,"world":0.012849,"n_cn":3128.6,"n_gb":1432.2},{"code":"44","en":"Human society","zh":"人类社会","cn":0.003207,"gb":0.014806,"world":0.00993,"n_cn":1803.7,"n_gb":1336.1},{"code":"47","en":"Language & culture","zh":"语言、传播与文化","cn":0.002828,"gb":0.005048,"world":0.013477,"n_cn":1590.7,"n_gb":455.5},{"code":"39","en":"Education","zh":"教育学","cn":0.002241,"gb":0.008663,"world":0.016036,"n_cn":1260.5,"n_gb":781.8},{"code":"36","en":"Creative arts","zh":"创意艺术","cn":0.000432,"gb":0.00177,"world":0.004366,"n_cn":243.0,"n_gb":159.8},{"code":"43","en":"History & archaeology","zh":"历史学与考古学","cn":0.000247,"gb":0.00193,"world":0.001549,"n_cn":138.8,"n_gb":174.2},{"code":"48","en":"Law","zh":"法学与法律研究","cn":0.000118,"gb":0.000731,"world":0.002352,"n_cn":66.2,"n_gb":66.0},{"code":"50","en":"Philosophy & religion","zh":"哲学与宗教研究","cn":5.7e-05,"gb":0.002256,"world":0.002706,"n_cn":32.3,"n_gb":203.6}]};
+      const q = new URLSearchParams(location.search);
+      const lang = q.get("lang") === "en" ? "en" : "zh";
+      if (q.get("embed") === "1") document.documentElement.classList.add("embed");
+      const L = {
+        zh: {
+          title: "中英高校 AI4S 学科构成",
+          meta: (d) => `高等教育机构 · n_ai4s ≥ 200 · 窗口 2015–2024。中国 ${d.n_cn} 所、英国 ${d.n_gb} 所。条长为该国（或全球）AI4S 论文落在该 FoR 学科的份额。`,
+          x: "占该系统 AI4S 论文的份额",
+          cn: "中国", gb: "英国", world: "全球",
+          hover: "份额"
+        },
+        en: {
+          title: "China–UK AI4S discipline mix",
+          meta: (d) => `Higher-education institutions · n_ai4s ≥ 200 · 2015–2024 window. China ${d.n_cn} universities, UK ${d.n_gb}. Bar length is the share of that system’s AI4S papers in the FoR field.`,
+          x: "Share of the system’s AI4S papers",
+          cn: "China", gb: "UK", world: "World",
+          hover: "Share"
+        }
+      }[lang];
+      document.title = L.title;
+      document.getElementById("title").textContent = L.title;
+      document.getElementById("meta").textContent = L.meta(DATA);
+      const labels = DATA.fields.map((f) => lang === "zh" ? f.zh : f.en);
+      const mk = (key, name, color) => ({
+        type: "bar",
+        name,
+        orientation: "h",
+        y: labels,
+        x: DATA.fields.map((f) => f[key]),
+        marker: { color },
+        hovertemplate: "%{y}<br>" + name + ": %{x:.1%}<extra></extra>"
+      });
+      Plotly.newPlot("plot", [
+        mk("cn", L.cn, "#C00000"),
+        mk("gb", L.gb, "#1F4E79"),
+        mk("world", L.world, "#8A96A3")
+      ], {
+        barmode: "group",
+        bargap: 0.18,
+        bargroupgap: 0.08,
+        margin: { l: lang === "zh" ? 148 : 168, r: 24, t: 12, b: 48 },
+        legend: { orientation: "h", y: 1.02, x: 0 },
+        xaxis: { tickformat: ".0%", title: L.x, gridcolor: "#e6edf3", zeroline: false },
+        yaxis: { autorange: "reversed", tickfont: { size: 12 } },
+        paper_bgcolor: "rgba(0,0,0,0)",
+        plot_bgcolor: "rgba(0,0,0,0)",
+        font: { family: "Source Sans 3, Noto Sans SC, Segoe UI, sans-serif", color: "#1a2330", size: 13 }
+      }, { responsive: true, displaylogo: false });
+    </script>
+  </body>
+</html>
