@@ -1,4 +1,4 @@
-import "../shell.js?v=sign3";
+import "../shell.js?v=sign4";
 import { getLocale, t } from "../i18n.js";
 import { figureUrl } from "../paths.js";
 

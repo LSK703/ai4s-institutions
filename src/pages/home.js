@@ -1,6 +1,6 @@
-import "../shell.js?v=sign3";
+import "../shell.js?v=sign4";
 import { fmtInt, loadInstitutions } from "../data.js";
-import { getLocale, t } from "../i18n.js?v=ed3";
+import { getLocale, t } from "../i18n.js?v=ed7";
 import { figureUrl, pageUrl } from "../paths.js";
 
 const payload = await loadInstitutions();

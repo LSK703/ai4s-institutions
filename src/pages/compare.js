@@ -1,5 +1,5 @@
-import "../shell.js?v=sign3";
-import { getLocale, t } from "../i18n.js?v=ed6";
+import "../shell.js?v=sign4";
+import { getLocale, t } from "../i18n.js?v=ed7";
 import { figureUrl } from "../paths.js";
 
 const LIVE = {

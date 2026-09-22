@@ -99,7 +99,9 @@ button, select, input { font-family: inherit; color: inherit; }
   gap: 0.7rem;
   color: var(--ink);
   text-decoration: none;
-  min-width: 13rem;
+  min-width: 14rem;
+  max-width: 22rem;
+  flex-shrink: 1;
 }
 .brand:hover { text-decoration: none; }
 .brand-mark-box {
@@ -114,9 +116,9 @@ button, select, input { font-family: inherit; color: inherit; }
   font-size: 0.72rem;
   letter-spacing: 0.02em;
 }
-.brand-text { display: flex; flex-direction: column; line-height: 1.15; }
-.brand-mark { font-weight: 700; font-size: 0.98rem; color: var(--ink); }
-.brand-sub { font-size: 0.72rem; color: var(--muted); font-weight: 400; }
+.brand-text { display: flex; flex-direction: column; line-height: 1.2; min-width: 0; }
+.brand-mark { font-weight: 700; font-size: 0.98rem; color: var(--ink); white-space: nowrap; }
+.brand-sub { font-size: 0.68rem; color: var(--muted); font-weight: 400; line-height: 1.35; max-width: 20rem; }
 
 .nav {
   display: flex;
@@ -963,7 +965,7 @@ tbody tr:hover { background: var(--row-hover); }
   z-index: 3;
   left: 1.5rem;
   bottom: 2.2rem;
-  max-width: 28rem;
+  max-width: 38rem;
 }
 .enter-kicker {
   margin: 0 0 0.55rem;
@@ -974,11 +976,19 @@ tbody tr:hover { background: var(--row-hover); }
   font-weight: 600;
 }
 .enter-copy h1 {
-  margin: 0 0 0.7rem;
+  margin: 0 0 0.45rem;
   font-size: clamp(2rem, 4.2vw, 3.15rem);
   font-weight: 700;
   color: #fff;
   letter-spacing: -0.02em;
+}
+.enter-sub {
+  margin: 0 0 1.15rem;
+  max-width: 34rem;
+  color: rgba(220, 228, 236, 0.72);
+  font-size: clamp(0.95rem, 1.6vw, 1.12rem);
+  line-height: 1.45;
+  font-weight: 400;
 }
 .enter-lede {
   margin: 0 0 1.25rem;

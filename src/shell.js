@@ -1,5 +1,5 @@
 import { applyTheme, bindThemeToggle } from "./theme.js";
-import { applyI18n, getLocale, setLocale, t } from "./i18n.js?v=ed4";
+import { applyI18n, getLocale, setLocale, t } from "./i18n.js?v=ed7";
 import { pageUrl } from "./paths.js";
 
 applyTheme();
@@ -7,7 +7,7 @@ applyTheme();
 if (!document.querySelector("link[data-ai4s-css]")) {
   const link = document.createElement("link");
   link.rel = "stylesheet";
-  link.href = `${new URL("./styles.css", import.meta.url).href}?v=sign2`;
+  link.href = `${new URL("./styles.css", import.meta.url).href}?v=brand1`;
   link.dataset.ai4sCss = "1";
   document.head.appendChild(link);
 }
@@ -99,4 +99,4 @@ function mount() {
 }
 
 mount();
-if (PAGE === "home") document.title = `${t("brand")} ${t("brandSub")}`;
+if (PAGE === "home") document.title = t("brand");
