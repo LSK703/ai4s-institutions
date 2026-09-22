@@ -1,5 +1,5 @@
-import "../shell.js?v=sign4";
-import { getLocale, t } from "../i18n.js";
+import "../shell.js?v=sign5";
+import { getLocale, t } from "../i18n.js?v=ed8";
 import { figureUrl } from "../paths.js";
 
 const PRESETS = {
@@ -40,6 +40,7 @@ function ch03Src(view) {
     embed: "1",
     lang: locale,
     view,
+    v: "cr1",
   });
 }
 

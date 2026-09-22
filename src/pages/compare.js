@@ -1,5 +1,5 @@
-import "../shell.js?v=sign4";
-import { getLocale, t } from "../i18n.js?v=ed7";
+import "../shell.js?v=sign5";
+import { getLocale, t } from "../i18n.js?v=ed8";
 import { figureUrl } from "../paths.js";
 
 const LIVE = {
@@ -24,7 +24,7 @@ function srcFor(spec) {
     lang: locale,
     view: spec.view,
     tab: spec.tab,
-    v: "clip6",
+    v: "cr1",
   });
 }
 
