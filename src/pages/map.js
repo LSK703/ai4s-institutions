@@ -1,5 +1,5 @@
-import "../shell.js?v=sign5";
-import { getLocale, t } from "../i18n.js?v=ed8";
+import "../shell.js?v=sign6";
+import { getLocale, t } from "../i18n.js?v=ed9";
 import {
   countryName,
   fmtIndex,
