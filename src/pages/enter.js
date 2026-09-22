@@ -1,6 +1,6 @@
 import { applyTheme, bindThemeToggle } from "../theme.js";
 import { applyI18n, getLocale, setLocale, t } from "../i18n.js?v=ed7";
-import { startSilk } from "../silk-ribbon.js";
+import { startGlobe } from "../globe.js?v=earth1";
 
 applyTheme();
 applyI18n();
@@ -20,4 +20,4 @@ document.getElementById("lang-toggle")?.addEventListener("click", () => {
 });
 
 const canvas = document.getElementById("silk");
-if (canvas) startSilk(canvas);
+if (canvas) startGlobe(canvas);
