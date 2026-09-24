@@ -1,4 +1,4 @@
-import "../shell.js?v=sign6";
+import "../shell.js?v=sign7";
 import { getLocale, t } from "../i18n.js?v=ed9";
 import { figureUrl } from "../paths.js";
 
@@ -40,7 +40,7 @@ function ch03Src(view) {
     embed: "1",
     lang: locale,
     view,
-    v: "cr1",
+    v: "font1",
   });
 }
 

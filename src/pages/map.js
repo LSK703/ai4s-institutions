@@ -1,4 +1,4 @@
-import "../shell.js?v=sign6";
+import "../shell.js?v=sign7";
 import { getLocale, t } from "../i18n.js?v=ed9";
 import {
   countryName,
@@ -430,7 +430,7 @@ function render(rows, geo, collab) {
     hoverlabel: {
       bgcolor: theme.dark ? "#1c2430" : "#fff",
       bordercolor: theme.line,
-      font: { color: theme.ink, family: "Source Sans 3, Noto Sans SC, sans-serif", size: 12 },
+      font: { color: theme.ink, family: "Times New Roman, Times, SimSun, Songti SC, STSong, serif", size: 12 },
       align: "left",
     },
   };

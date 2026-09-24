@@ -3,8 +3,6 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600&display=swap">
   <script src="plotly-locale-zh-cn.js"></script>
   <title>第三章 · 高校 AI4S 产出（交互版）</title>
   <style>
@@ -25,7 +23,7 @@
     * { box-sizing: border-box; }
     html, body {
       margin: 0; padding: 0; background: var(--bg); color: var(--ink);
-      font-family: "Noto Serif SC", "Songti SC", "SimSun", Georgia, serif;
+      font-family: "Times New Roman", Times, SimSun, "Songti SC", STSong, serif;
     }
     header {
       max-width: 1280px; margin: 0 auto; padding: 22px 24px 8px;
@@ -120,7 +118,7 @@
       background: var(--tip-bg);
       color: #fff;
       padding: 7px 10px;
-      font: 12px "Open Sans", verdana, arial, sans-serif;
+      font: 12px "Times New Roman", Times, SimSun, "Songti SC", serif;
       line-height: 1.35;
       white-space: nowrap;
       transform: translate(18px, -50%);
@@ -433,7 +431,7 @@
 
     function layoutBase() {
       return {
-        font: { family: '"Noto Serif SC","Songti SC",Georgia,serif', size: 13, color: "#111" },
+        font: { family: "Times New Roman, Times, SimSun, Songti SC, STSong, serif", size: 13, color: "#111" },
         paper_bgcolor: "#fff",
         plot_bgcolor: "#fff",
         margin: { l: 18, r: 18, t: 28, b: 56 },

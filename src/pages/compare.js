@@ -1,4 +1,4 @@
-import "../shell.js?v=sign6";
+import "../shell.js?v=sign7";
 import { getLocale, t } from "../i18n.js?v=ed9";
 import { figureUrl } from "../paths.js";
 
@@ -17,14 +17,14 @@ const tabNote = document.getElementById("compare-tab-note");
 
 function srcFor(spec) {
   if (spec.figure) {
-    return figureUrl(spec.figure, { embed: "1", lang: locale, v: "d2" });
+    return figureUrl(spec.figure, { embed: "1", lang: locale, v: "font1" });
   }
   return figureUrl("ch03_institutions.html", {
     embed: "1",
     lang: locale,
     view: spec.view,
     tab: spec.tab,
-    v: "cr1",
+    v: "font1",
   });
 }
 

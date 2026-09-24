@@ -1,4 +1,4 @@
-import "../shell.js?v=sign6";
+import "../shell.js?v=sign7";
 import { fmtInt, loadInstitutions } from "../data.js";
 import { getLocale, t } from "../i18n.js?v=ed9";
 import { figureUrl, pageUrl } from "../paths.js";
@@ -26,12 +26,12 @@ const slides = [
   {
     titleKey: "presetScaleEff",
     fit: "plot",
-    src: figureUrl("ch03_institutions.html", { embed: "1", lang: locale, view: "size", v: "cr1" }),
+    src: figureUrl("ch03_institutions.html", { embed: "1", lang: locale, view: "size", v: "font1" }),
   },
   {
     titleKey: "presetExpectedObs",
     fit: "plot",
-    src: figureUrl("ch03_institutions.html", { embed: "1", lang: locale, view: "obs", v: "cr1" }),
+    src: figureUrl("ch03_institutions.html", { embed: "1", lang: locale, view: "obs", v: "font1" }),
   },
   {
     titleKey: "presetScaleCollab",

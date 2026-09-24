@@ -1,4 +1,4 @@
-import "../shell.js?v=sign6";
+import "../shell.js?v=sign7";
 import { getLocale, t } from "../i18n.js?v=ed9";
 import {
   countryName,

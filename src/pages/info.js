@@ -1,4 +1,4 @@
-import "../shell.js?v=sign6";
+import "../shell.js?v=sign7";
 
 const SIGNS = ["data", "indicators", "institutions", "use"];
 
