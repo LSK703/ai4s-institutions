@@ -277,13 +277,9 @@ document.querySelectorAll(".stats-orbs .stat").forEach((el) => {
 
 const prinCube = document.getElementById("prin-cube");
 const prinPag = document.getElementById("prin-3d-pag");
-const prinStage = prinCube?.parentElement;
-if (prinCube && prinPag && prinStage) {
-  const count = prinCube.querySelectorAll(".prin-jelly-content").length;
+if (prinCube && prinPag && window.Swiper) {
+  const count = prinCube.querySelectorAll(".swiper-slide").length;
   const buttons = [];
-  let index = 0;
-  let timer = 0;
-
   for (let i = 0; i < count; i += 1) {
     const label = String(i + 1).padStart(2, "0");
     const btn = document.createElement("button");
@@ -294,38 +290,31 @@ if (prinCube && prinPag && prinStage) {
     prinPag.appendChild(btn);
     buttons.push(btn);
   }
-
-  const layout = () => {
-    prinCube.style.setProperty("--turn", `${-index * 90}deg`);
-    buttons.forEach((btn, i) => btn.classList.toggle("is-on", i === index));
-  };
-
-  const go = (next) => {
-    index = (next + count) % count;
-    layout();
-  };
-
-  const play = () => {
-    window.clearInterval(timer);
-    timer = window.setInterval(() => go(index + 1), 4800);
-  };
-
-  buttons.forEach((btn, i) => btn.addEventListener("click", () => go(i)));
-  prinStage.addEventListener("mousemove", (event) => {
-    const box = prinStage.getBoundingClientRect();
-    const x = (event.clientX - box.left) / box.width - 0.5;
-    const y = (event.clientY - box.top) / box.height - 0.5;
-    prinCube.style.setProperty("--rx", `${(-20 - y * 10).toFixed(1)}deg`);
-    prinCube.style.setProperty("--nudge", `${(x * 14).toFixed(1)}deg`);
+  const sw = new window.Swiper(prinCube, {
+    effect: "cube",
+    grabCursor: true,
+    rewind: true,
+    speed: 800,
+    cubeEffect: {
+      shadow: true,
+      slideShadows: true,
+      shadowOffset: 16,
+      shadowScale: 0.92,
+    },
+    autoplay: { delay: 4800, disableOnInteraction: false },
+    on: {
+      slideChange() {
+        buttons.forEach((btn, i) => {
+          btn.classList.toggle("is-on", i === this.activeIndex);
+        });
+      },
+    },
   });
-  prinStage.addEventListener("mouseenter", () => window.clearInterval(timer));
-  prinStage.addEventListener("mouseleave", () => {
-    prinCube.style.setProperty("--rx", "-20deg");
-    prinCube.style.setProperty("--nudge", "0deg");
-    play();
+  buttons.forEach((btn, i) => {
+    btn.addEventListener("click", () => sw.slideTo(i));
   });
-  layout();
-  play();
+  prinCube.addEventListener("mouseenter", () => sw.autoplay?.stop());
+  prinCube.addEventListener("mouseleave", () => sw.autoplay?.start());
 }
 
 function revealOnScroll() {
