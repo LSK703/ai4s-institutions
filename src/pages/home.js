@@ -279,7 +279,7 @@ const prinCube = document.getElementById("prin-cube");
 const prinPag = document.getElementById("prin-3d-pag");
 const prinStage = prinCube?.parentElement;
 if (prinCube && prinPag && prinStage) {
-  const count = prinCube.querySelectorAll(".prin-jelly-side").length;
+  const count = prinCube.querySelectorAll(".prin-jelly-content").length;
   const buttons = [];
   let index = 0;
   let timer = 0;
@@ -296,9 +296,7 @@ if (prinCube && prinPag && prinStage) {
   }
 
   const layout = () => {
-    const r = Math.max(140, Math.round(prinStage.clientWidth * 0.5));
-    prinCube.style.setProperty("--r", `${r}px`);
-    prinCube.style.transform = `rotateY(${-index * 120}deg)`;
+    prinCube.style.setProperty("--turn", `${-index * 90}deg`);
     buttons.forEach((btn, i) => btn.classList.toggle("is-on", i === index));
   };
 
@@ -313,9 +311,19 @@ if (prinCube && prinPag && prinStage) {
   };
 
   buttons.forEach((btn, i) => btn.addEventListener("click", () => go(i)));
+  prinStage.addEventListener("mousemove", (event) => {
+    const box = prinStage.getBoundingClientRect();
+    const x = (event.clientX - box.left) / box.width - 0.5;
+    const y = (event.clientY - box.top) / box.height - 0.5;
+    prinCube.style.setProperty("--rx", `${(-20 - y * 10).toFixed(1)}deg`);
+    prinCube.style.setProperty("--nudge", `${(x * 14).toFixed(1)}deg`);
+  });
   prinStage.addEventListener("mouseenter", () => window.clearInterval(timer));
-  prinStage.addEventListener("mouseleave", play);
-  window.addEventListener("resize", layout);
+  prinStage.addEventListener("mouseleave", () => {
+    prinCube.style.setProperty("--rx", "-20deg");
+    prinCube.style.setProperty("--nudge", "0deg");
+    play();
+  });
   layout();
   play();
 }
