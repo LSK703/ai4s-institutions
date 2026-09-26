@@ -509,54 +509,49 @@
           max-width: none;
           justify-self: stretch;
         }
-        .prin-jelly {
-          position: relative;
-          border-radius: 1.45rem;
-          overflow: hidden;
-          isolation: isolate;
-          background:
-            linear-gradient(160deg, rgba(255, 255, 255, 0.62) 0%, rgba(196, 226, 242, 0.42) 46%, rgba(126, 182, 212, 0.38) 100%);
-          box-shadow:
-            0 22px 40px rgba(90, 130, 170, 0.22),
-            inset 0 1px 0 rgba(255, 255, 255, 0.78),
-            inset 0 -16px 28px rgba(126, 182, 212, 0.22);
-          backdrop-filter: blur(14px);
-          -webkit-backdrop-filter: blur(14px);
+        .prin-jelly-stage {
+          perspective: 1200px;
+          height: 13.2rem;
+          overflow: visible;
         }
-        .prin-jelly::after {
-          content: "";
+        .prin-jelly-spin {
+          position: relative;
+          width: 100%;
+          height: 100%;
+          transform-style: preserve-3d;
+          transition: transform 0.95s cubic-bezier(0.22, 0.76, 0.28, 1);
+        }
+        .prin-jelly-side {
           position: absolute;
           inset: 0;
-          border-radius: inherit;
-          pointer-events: none;
-          z-index: 2;
-          background: linear-gradient(135deg, rgba(255, 255, 255, 0.5) 0%, rgba(255, 255, 255, 0.08) 38%, transparent 62%);
-        }
-        #prin-cube {
-          width: 100%;
-          height: 13.2rem;
-          overflow: hidden;
-        }
-        #prin-cube .swiper-slide {
-          background: linear-gradient(155deg, rgba(232, 246, 252, 0.55) 0%, rgba(168, 212, 234, 0.28) 55%, rgba(126, 182, 212, 0.22) 100%);
-          border: 0;
-          border-radius: 0;
-        }
-        #prin-cube .swiper-cube-shadow {
-          background: rgba(90, 130, 170, 0.18);
-          filter: blur(10px);
-        }
-        #prin-cube .principle {
-          height: 100%;
           box-sizing: border-box;
           border: 0;
-          background: transparent;
+          border-radius: 1.55rem;
           padding: 1rem 1.15rem;
           display: flex;
           flex-direction: column;
           align-items: center;
           justify-content: center;
           text-align: center;
+          background:
+            linear-gradient(160deg, rgba(255, 255, 255, 0.78) 0%, rgba(196, 226, 242, 0.58) 48%, rgba(126, 182, 212, 0.5) 100%);
+          box-shadow:
+            0 18px 34px rgba(80, 120, 160, 0.2),
+            inset 0 1px 0 rgba(255, 255, 255, 0.88),
+            inset 0 -18px 28px rgba(126, 182, 212, 0.22);
+          backdrop-filter: blur(16px);
+          -webkit-backdrop-filter: blur(16px);
+          backface-visibility: hidden;
+          -webkit-backface-visibility: hidden;
+          transform: rotateY(var(--a)) translateZ(var(--r, 9rem));
+        }
+        .prin-jelly-side::after {
+          content: "";
+          position: absolute;
+          inset: 0;
+          border-radius: inherit;
+          pointer-events: none;
+          background: linear-gradient(135deg, rgba(255, 255, 255, 0.55) 0%, rgba(255, 255, 255, 0.08) 40%, transparent 64%);
         }
         #prin-cube .principle-n {
           color: #1f5a86;
@@ -633,8 +628,8 @@
             max-width: 22.5rem;
             margin: 0 auto;
           }
-          #prin-cube { height: 12rem; }
-          .prin-jelly { border-radius: 1.2rem; }
+          .prin-jelly-stage { height: 12rem; }
+          .prin-jelly-side { border-radius: 1.25rem; }
         }
       </style>
 
@@ -648,32 +643,24 @@
         </header>
 
         <div class="principles principles-cube ed-reveal ed-reveal-fade">
-          <div class="prin-jelly">
-          <div class="swiper" id="prin-cube">
-            <div class="swiper-wrapper">
-              <div class="swiper-slide">
-                <section class="principle">
-                  <span class="principle-n">01</span>
-                  <h3 data-i18n="prin1Title"></h3>
-                  <p data-i18n="prin1Body"></p>
-                </section>
-              </div>
-              <div class="swiper-slide">
-                <section class="principle">
-                  <span class="principle-n">02</span>
-                  <h3 data-i18n="prin2Title"></h3>
-                  <p data-i18n="prin2Body"></p>
-                </section>
-              </div>
-              <div class="swiper-slide">
-                <section class="principle">
-                  <span class="principle-n">03</span>
-                  <h3 data-i18n="prin3Title"></h3>
-                  <p data-i18n="prin3Body"></p>
-                </section>
-              </div>
+          <div class="prin-jelly-stage">
+            <div class="prin-jelly-spin" id="prin-cube">
+              <section class="principle prin-jelly-side" style="--a:0deg">
+                <span class="principle-n">01</span>
+                <h3 data-i18n="prin1Title"></h3>
+                <p data-i18n="prin1Body"></p>
+              </section>
+              <section class="principle prin-jelly-side" style="--a:120deg">
+                <span class="principle-n">02</span>
+                <h3 data-i18n="prin2Title"></h3>
+                <p data-i18n="prin2Body"></p>
+              </section>
+              <section class="principle prin-jelly-side" style="--a:240deg">
+                <span class="principle-n">03</span>
+                <h3 data-i18n="prin3Title"></h3>
+                <p data-i18n="prin3Body"></p>
+              </section>
             </div>
-          </div>
           </div>
           <div class="prin-3d-pag" id="prin-3d-pag"></div>
         </div>
@@ -726,6 +713,6 @@
     </main>
     <div id="site-footer"></div>
     <script src="vendor/swiper/swiper-bundle.min.js"></script>
-    <script type="module" src="src/pages/home.js?v=ed31"></script>
+    <script type="module" src="src/pages/home.js?v=ed32"></script>
   </body>
 </html>

@@ -277,9 +277,13 @@ document.querySelectorAll(".stats-orbs .stat").forEach((el) => {
 
 const prinCube = document.getElementById("prin-cube");
 const prinPag = document.getElementById("prin-3d-pag");
-if (prinCube && prinPag && window.Swiper) {
-  const count = prinCube.querySelectorAll(".swiper-slide").length;
+const prinStage = prinCube?.parentElement;
+if (prinCube && prinPag && prinStage) {
+  const count = prinCube.querySelectorAll(".prin-jelly-side").length;
   const buttons = [];
+  let index = 0;
+  let timer = 0;
+
   for (let i = 0; i < count; i += 1) {
     const label = String(i + 1).padStart(2, "0");
     const btn = document.createElement("button");
@@ -290,31 +294,30 @@ if (prinCube && prinPag && window.Swiper) {
     prinPag.appendChild(btn);
     buttons.push(btn);
   }
-  const sw = new window.Swiper(prinCube, {
-    effect: "cube",
-    grabCursor: true,
-    rewind: true,
-    speed: 800,
-    cubeEffect: {
-      shadow: false,
-      slideShadows: false,
-      shadowOffset: 12,
-      shadowScale: 0.9,
-    },
-    autoplay: { delay: 4800, disableOnInteraction: false },
-    on: {
-      slideChange() {
-        buttons.forEach((btn, i) => {
-          btn.classList.toggle("is-on", i === this.activeIndex);
-        });
-      },
-    },
-  });
-  buttons.forEach((btn, i) => {
-    btn.addEventListener("click", () => sw.slideTo(i));
-  });
-  prinCube.addEventListener("mouseenter", () => sw.autoplay?.stop());
-  prinCube.addEventListener("mouseleave", () => sw.autoplay?.start());
+
+  const layout = () => {
+    const r = Math.max(140, Math.round(prinStage.clientWidth * 0.5));
+    prinCube.style.setProperty("--r", `${r}px`);
+    prinCube.style.transform = `rotateY(${-index * 120}deg)`;
+    buttons.forEach((btn, i) => btn.classList.toggle("is-on", i === index));
+  };
+
+  const go = (next) => {
+    index = (next + count) % count;
+    layout();
+  };
+
+  const play = () => {
+    window.clearInterval(timer);
+    timer = window.setInterval(() => go(index + 1), 4800);
+  };
+
+  buttons.forEach((btn, i) => btn.addEventListener("click", () => go(i)));
+  prinStage.addEventListener("mouseenter", () => window.clearInterval(timer));
+  prinStage.addEventListener("mouseleave", play);
+  window.addEventListener("resize", layout);
+  layout();
+  play();
 }
 
 function revealOnScroll() {
