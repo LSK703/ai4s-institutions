@@ -278,11 +278,15 @@ document.querySelectorAll(".stats-orbs .stat").forEach((el) => {
 const prinCube = document.getElementById("prin-cube");
 const prinPag = document.getElementById("prin-3d-pag");
 const prinStage = prinCube?.parentElement;
-if (prinCube && prinPag && prinStage) {
+if (prinCube && prinPag && prinStage && window.gsap) {
+  const gsap = window.gsap;
   const count = prinCube.querySelectorAll(".prin-jelly-content").length;
   const buttons = [];
+  const restRx = -18;
+  const pose = { turn: 0, rx: restRx, nudge: 0, lift: 0 };
   let index = 0;
   let timer = 0;
+  let turning = false;
 
   for (let i = 0; i < count; i += 1) {
     const label = String(i + 1).padStart(2, "0");
@@ -295,36 +299,67 @@ if (prinCube && prinPag && prinStage) {
     buttons.push(btn);
   }
 
-  const layout = () => {
-    prinCube.style.setProperty("--turn", `${-index * 90}deg`);
+  const apply = () => {
+    prinCube.style.transform = `translateZ(${pose.lift}px) rotateX(${pose.rx}deg) rotateY(${pose.turn + pose.nudge}deg)`;
+  };
+
+  const mark = () => {
     buttons.forEach((btn, i) => btn.classList.toggle("is-on", i === index));
   };
 
+  const destTurnFor = (destIndex) => {
+    let dest = -destIndex * 90;
+    while (dest > pose.turn + 180) dest -= 360;
+    while (dest < pose.turn - 180) dest += 360;
+    if (destIndex === 0 && index === count - 1 && dest >= pose.turn) dest -= 360;
+    return dest;
+  };
+
   const go = (next) => {
-    index = (next + count) % count;
-    layout();
+    const destIndex = (next + count) % count;
+    if (destIndex === index) return;
+    const destTurn = destTurnFor(destIndex);
+    index = destIndex;
+    mark();
+    turning = true;
+    gsap.timeline({
+      onComplete: () => {
+        pose.turn = -index * 90;
+        pose.lift = 0;
+        pose.rx = restRx;
+        turning = false;
+        apply();
+      },
+    })
+      .to(pose, { lift: 14, rx: restRx + 2, duration: 0.2, ease: "power1.out", onUpdate: apply })
+      .to(pose, { turn: destTurn, duration: 0.72, ease: "power2.inOut", onUpdate: apply }, "-=0.04")
+      .to(pose, { lift: 0, rx: restRx, duration: 0.26, ease: "power1.inOut", onUpdate: apply }, "-=0.1");
   };
 
   const play = () => {
     window.clearInterval(timer);
-    timer = window.setInterval(() => go(index + 1), 4800);
+    timer = window.setInterval(() => go(index + 1), 5000);
   };
 
   buttons.forEach((btn, i) => btn.addEventListener("click", () => go(i)));
   prinStage.addEventListener("mousemove", (event) => {
+    if (turning) return;
     const box = prinStage.getBoundingClientRect();
     const x = (event.clientX - box.left) / box.width - 0.5;
     const y = (event.clientY - box.top) / box.height - 0.5;
-    prinCube.style.setProperty("--rx", `${(-20 - y * 10).toFixed(1)}deg`);
-    prinCube.style.setProperty("--nudge", `${(x * 14).toFixed(1)}deg`);
+    pose.nudge = x * 6;
+    pose.rx = restRx - y * 4;
+    apply();
   });
   prinStage.addEventListener("mouseenter", () => window.clearInterval(timer));
   prinStage.addEventListener("mouseleave", () => {
-    prinCube.style.setProperty("--rx", "-20deg");
-    prinCube.style.setProperty("--nudge", "0deg");
+    pose.nudge = 0;
+    pose.rx = restRx;
+    apply();
     play();
   });
-  layout();
+  apply();
+  mark();
   play();
 }
 
