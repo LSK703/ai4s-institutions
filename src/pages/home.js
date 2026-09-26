@@ -1,4 +1,4 @@
-import "../shell.js?v=sign7";
+import "../shell.js?v=sign8";
 import { fmtInt, loadInstitutions } from "../data.js";
 import { getLocale, t } from "../i18n.js?v=ed9";
 import { figureUrl, pageUrl } from "../paths.js";
@@ -296,10 +296,10 @@ if (prinCube && prinPag && window.Swiper) {
     rewind: true,
     speed: 800,
     cubeEffect: {
-      shadow: true,
-      slideShadows: true,
-      shadowOffset: 16,
-      shadowScale: 0.92,
+      shadow: false,
+      slideShadows: false,
+      shadowOffset: 12,
+      shadowScale: 0.9,
     },
     autoplay: { delay: 4800, disableOnInteraction: false },
     on: {
